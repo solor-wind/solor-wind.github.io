@@ -24,7 +24,7 @@
 <meta property="og:description" content="\(\mathcal{Author:gpf}\)  考前要看的几点 判断题 连通无向图：欧拉图 \(\Leftrightarrow\) 有欧拉闭路；非连通无向图：欧拉图 \(\Leftrightarrow\) 每个分支都有欧拉闭路 字典序不一定保证有极小元（ab,aab,aaab,...） n阶二叉树有(n+1)&#x2F;2个叶节点，(n-1)&#x2F;2个分支节点 任何图都有偶数个奇结点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-14T12:37:16.000Z">
-<meta property="article:modified_time" content="2024-01-14T12:38:52.822Z">
+<meta property="article:modified_time" content="2024-01-14T12:58:43.285Z">
 <meta property="article:author" content="gpf">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -307,7 +307,7 @@ class="math inline">\(\#\mathcal{P}(A)=2^{\#A}\)</span></p>
 <h4 id="广义交广义并">广义交、广义并</h4>
 <p>集类：某集合的所有元素都是集合</p>
 <p>广义并：设 <span class="math inline">\(\mathcal{B}\)</span>
-是任意集类，称集合 <span class="math inline">\(\{x|\exist
+是任意集类，称集合 <span class="math inline">\(\{x|\exists
 X(X\in\mathcal{B}\land x\in X)\}\)</span> 为 <span
 class="math inline">\(\mathcal{B}\)</span> 的广义并，记为 <span
 class="math inline">\(\cup\mathcal{B}\)</span></p>
@@ -428,9 +428,9 @@ R\)</span>， x到y有路径，则x到y有边</li>
 <h4 id="交并补异或差">交并补、异或、差</h4>
 <p>定义域与值域：</p>
 <ul>
-<li><span class="math inline">\(dom(R)=\{x\in A|\exist y\in
+<li><span class="math inline">\(dom(R)=\{x\in A|\exists y\in
 B使得&lt;x,y&gt;\in R\}\)</span></li>
-<li><span class="math inline">\(ran(R)=\{y\in B|\exist x\in
+<li><span class="math inline">\(ran(R)=\{y\in B|\exists x\in
 A使得&lt;x,y&gt;\in R\}\)</span></li>
 <li><span class="math inline">\(dom(R_1\cup R_2)=dom(R_1)\cup
 dom(R_2)\)</span></li>
@@ -513,7 +513,7 @@ class="math inline">\(\checkmark\)</span></td>
 </table>
 <p>逆关系相当于矩阵转置，保持原有关系的5个性质</p>
 <h4 id="复合运算">复合运算</h4>
-<p><span class="math inline">\(R\circ S=\{&lt;x,z&gt;|\exist y\in
+<p><span class="math inline">\(R\circ S=\{&lt;x,z&gt;|\exists y\in
 Y使得xRy\land ySz\}\)</span></p>
 <p>若R是A上的关系，则 <span class="math inline">\(R^0=I_A\)</span> ，
 <span class="math inline">\(R^{n+1}=R^n\circ R\)</span></p>
@@ -608,7 +608,7 @@ class="math inline">\(\le\)</span> 为A上的全序（线序），并称 <span
 class="math inline">\(&lt;A,\le&gt;\)</span> 为全序结构（链）</p></li>
 <li><p>严格偏序关系：A上二元关系R，且R反自反、传递</p></li>
 <li><p>覆盖：y是x的覆盖 <span class="math inline">\(\Leftrightarrow
-x&lt;y\land\neg\exist z(z\in A\land x&lt;z\land
+x&lt;y\land\neg\exists z(z\in A\land x&lt;z\land
 z&lt;y)\)</span></p></li>
 <li><p>良序：偏序结构 <span
 class="math inline">\(&lt;A,\le&gt;\)</span>，若A的每一个非空子集都有一个最小元，则称
@@ -664,7 +664,7 @@ class="math inline">\(S_1=S_2\)</span></li>
 <p>若R为A上的等价关系，则商集 <span
 class="math inline">\(A/R=\{[x]_R|x\in A\}\)</span> 为A的一个划分</p>
 <p>若 <span class="math inline">\(\Pi\)</span> 为A的一个划分，则 <span
-class="math inline">\(R_{\Pi}=\{&lt;x,y&gt;|\exist S\in\Pi,使x,y\in
+class="math inline">\(R_{\Pi}=\{&lt;x,y&gt;|\exists S\in\Pi,使x,y\in
 S\}\)</span> 为A上的等价关系，且 <span
 class="math inline">\(A/R_{\Pi}=\Pi\)</span></p>
 <h2 id="函数">函数</h2>
@@ -673,11 +673,11 @@ class="math inline">\(A/R_{\Pi}=\Pi\)</span></p>
 class="math inline">\(&lt;x,y_1&gt;\in f\land&lt;x,y_2&gt;\in
 f\rightarrow y_1=y_2\)</span> ，记作 <span
 class="math inline">\(y=f(x)\)</span></p>
-<p>定义域：<span class="math inline">\(dom(f)=\{x\in X|\exist y\in
+<p>定义域：<span class="math inline">\(dom(f)=\{x\in X|\exists y\in
 Y使y=f(x)\}\)</span> 。<span class="math inline">\(x\in dom(f)\)</span>
 称f在x处有定义，记为 <span class="math inline">\(f(x)\uparrow\)</span>
 ，反之记为 <span class="math inline">\(f(x)\downarrow\)</span></p>
-<p>值域：<span class="math inline">\(ran(f)=\{y\in Y|\exist x\in
+<p>值域：<span class="math inline">\(ran(f)=\{y\in Y|\exists x\in
 X使y=f(x)\}\)</span></p>
 <p><span class="math inline">\(dom(g\circ f)=f^{-1}[dom\ g],ran(g\circ
 f)=g[ran\ f]\)</span></p>
@@ -689,9 +689,9 @@ f\subset Y\)</span></p>
 <p>1-1部分函数：<span class="math inline">\(\forall x_1,x_2\in dom
 f,当x_1\ne x_2时,均有f(x_1)\ne f(x_2)\)</span></p>
 <p><span class="math inline">\(A\subseteq X,B\subseteq Y\)</span>
-像：<span class="math inline">\(f[A]=\{y\in Y|\exist x\in
+像：<span class="math inline">\(f[A]=\{y\in Y|\exists x\in
 A使y=f(x)\}\)</span> 源像：<span class="math inline">\(f^{-1}[B]=\{x\in
-X|\exist y\in B使y=f(x)\}\)</span></p>
+X|\exists y\in B使y=f(x)\}\)</span></p>
 <h3 id="函数相关概念">函数相关概念</h3>
 <ul>
 <li>函数（全函数）：<span class="math inline">\(dom f=X\)</span>，记为
@@ -735,7 +735,7 @@ class="math inline">\(g\)</span> 的积</p>
 <p>设f是从X到Y的（部分）函数，g为从Y到Z的（部分）函数，则复合关系 <span
 class="math inline">\(f\circ g\)</span> 是从X到Y的（部分）函数，记为
 <span class="math inline">\(g\circ f=\{&lt;x,z&gt;|x\in X\land z\in
-Z\land \exist y(y\in Y\land y=f(x)\land z=g(y))\}\)</span></p>
+Z\land \exists y(y\in Y\land y=f(x)\land z=g(y))\}\)</span></p>
 <p><span class="math inline">\(f:X\rightarrow X\)</span>，则f的n次幂记为
 <span class="math inline">\(f^n=f\circ f^{n-1}\)</span> ……</p>
 <p><span class="math inline">\(g\circ f\)</span>
@@ -1043,7 +1043,7 @@ class="math inline">\(G[V-V&#39;]\)</span> 记为 <span
 class="math inline">\(G-V&#39;\)</span></p>
 <p><strong>边导出子图</strong>：<span
 class="math inline">\(E&#39;\subseteq
-E,E&#39;\ne\emptyset,V&#39;=\{v|v\in V且\exist e\in
+E,E&#39;\ne\emptyset,V&#39;=\{v|v\in V且\exists e\in
 E&#39;使v与e关联\}\)</span> ，记为 <span
 class="math inline">\(G[E&#39;]\)</span></p>
 <h4 id="一些运算">一些运算</h4>
