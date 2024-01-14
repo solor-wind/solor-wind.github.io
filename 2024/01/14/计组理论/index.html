@@ -1,0 +1,1250 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="\(\mathcal{Author:gpf}\)  考题 10*单选 简答：逻辑函数化简、内存扩展（译码器生成片选信号、二维地址结构）、页式存储、cache命中率、mips汇编 概述 进制转换 组合逻辑 逻辑函数化简：吸收律、配项法…… 多路选择器：74151、函数生成器 时序逻辑 有限状态机：moore、mealy型，状态转换图、表、函数表达式（考试说明再化简） 主存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组理论">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/14/%E8%AE%A1%E7%BB%84%E7%90%86%E8%AE%BA/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="\(\mathcal{Author:gpf}\)  考题 10*单选 简答：逻辑函数化简、内存扩展（译码器生成片选信号、二维地址结构）、页式存储、cache命中率、mips汇编 概述 进制转换 组合逻辑 逻辑函数化简：吸收律、配项法…… 多路选择器：74151、函数生成器 时序逻辑 有限状态机：moore、mealy型，状态转换图、表、函数表达式（考试说明再化简） 主存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925143251215.png">
+<meta property="og:image" content="c:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925143754522.png">
+<meta property="og:image" content="c:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925144127337.png">
+<meta property="og:image" content="c:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925145703517.png">
+<meta property="article:published_time" content="2024-01-14T12:37:27.000Z">
+<meta property="article:modified_time" content="2024-01-14T12:39:11.472Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925143251215.png">
+  
+  
+  
+  <title>计组理论 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组理论"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-14 20:37" pubdate>
+          2024年1月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组理论</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h3 id="考题">考题</h3>
+<p>10*单选</p>
+<p>简答：逻辑函数化简、内存扩展（译码器生成片选信号、二维地址结构）、页式存储、cache命中率、mips汇编</p>
+<h4 id="概述">概述</h4>
+<p>进制转换</p>
+<h4 id="组合逻辑">组合逻辑</h4>
+<p>逻辑函数化简：吸收律、配项法……</p>
+<p>多路选择器：74151、函数生成器</p>
+<h4 id="时序逻辑">时序逻辑</h4>
+<p>有限状态机：moore、mealy型，状态转换图、表、函数表达式（考试说明再化简）</p>
+<h4 id="主存">主存</h4>
+<p>二维地址结构、译码器生成片选信号</p>
+<h4 id="汇编">汇编</h4>
+<p>指令格式：操作码结构、指令长度（定长快、变长小）</p>
+<p>各种指令：R、I、J</p>
+<p>寻址方式</p>
+<h4 id="mips流水线">mips流水线</h4>
+<p>基本概念</p>
+<p>数据冒险</p>
+<h4 id="cache">cache</h4>
+<p>直接映射：区地址（tag）+区内快递至</p>
+<p>命中率（能否替换）</p>
+<h4 id="中断">中断</h4>
+<p>DMA、中断</p>
+<h4 id="浮点数">浮点数</h4>
+<p>以单精度浮点数为例，浮点数共由以下3部分组成</p>
+<ul>
+<li>1位数符S：0表示正数，1为负数</li>
+<li>8位阶E（双精度为11位）：偏移量为 <span
+class="math inline">\(2^{n-1}-1\)</span></li>
+<li>23位尾数m（双精度为52位）：规格化成小数点左侧为1，且1作为隐含位被忽略，即1.m</li>
+</ul>
+<p><span
+class="math inline">\((178.125)_{10}=(10110010.001)_2=1.0110010001\times2^{111}\)</span>
+：S=0，E=00000111+01111111=10000110，m=01100100010000000000000</p>
+<p>单精度浮点数的表示约定：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">E</th>
+<th style="text-align: center;">M</th>
+<th style="text-align: center;">浮点数N</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1-254</td>
+<td style="text-align: center;">不为0</td>
+<td style="text-align: center;">规范浮点数 <span
+class="math inline">\(N=(-1)^s\times1.m\times2^{E-127}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">不为0</td>
+<td style="text-align: center;">非规范浮点数 <span
+class="math inline">\(N=(-1)^s\times0.m\times2^{-126}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">无穷（有正负）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">不为0</td>
+<td style="text-align: center;">NaN（不是一个数）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="组合逻辑-1">组合逻辑</h2>
+<h3 id="基础知识">基础知识</h3>
+<h4 id="晶体管类器件">晶体管类器件</h4>
+<p>P(positive)型半导体掺三价元素，导电以空穴为主；N(negtive)型半导体掺五价元素，导电以电子为主。</p>
+<p>PN结（晶体二极管）P极接正极为正向偏置，导通；反之为反向偏置，截止</p>
+<p>三极管</p>
+<p>集电极C，N型；基极B，P型；发射极E，N型</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231214213736360.png" srcset="/img/loading.gif" lazyload
+alt="image-20231214213736360" />
+<figcaption aria-hidden="true">image-20231214213736360</figcaption>
+</figure>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231216214649868.png" srcset="/img/loading.gif" lazyload
+alt="image-20231216214649868" />
+<figcaption aria-hidden="true">image-20231216214649868</figcaption>
+</figure>
+<p>TTL与非门的两个状态通常称为关态和开态，当输入全为高电平时对应的是关态，此时输出为高电平；当输入有一为低电平时，对应的是开态，此时输出为低电平。</p>
+<h4 id="逻辑电路的符号表示">逻辑电路的符号表示</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231210151341113.png" srcset="/img/loading.gif" lazyload
+alt="image-20231210151341113" />
+<figcaption aria-hidden="true">image-20231210151341113</figcaption>
+</figure>
+<h4 id="组合逻辑电路">组合逻辑电路</h4>
+<ol type="1">
+<li>从结构看，组合逻辑电路由门电路构成，不含<strong>存储电路</strong>，也不含<strong>反馈电路</strong>，信号从输入开始单向传输到输出。对于组合逻辑电路，任何时刻电路的输出仅由当时的<strong>输入信号</strong>决定。</li>
+<li>将加在电路若干输入端中的某一个输入端的信号变换成相应的一组二进制代码输出的过程叫做<strong>编码</strong></li>
+<li>将二进制代码所表示的信息翻译成对应输出的高低电平信号的过程称为译码；n位二进制译码器有n个输入，有2^n个输出，工作时译码器只允许有一个输出有效。</li>
+</ol>
+<h3 id="理论运算">理论运算</h3>
+<h5 id="符号">符号</h5>
+<p>与：<span class="math inline">\(\cdot\)</span> 或 <span
+class="math inline">\(\land\)</span></p>
+<p>或：<span class="math inline">\(+\)</span> 或 <span
+class="math inline">\(\lor\)</span></p>
+<p>非：<span class="math inline">\(\overline{}\)</span> 或 <span
+class="math inline">\(\neg\)</span></p>
+<p>异或：<span class="math inline">\(\oplus\)</span></p>
+<p>同或：<span class="math inline">\(\odot\)</span></p>
+<p>优先级：括号、非、与、异或、或 <span
+class="math inline">\(()&gt;\neg&gt;\cdot&gt;\oplus&gt;+\)</span></p>
+<h5 id="运算律">运算律</h5>
+<p>交换律、结合律、0-1律（与0做运算）、互补律</p>
+<p>重叠率、吸收律、还原律</p>
+<p>吸收律</p>
+<p><span class="math inline">\(A+\bar{A}B=A+B\)</span></p>
+<p>分配律</p>
+<p><span class="math inline">\(A\cdot(B+C)=A\cdot B+A\cdot
+C\)</span></p>
+<p><span class="math inline">\(A+B\cdot C=(A+B)\cdot(A+C)\)</span></p>
+<p>反演律（德摩根律）</p>
+<p><span
+class="math inline">\(\overline{A+B}=\overline{A}\cdot\overline{B}\)</span></p>
+<p><span class="math inline">\(\overline{A\cdot
+B}=\overline{A}+\overline{B}\)</span></p>
+<p>包含律</p>
+<p><span class="math inline">\(A\cdot B+\overline{A}\cdot B+B\cdot
+C=A\cdot B+\overline{A}\cdot B\)</span></p>
+<p><span
+class="math inline">\((A+B)\cdot(\overline{A}+C)\cdot(B+C)=(A+B)\cdot(\overline{A}+C)\)</span></p>
+<h5 id="规则">规则</h5>
+<p>代入规则、反演规则、对偶规则</p>
+<h5 id="逻辑函数的标准表达式">逻辑函数的标准表达式</h5>
+<h6 id="最小项">最小项</h6>
+<ul>
+<li><p>最小项：由n个变量组成的 “与”
+项中，每个变量以原变量或反变量的形式出现且仅出现一次，则这个与项称为最小项。n个变量有
+<span class="math inline">\(2^n\)</span> 个最小项</p></li>
+<li><p>最小项编号：按照变量顺序将最小项中的原变量用1表示、反变量用0表示，得到一个二进制数，与其对应的十进制数，即该最小项的编号
+i</p></li>
+<li><p>性质：</p></li>
+</ul>
+<ol type="1">
+<li><p>对于任何一个最小项，只有对应的一组变量取值，使其值为1，其余情况下均为0</p></li>
+<li><p>全体最小项之和为1</p></li>
+<li><p>任意两个最小项的乘积为0</p></li>
+<li><p>相邻最小项：除一个变量互为相反外，其余变量都分别相同的两个最小项。</p>
+<p>具有相邻性的两个最小项之和，可以合并为一个乘积项，消去一个以原变量和反变量形式出现的变量，保留由没有变化的变量构成的乘积项。</p>
+<p>例：<span
+class="math inline">\(\bar{A}\bar{B}\bar{C}+\bar{A}\bar{B}C=\bar{A}\bar{B}\)</span></p></li>
+</ol>
+<ul>
+<li>最小项推导法（从真值表推出表达式）：把输出为1的输入组合写成乘积项的形式，其中取值为
+1 的输入用原变量表示，取值为 0
+的输入用反变量表示，然后把这些乘积项加起来</li>
+</ul>
+<p><span
+class="math inline">\(F=\bar{A}BC+A\bar{B}C+AB\bar{C}+ABC\)</span></p>
+<p><span class="math inline">\(F(A,B,C)=m_3+m_5+m_6+m_7\)</span></p>
+<p><span class="math inline">\(F(A,B,C)=\sum m(3,5,6,7)\)</span></p>
+<h6 id="最大项">最大项</h6>
+<ul>
+<li><p>最大项：设有n个变量，它们所组成的具有n个变量的“或”
+项（和项）中，每个变量以原变量或反变量的形式出现且仅出现一次，则这个和项称为最大项。n个变量有2
+n个最大项</p></li>
+<li><p>最大项编号：按照变量顺序将最大项中的原变量用0表示、反变量用1表示，得到一个二进制数，与其对应的十进制数即该最大项的编号i</p></li>
+<li><p>性质：</p>
+<ol type="1">
+<li><p>对于任何一个最大项，只有对应的一组变量取值，使其值为0，其余情况下均为1</p></li>
+<li><p>全体最大项之积为0</p></li>
+<li><p>任意两个最大项之和为1</p></li>
+<li><p>相邻最大项：
+若2个最大项中只有1个变量分别以原变量和反变量的形式出现，其余的变量分别相同，则称这2个变量具有相邻性，或相邻最大项。具有相邻性的两个最大项之积可以合并为一个和项，消去一个以原变量和反变量形式出现的变量，保留由没有变化的变量构成的和项。</p>
+<p>例：<span
+class="math inline">\((\bar{A}+B+\bar{C})(A+B+\bar{C})=[\bar{A}+(B+\bar{C})][A+(B+\bar{C})]=B+\bar{C}\)</span></p></li>
+</ol></li>
+<li><p>1</p></li>
+</ul>
+<h6 id="化简">化简</h6>
+<p>一般由EDA工具完成</p>
+<p>“与或”表达式化简：</p>
+<ol type="1">
+<li><p>乘积项最少（与门最少）</p></li>
+<li><p>乘积中变量最少</p></li>
+<li><p>用最少的门、门的输入也最少</p></li>
+</ol>
+<p>方法：</p>
+<ol type="1">
+<li><p>合并乘积项（互补律）</p></li>
+<li><p>吸收项法（吸收律、包含律）</p></li>
+<li><p>配项法（利用互补律）</p></li>
+</ol>
+<p><strong>卡诺图化简</strong></p>
+<h3 id="常见器件">常见器件</h3>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">输入</th>
+<th style="text-align: center;">输出</th>
+<th style="text-align: center;">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">7485四位比较器</td>
+<td style="text-align: center;">A3-A0,B3-B0,I0-I2</td>
+<td style="text-align: center;">F&gt;,F&lt;,F=</td>
+<td style="text-align: center;">比较4位二进制数的大小</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">8线-3线编码器</td>
+<td style="text-align: center;">Y0,Y1...Y7</td>
+<td style="text-align: center;">C,B,A</td>
+<td style="text-align: center;">用3位二进制代码对8个信号进行编码</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8421BCD编码器</td>
+<td style="text-align: center;">Y0,Y1...Y9</td>
+<td style="text-align: center;">D,C,B,A</td>
+<td
+style="text-align: center;">用4位二进制代码对10个十进制数字进行编码</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">74LS148优先编码器</td>
+<td style="text-align: center;">低电平有效</td>
+<td style="text-align: center;">反码</td>
+<td style="text-align: center;">同8-3，优先编码7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">74LS147优先编码器</td>
+<td style="text-align: center;">低电平有效</td>
+<td style="text-align: center;">反码</td>
+<td style="text-align: center;">同8421，优先编码9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">3线-8线译码器(74138)</td>
+<td style="text-align: center;">A2,A1,A0,S2,S1,S0</td>
+<td style="text-align: center;">Y7-Y0，低电平输出有效</td>
+<td style="text-align: center;">S0,S1,S2为100时使能，3-8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">BCD译码器</td>
+<td style="text-align: center;">DCBA</td>
+<td style="text-align: center;">Y9-Y0，低电平输出有效</td>
+<td style="text-align: center;">10-4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">74151多选器</td>
+<td style="text-align: center;">D7-D0,A2-A1,~en</td>
+<td style="text-align: center;">Y,~Y</td>
+<td style="text-align: center;">8选1数据选择器</td>
+</tr>
+</tbody>
+</table>
+<h2 id="时序逻辑-1">时序逻辑</h2>
+<h3 id="基础知识-1">基础知识</h3>
+<ol type="1">
+<li><p>时序逻辑电路由组合逻辑电路和存储电路两部分组成</p></li>
+<li><p>时序逻辑电路按触发器时钟端的连接方式不同可以分为同步时序逻辑和异步时序逻辑两类。</p></li>
+</ol>
+<h3 id="锁存器">锁存器</h3>
+<h6 id="基本rs锁存器">基本RS锁存器</h6>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925142055279.png" srcset="/img/loading.gif" lazyload
+alt="image-20230925142055279" />
+<figcaption aria-hidden="true">image-20230925142055279</figcaption>
+</figure>
+<p>功能：</p>
+<ol type="1">
+<li><p>保持原来状态： <span
+class="math inline">\(\overline{R_D}=1,\overline{S_D}=1\)</span></p></li>
+<li><p>置0（次态变0）：<span
+class="math inline">\(\overline{R_D}=0,\overline{S_D}=1\)</span></p></li>
+<li><p>置1：<span
+class="math inline">\(\overline{R_D}=1,\overline{S_D}=0\)</span></p></li>
+</ol>
+<p>约束条件：<span
+class="math inline">\(\overline{R_D}+\overline{S_D}=1\)</span></p>
+<p>特性方程：<span
+class="math inline">\(Q^{n+1}=S_D+\overline{R_D}Q^n\)</span></p>
+<h6 id="钟控rs锁存器">钟控RS锁存器</h6>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925142436000.png" srcset="/img/loading.gif" lazyload
+alt="image-20230925142436000" />
+<figcaption aria-hidden="true">image-20230925142436000</figcaption>
+</figure>
+<p>功能：</p>
+<ol type="1">
+<li><p><span class="math inline">\(CP=0\)</span> 时，保持状态</p></li>
+<li><p><span class="math inline">\(CP=1\)</span>
+时，具有RS锁存器的功能</p></li>
+</ol>
+<p>约束条件：<span class="math inline">\(S*R=0\)</span></p>
+<p>特性方程：<span
+class="math inline">\(Q^{n+1}=S+\overline{R}Q^n\)</span></p>
+<h6 id="钟控d锁存器">钟控D锁存器</h6>
+<p><img src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925143251215.png" srcset="/img/loading.gif" lazyload alt="image-20230925143251215" style="zoom:50%;" /></p>
+<p>功能：</p>
+<ol type="1">
+<li><p><span class="math inline">\(CP=0\)</span> ，保持</p></li>
+<li><p><span class="math inline">\(CP=1\)</span> ，<span
+class="math inline">\(Q=D\)</span></p></li>
+</ol>
+<p>特性方程：<span class="math inline">\(Q^{n+1}=D\)</span></p>
+<h6 id="d触发器">D触发器</h6>
+<p><img src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925143754522.png" srcset="/img/loading.gif" lazyload alt="image-20230925143754522" style="zoom:50%;" /></p>
+<p>功能：CP（clk）上升沿更新Q，Q=D</p>
+<p>可带使能端、复位</p>
+<p>多个D触发器可以组成寄存器</p>
+<h6 id="jk触发器">JK触发器</h6>
+<p><img src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925144127337.png" srcset="/img/loading.gif" lazyload alt="image-20230925144127337" style="zoom:50%;" /></p>
+<p>功能：</p>
+<ol type="1">
+<li><p><span class="math inline">\(CP=0\)</span> ，保持</p></li>
+<li><p><span class="math inline">\(CP=1\)</span> ，RS锁存器功能，且
+<span class="math inline">\(J=K=1\)</span> 时翻转</p></li>
+</ol>
+<p>特性方程：<span
+class="math inline">\(Q^{n+1}=J\overline{Q^n}+\overline{K}Q^n\)</span></p>
+<h6 id="t触发器">T触发器</h6>
+<p>功能：</p>
+<ol type="1">
+<li><p><span class="math inline">\(T=0\)</span> ，保持</p></li>
+<li><p><span class="math inline">\(T=1\)</span> ，翻转</p></li>
+</ol>
+<p>特性方程：<span class="math inline">\(Q_{n+1}=T\oplus
+Q_n\)</span></p>
+<h3 id="有限状态机">有限状态机</h3>
+<h6 id="相关概念">相关概念</h6>
+<p>概念：可描述有限个状态以及这些状态之间的转移及引起转移的动作等的离散数学模型。</p>
+<p>次态逻辑：组合逻辑，根据当前状态和输入计算下一状态。</p>
+<p>状态寄存器：在时钟沿到来之前，保持现态，并为输出逻辑和次态逻辑提供稳定输入；在时钟沿到来时，锁存次态逻辑输出的状态值。</p>
+<p>输出逻辑：组合逻辑，根据现态形成输出信号。</p>
+<p><img src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20230925145703517.png" srcset="/img/loading.gif" lazyload alt="image-20230925145703517" style="zoom: 50%;" /></p>
+<p>分类：Moore型状态机：输出状态仅与当前状态有关</p>
+<p>Mealy型状态机：输出信号与当前状态和输入信号有关</p>
+<h6 id="建立方法">建立方法</h6>
+<ol type="1">
+<li><p>确定输入、输出、状态</p></li>
+<li><p>画出状态转换图，进而得到状态转换表、次态与输出逻辑表达式</p></li>
+</ol>
+<h6 id="时序问题">时序问题</h6>
+<p><span
+class="math inline">\(T_c&gt;=T_{ctq}+T_{cd}+T_{setup}+时钟偏移\)</span></p>
+<p><span class="math inline">\(T_c\)</span> ：时钟周期</p>
+<p><span class="math inline">\(T_{ctq}\)</span>
+：稳定时间（clock-to-Q）：——从触发时钟边沿到输出稳定的时间</p>
+<p><span class="math inline">\(T_{cd}\)</span>
+：组合逻辑电路最长时延</p>
+<p><span class="math inline">\(T_{setup}\)</span>
+：建立时间——触发时钟沿之前，输入需稳定的时间</p>
+<p><span class="math inline">\(T_{hold}\)</span>
+：保持时间：触发时钟沿之后，输入仍需稳定的时间</p>
+<p>保持约束：<span class="math inline">\(T_{ctq}+T_{cd}\geqslant
+T_{hold}\)</span></p>
+<h3 id="寄存器">寄存器</h3>
+<p>数据寄存器：多个边沿触发器组成</p>
+<p>数据锁存器：多位电位触发器组成</p>
+<p>移位寄存器：</p>
+<p>4位双向移位寄存器(CT74194)</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231215222541935.png" srcset="/img/loading.gif" lazyload
+alt="image-20231215222541935" />
+<figcaption aria-hidden="true">image-20231215222541935</figcaption>
+</figure>
+<p>同步计数器：所有触发器的时钟端并在一起</p>
+<p>异步计数器：时钟脉冲只作用于最低位</p>
+<h2 id="主存储器">主存储器</h2>
+<h3 id="分类">分类</h3>
+<p>RAM（随机访问存储器）、ROM（只读存储器）</p>
+<p>RAM可分为SRAM（静态存储器，Cache）、DRAM（主存）</p>
+<p>ROM可分为Flash（闪存，可擦写）、不可在线更改的等等</p>
+<h3 id="描述">描述</h3>
+<p>存取时间：读或写操作所用的时间</p>
+<p>存取周期：两次访问存储单元的最小时间间隔</p>
+<p>存储器带宽：单位时间访问的存储量</p>
+<p>存储芯片容量=字单元数*字单元的位数，即 <span
+class="math inline">\(2^n\times m\)</span> 。其中 <span
+class="math inline">\(2^n\)</span>
+为字单元数量，n为地址线数量，m为数据线数量（字单元位数）</p>
+<p>地址线=log2(字单元数)，（按字寻址）</p>
+<p>数据线=字单元位数</p>
+<h3 id="扩展">扩展</h3>
+<p>位扩展：字单元位数不够</p>
+<p>字扩展：字单元数不够</p>
+<h3 id="dram刷新">DRAM刷新</h3>
+<p>刷新间隔：同一行两次被刷新之间的时间</p>
+<p>刷新周期：所有行被刷新一次的时间</p>
+<p>集中式：间隔=刷新周期</p>
+<p>分散式：间隔=刷新行数*存储周期</p>
+<p>分布式（异步）：间隔=刷新周期</p>
+<h2 id="mips汇编">MIPS汇编</h2>
+<h3 id="指令格式">指令格式</h3>
+<p>操作码+操作数（操作数地址，0123）</p>
+<p>定长/变长</p>
+<h3 id="寻址">寻址</h3>
+<p>立即寻址：机器码中给出立即数</p>
+<p>直接寻址：操作数在寄存器中，机器码里有寄存器编号</p>
+<p>间接寻址：操作数在内存中，机器码里有存储着内存地址的寄存器的编号</p>
+<p>基址寻址/变址寻址：间接寻址+立即数（<code>lw $s1,100($s2)</code>）</p>
+<p>相对寻址：PC作为基址寄存器+立即数</p>
+<p>堆栈寻址</p>
+<h4 id="mips中的寻址">mips中的寻址</h4>
+<p>立即寻址：ori中的立即数</p>
+<p>寄存器寻址：add中操作数在寄存器里</p>
+<p>基址寻址：lw，根据寄存器中的数据+偏移量得出内存地址，取数</p>
+<p>PC相对寻址：beq</p>
+<p>伪直接寻址：j</p>
+<h3 id="一些指令">一些指令</h3>
+<h4 id="跳转相关">跳转相关</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">位数</th>
+<th style="text-align: center;">跳转空间</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">beq</td>
+<td style="text-align: center;">16位立即数+左移2</td>
+<td style="text-align: center;">256K</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">j</td>
+<td style="text-align: center;">26位立即数+左移2</td>
+<td style="text-align: center;">256M</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">jr</td>
+<td style="text-align: center;">寄存器，32位</td>
+<td style="text-align: center;">4G</td>
+</tr>
+</tbody>
+</table>
+<h4 id="罕见指令">罕见指令</h4>
+<p>bgez：大于等于0跳转 bgtz：大于0跳转 blez：小于等于……
+bgeal：大于等于0，则跳转+写入ra</p>
+<p>lbu：加载无符号数……lhu、lwu、sbu</p>
+<p>sll：逻辑左移，5位立即数 sllv：寄存器代替立即数 srl：逻辑右移
+sra：算数右移……</p>
+<p>slti：小于立即数置1 sltiu：小于无符号立即数置1</p>
+<h2 id="流水线cpu">流水线CPU</h2>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231231103906887.png" srcset="/img/loading.gif" lazyload
+alt="image-20231231103906887" />
+<figcaption aria-hidden="true">image-20231231103906887</figcaption>
+</figure>
+<p>数据相关性：设指令i在指令j前面</p>
+<ol type="1">
+<li>写读相关（RAW）：指令i将数据写入寄存器后，指令j才能读取</li>
+<li>读写相关（WAR）：指令i读出数据后，指令j才能写寄存器</li>
+<li>写写相关（WAW）：指令i写入后，指令j才能写入，否则寄存器内容不是最新值</li>
+</ol>
+<p>冒险类型：</p>
+<ul>
+<li>数据冒险：数据存在相关性，可用转发、暂停解决</li>
+<li>控制冒险：分支跳转指令“撤回”等问题，可用延迟槽、分支比较前移解决</li>
+<li>结构冒险：两条指令使用同一部件如同时读写寄存器堆，可通过把指令寄存器和数据寄存器分开解决</li>
+</ul>
+<h2 id="cache-1">Cache</h2>
+<p><strong>注意主存地址位数（多少字节）、字节、字之间的换算！！！</strong></p>
+<h3 id="cache结构">Cache结构</h3>
+<p>SRAM组成，以数据块为单位。块大小与主存相同</p>
+<p>数据块（block）：主存与cache交换数据的最小单位，多个字节组成</p>
+<p>标记（tag）：保存该数据块对应的主存数据块的地址信息</p>
+<p>有效位（valid bit）：该数据块中是否包含有效数据</p>
+<p>行：1行=数据块+标记+有效位</p>
+<p>组：若干块构成一组</p>
+<p>实际Cache容量=行数*(tag+有效位等+数据块字节数)</p>
+<h3 id="cache映射机制">Cache映射机制</h3>
+<h4 id="全相联">全相联</h4>
+<p>主存中某一数据块可以映射到Cache中的任意一数据块</p>
+<p>Cache的tag内容：与该数据块对应的主存的数据块的块地址</p>
+<p>主存地址格式：块地址+块内地址</p>
+<h4 id="直接映射">直接映射</h4>
+<p>主存中某一块J映射到Cache中的固定块K，<span
+class="math inline">\(K=J\mod M\)</span> ，M是Cache包含的块数</p>
+<p>Cache的tag内容：主存中与该数据块对应的区地址，即第几个能映射到Cache中该块的数据块</p>
+<p>主存地址格式：区地址+区内块地址+块内地址</p>
+<h4 id="组相联">组相联</h4>
+<p>Cache分成K组，每组L块，主存的块J映射到Cache中组I的任意一块，其中$
+I=JK$</p>
+<p>实际上，主存与Cache都分为K组，但组内块数不同，组内任意映射</p>
+<p>Cache的tag内容：主存中与该数据块对应的组内块地址</p>
+<p>主存地址格式：组内块地址+组地址+块内地址</p>
+<h3 id="缺失损失与替换策略">缺失损失与替换策略</h3>
+<h4 id="缺失损失">缺失损失</h4>
+<p>缺失时，CPU等待数据装入Cache后才能访问</p>
+<p>取出块的时间：第一个字的延迟时间（存储器访问）+块的剩余部分的传送时间</p>
+<p>计算方法1：访问Cache发现缺失的时间+访问DRAM的时间*字数+传输时间*字数</p>
+<p>传输时间可能会因为并行数而改变</p>
+<h4 id="缺失处理">缺失处理</h4>
+<ul>
+<li>块装入后访问</li>
+<li>尽早重启：块中各字按顺序装入Cache，一旦所请求的字装入Cache，CPU立刻访问</li>
+<li>请求字优先：先把所请求的字装入Cache，再装入其他字</li>
+</ul>
+<h4 id="替换策略">替换策略</h4>
+<p>最近最少使用法（LRU）：最近没有被使用的块被替换。替换的块计数清零，其他计数器+1；访问命中时，计数值小于等于命中块计数值的+1，然后命中块清零；替换时选择计数值最大的块来替换</p>
+<p>先进先出法（FIFO）：最先装入数据的块被替换</p>
+<p>最小使用频率法（LFU）：使用次数最少的块被替换</p>
+<p>随机法（RAND）</p>
+<h2 id="辅助存储与虚拟存储">辅助存储与虚拟存储</h2>
+<h3 id="辅助存储">辅助存储</h3>
+<h4 id="磁介质">磁介质</h4>
+<p>磁记录编码方式：</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231231113943254.png" srcset="/img/loading.gif" lazyload
+alt="image-20231231113943254" />
+<figcaption aria-hidden="true">image-20231231113943254</figcaption>
+</figure>
+<p>编码效率：记录一位信息的最大磁化翻转次数的倒数，调频、调相为0.5，不归零制为1</p>
+<p>自同步能力：从读出的信号中提取同步信号。PM、FM有</p>
+<p>可靠性：归零制低，调相制高</p>
+<h5 id="磁盘">磁盘</h5>
+<p>RPM：每分钟转多少圈</p>
+<p>容量：盘面数*每面磁道数*每磁道扇区数*扇区容量</p>
+<p>访问时间=寻道时间+寻区时间</p>
+<p>数据传输率：单位时间传输的数据位数</p>
+<p>RAID：廉价磁盘冗余阵列，多个物理磁盘构成，但被操作系统当成一个逻辑磁盘，数据分布在不同的物理磁盘上，冗余磁盘用于保存数据校验信息，校验信息保证在出现磁盘损坏时能够有效地恢复数据。</p>
+<ul>
+<li>RAID0：每一数据条带分布在不同物理磁盘上，改善数据传输性能，但完全没有冗余</li>
+<li>RAID1：简单镜像磁盘冗余，利用率50%。写操作性能不高（同时写两组）</li>
+<li>RAID2：海明校验，完整的并行访问技术</li>
+<li>RAID3：奇偶校验的并行传送，校验码保存在独立的冗余磁盘对应位置</li>
+<li>RAID4：奇偶校验吗的独立磁盘结构</li>
+<li>RAID5：分布式奇偶校验的独立磁盘结构。校验信息保存在磁盘组的不同磁盘中</li>
+</ul>
+<h5 id="mips存储管理">MIPS存储管理</h5>
+<p>从低到高32位：用户2G，KSeg0（有MMU的操作系统内核）512M，KSeg1
+512M，KSeg2 1G</p>
+<p>PC初始值：0x00400000</p>
+<p>$gp：0x10008000，静态数据区为0x10000000-0x1000FFFF</p>
+<p>$sp：0x7FFFFFFF</p>
+<h3 id="虚拟存储">虚拟存储</h3>
+<p>虚地址：编写程序时使用的地址，地址格式为虚页号+页内地址</p>
+<p>实地址：物理内存的访问地址，地址格式为实页号+页内地址</p>
+<p>页表：每道程序一个，以虚页号为索引，实页号、有效位为页表项，存储在内存中</p>
+<p>快表（TLB）：用Cache存储部分活跃的页表项，内容为虚页号、对应实页号、有效位、修改位</p>
+<p>调度方式：页式调度、段式调度、段页式调度</p>
+<h2 id="总线与io接口">总线与I/O接口</h2>
+<h3 id="总线">总线</h3>
+<p>分类：片内总线、系统总线、通信总线。其中系统总线可分为数据总线、地址总线、控制总线</p>
+<p>总线的信息传送：请求总线、总线仲裁、寻址、信息传送、状态返回</p>
+<p>总线仲裁方式（分布式、集中式）：链式查询、计数器定时查询、独立请求</p>
+<p>总线通信方式：同步、异步（不互锁、半互锁、全互锁）</p>
+<h3 id="io接口">I/O接口</h3>
+<p>分类：串行/并行、同步/异步、程序查询/中断/DMA/通道控制接口</p>
+<p>I/O操作过程：</p>
+<ol type="1">
+<li>CPU查询接口状态</li>
+<li>I/O回送设备状态</li>
+<li>CPU发出命令，请求传送</li>
+<li>I/O获得来自外设的数据</li>
+<li>数据从I/O接口传送至CPU</li>
+</ol>
+<p>编址方式：独立编址、统一编址（存储器与I/O地址统一考虑）</p>
+<p>程序查询I/O：I/O操作全部由CPU直接完成，与CPU串行，效率低</p>
+<p>中断I/O：当前指令执行完毕后，响应中断。外设准备阶段可认为是并行的。目前最主要的方式。</p>
+<p>DMA：CPU不再介入具体的I/O操作，DMA控制总线，数据传送效率更高。周期窃取方式（单字、一个总线周期），停止CPU访问内存（成组传送方式）。指令周期的任一存取周期结束时响应</p>
+<p>通道I/O：有自己指令系统的专业控制器，CPU基本不需要管理I/O。选择通道的数据传输率=一台设备的数据传输率，字节多通道、数组多通道数据传输率=各设备数据传输率之和</p>
+<h3 id="dma与中断">DMA与中断</h3>
+<p>响应时机：中断在一条指令结束后响应；DMA在指令周期内任一存储周期结束时响应</p>
+<p>现场保护：中断要中断现有程序，保护现场；DMA不中断现有程序，无须保护现场</p>
+<p>适应场合：中断适于处理紧急或异常事件；DMA适合传送大批数据（如磁盘、网卡等）</p>
+<p>传送方式：中断靠程序传送数据；DMA靠硬件</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组理论</div>
+      <div>https://solor-wind.github.io/2024/01/14/计组理论/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/14/%E7%A6%BB%E6%95%A32%E7%AC%94%E8%AE%B0/" title="离散2笔记">
+                        <span class="hidden-mobile">离散2笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

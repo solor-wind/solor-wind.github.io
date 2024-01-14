@@ -1,0 +1,1561 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="\(\mathcal{Author:gpf}\)  物理常数 电子电荷 \(e&#x3D;1.6\times10^{-19}C\) 电子质量 \(m_e&#x3D;9.1\times 10^{-31}kg\) 普适气体常量 \(R&#x3D;8.31J&#x2F;(mol·K)\) 玻尔兹曼常数 \(k&#x3D;\dfrac{R}{N_A}&#x3D;1.38\times10^{-23}J&#x2F;K\) 普朗克常数 \(h&#x3D;6.63\tim">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大物2笔记">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/14/%E5%A4%A7%E7%89%A92%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="\(\mathcal{Author:gpf}\)  物理常数 电子电荷 \(e&#x3D;1.6\times10^{-19}C\) 电子质量 \(m_e&#x3D;9.1\times 10^{-31}kg\) 普适气体常量 \(R&#x3D;8.31J&#x2F;(mol·K)\) 玻尔兹曼常数 \(k&#x3D;\dfrac{R}{N_A}&#x3D;1.38\times10^{-23}J&#x2F;K\) 普朗克常数 \(h&#x3D;6.63\tim">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-14T12:36:59.000Z">
+<meta property="article:modified_time" content="2024-01-14T12:38:29.446Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>大物2笔记 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="大物2笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-14 20:36" pubdate>
+          2024年1月14日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          61 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">大物2笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h4 id="物理常数">物理常数</h4>
+<p>电子电荷 <span class="math inline">\(e=1.6\times10^{-19}C\)</span>
+电子质量 <span class="math inline">\(m_e=9.1\times
+10^{-31}kg\)</span></p>
+<p>普适气体常量 <span class="math inline">\(R=8.31J/(mol·K)\)</span>
+玻尔兹曼常数 <span
+class="math inline">\(k=\dfrac{R}{N_A}=1.38\times10^{-23}J/K\)</span></p>
+<p>普朗克常数 <span class="math inline">\(h=6.63\times10^{-34}J\cdot
+s\)</span> 约化普朗克常数 <span
+class="math inline">\(\hbar=\dfrac{h}{2\pi}=1.0546\times10^{-34}J\cdot
+s\)</span></p>
+<p>真空介电常数 <span
+class="math inline">\(\varepsilon_0=8.854\times10^{-12}F/m\)</span>
+真空磁导率 <span
+class="math inline">\(\mu_0=4\pi\times10^{-7}N/A^2\)</span></p>
+<p>万有引力常量 <span
+class="math inline">\(G=6.67\times10^{-11}m^3/(kg\cdot s^2)\)</span></p>
+<h2 id="热学">热学</h2>
+<p>热力学第零定律：分别与第三个系统处于热平衡的两个系统彼此也处于热平衡</p>
+<h3 id="理想气体的参量">理想气体的参量</h3>
+<p>理想气体状态方程：<span
+class="math inline">\(pV=\frac{m}{M}RT\)</span></p>
+<p>*范德瓦尔斯方程：<span
+class="math inline">\((p+\frac{a}{V_m^2})(V_m-b)=RT\)</span></p>
+<p>普适气体常量 <span
+class="math inline">\(R=8.31J/(mol·K)\)</span>，玻尔兹曼常数 <span
+class="math inline">\(k=\dfrac{R}{N_A}=1.38\times10^{-23}J/K\)</span></p>
+<p><strong>压缩气体需要力，不说明分子间存在斥力</strong></p>
+<p>理想气体压强：<span
+class="math inline">\(p=\frac{1}{3}nm\bar{v^2}=\frac{2}{3}n\bar{E_k}=nkT\)</span>，其中
+<span
+class="math inline">\(\bar{E_k}=\frac{1}{2}m\bar{v^2}\)</span>，n为分子数密度</p>
+<p>理想气体温度：<span
+class="math inline">\(\bar{E_k}=\frac{3}{2}kT\)</span></p>
+<p>能量按自由度均分定理：温度为T的平衡态下，物质分子的每一自由度都具有相同的平均动能
+<span class="math inline">\(E_k=\frac{1}{2}kT\)</span>
+，一个分子的平均平动动能为 <span
+class="math inline">\(\bar{E_k}=\frac{1}{2}m\bar{v^2}\)</span></p>
+<p>理想气体的内能：<span
+class="math inline">\(E=\dfrac{m}{M}\dfrac{i}{2}RT\)</span></p>
+<h3 id="麦克斯韦速率分布律">麦克斯韦速率分布律</h3>
+<p>速率分布函数（可类比概率密度函数）：<span
+class="math inline">\(f(v)=\lim\limits_{\Delta v\to0}\dfrac{\Delta
+N}{N\Delta v}=\dfrac{dN}{Ndv}=4\pi(\dfrac{m}{2\pi
+kT})^{\frac{3}{2}}e^{-\tfrac{mv^2}{2kT}}v^2\)</span></p>
+<p>另有：v附近 <span class="math inline">\(\Delta v\)</span>
+范围内分子占分子总数的比例 <span class="math inline">\(\dfrac{\Delta
+N}{N}=f(v)\Delta
+v=\dfrac{4}{\sqrt{\pi}}\dfrac{v^2}{v_p^3}e^{-\tfrac{v^2}{v_p^2}}\Delta
+v\)</span></p>
+<p>归一化条件：<span
+class="math inline">\(\int_0^{\infty}f(v)dv=1\)</span></p>
+<p>最概然速率：<span
+class="math inline">\(v_p=\sqrt{\dfrac{2kT}{m_0}}\)</span></p>
+<p>方均根速率：<span
+class="math inline">\(\sqrt{\bar{v^2}}=\sqrt{\dfrac{3kT}{m_0}}=\sqrt{\dfrac{3RT}{M}}\)</span></p>
+<p>平均速率：<span
+class="math inline">\(\bar{v}=\int_0^{\infty}vf(v)dv=\sqrt{\dfrac{8kT}{\pi
+m_0}}\)</span></p>
+<p>平均碰撞频率：<span class="math inline">\(\bar{Z}=Vn=\pi
+d^2\bar{v_r}n=\sqrt{2}\pi d^2\bar{v}n\)</span>，其中 <span
+class="math inline">\(\bar{v_r}\)</span>
+是平均相对速率，d是分子碰撞时中心间距，n是分子数密度</p>
+<p>分子平均自由程：<span
+class="math inline">\(\bar{\lambda}=\dfrac{\bar{v}}{\bar{Z}}=\dfrac{1}{\sqrt{2}\pi
+d^2n}=\dfrac{kT}{\sqrt{2}\pi d^2p}\)</span></p>
+<p><strong>速率在v1和v2之间的分子的平均速率不是 <span
+class="math inline">\(\int_{v_1}^{v_2}vf(v)dv\)</span>，而是 <span
+class="math inline">\(\dfrac{\int_{v_1}^{v_2}vf(v)dv}{\int_{v_1}^{v_2}f(v)dv}\)</span>
+</strong></p>
+<p>分子数密度按势能分布： <span
+class="math inline">\(n=n_0e^{-\tfrac{E_p}{kT}}\)</span></p>
+<p>等温气压公式：<span
+class="math inline">\(p=p_0e^{-\tfrac{mgh}{kT}}\)</span></p>
+<h3 id="近平衡态的运输现象">*近平衡态的运输现象</h3>
+<p>粘滞力：<span class="math inline">\(f=\pm \eta\frac{dv}{dx}\Delta
+S\)</span>，其中 <span class="math inline">\(\frac{dv}{dx}\)</span>
+为速度梯度，动力粘度 <span
+class="math inline">\(\eta=\frac{1}{3}\rho\bar{v}\bar{\lambda}\)</span></p>
+<p>热传导：<span class="math inline">\(\frac{\Delta Q}{\Delta
+t}=-\kappa\frac{dT}{dx}\Delta S\)</span> ，热导率 <span
+class="math inline">\(\kappa=\frac{1}{3}\frac{C_{v,m}}{M}\rho\bar{v}\bar{\lambda}\)</span></p>
+<p>扩散现象：<span class="math inline">\(\frac{\Delta m}{\Delta
+t}=-D\frac{d\rho}{dx}\Delta S\)</span>，扩散系数 <span
+class="math inline">\(D=\frac{1}{3}\bar{v}\bar{\lambda}\)</span></p>
+<h3 id="热力学过程">热力学过程</h3>
+<p>热力学第一定律：设外界对系统传递热量Q，系统对外做功A，系统内能为E，则
+<span class="math inline">\(Q=E_2-E_1+A\)</span></p>
+<p>摩尔热容 <span
+class="math inline">\(C_m=\dfrac{dQ}{\frac{m}{M}dT}\)</span>
+，即一摩尔物质变化单位温度所需的热量</p>
+<p>计算思路：气体做功可用 <span class="math inline">\(\int pdV\)</span>
+，内能变化可用 <span class="math inline">\(\Delta
+E=\dfrac{i}{2}\dfrac{m}{M}R\Delta T\)</span> ，热量可用 <span
+class="math inline">\(\Delta Q=C_m\dfrac{m}{M}\Delta T\)</span>
+。除此之外还可利用热力学第一定律间接计算</p>
+<h4 id="等体过程">等体过程</h4>
+<p>条件：<span class="math inline">\(dV=0\Rightarrow
+A=0,Q=E_2-E_1\)</span></p>
+<p>摩尔定容热容：<span class="math inline">\(C_{v,m}=\dfrac{\delta
+Q_v}{\frac{m}{M}dT}=\dfrac{i}{2}R\)</span></p>
+<p><span class="math inline">\(dE=\frac{m}{M}C_{v,m}dT\)</span></p>
+<h4 id="等压过程">等压过程</h4>
+<p><span class="math inline">\(dp=0\Rightarrow A=p\Delta
+V,Q_p=E_2-E_1+\frac{m}{M}R(T_2-T_1)\)</span></p>
+<p>摩尔定压热容：<span class="math inline">\(C_{p,m}=\dfrac{\delta
+Q_p}{\frac{m}{M}dT}=C_{v,m}+R\)</span></p>
+<p>摩尔热容比：<span
+class="math inline">\(\gamma=\dfrac{C_{p,m}}{C_{v,m}}=\dfrac{i+2}{i}\)</span></p>
+<h4 id="等温过程">等温过程</h4>
+<p><span class="math inline">\(dT=0\Rightarrow \Delta
+E=0,Q_T=A=\int_{V_1}^{V_2}pdV=p_1V_1\ln\frac{p_1}{p_2}=p_1V_1\ln\frac{V_2}{V_1}\)</span></p>
+<h4 id="绝热过程">绝热过程</h4>
+<p><span class="math inline">\(\delta Q=0\Rightarrow
+dE+pdV=0\)</span>，据此可推出绝热过程方程：</p>
+<p><span
+class="math inline">\(pV^{\gamma}=C_1,V^{\gamma-1}T=C_2,p^{\gamma-1}T^{-\gamma}=C_3\)</span></p>
+<p>其中 <span class="math inline">\(C_1,C_2,C_3\)</span> 均为常量，<span
+class="math inline">\(\gamma\)</span> 为摩尔热容比</p>
+<h3 id="循环过程">循环过程</h3>
+<p>系统经某一过程后又回到初始状态称循环过程，若循环过程每一分过程均为准静态，则可用p-V图表示且为一闭合曲线。曲线方向顺时针为正循环、热机，逆时针为逆循环、制冷机</p>
+<p>热机效率：<span
+class="math inline">\(\eta=\dfrac{A}{Q_1}=\dfrac{Q_1-Q_2}{Q_1}=1-\dfrac{Q_2}{Q_1}\)</span></p>
+<p>一般的热机效率 <span
+class="math inline">\(\eta=\dfrac{W_{循环}}{Q_{总吸}}\)</span></p>
+<p>制冷系数：<span
+class="math inline">\(w=\dfrac{Q_2}{A}=\dfrac{Q_2}{Q_1-Q_2}\)</span></p>
+<p>其中 <span class="math inline">\(Q_1\)</span>
+是从高温热源吸收的热量， <span class="math inline">\(Q_2\)</span>
+是向低温热源放出的热量， <span class="math inline">\(A\)</span>
+是对外界做的功</p>
+<p>热力学第三定律：不可能通过有限的过程使物体冷却到绝对零度</p>
+<h4 id="卡诺循环">卡诺循环</h4>
+<p>在两温度恒定的热源之间工作的循环过程，工质只与热源交换能量</p>
+<p><span
+class="math inline">\(\eta_c=1-\dfrac{T_2}{T_1},w_c=\dfrac{T_2}{T_1-T_2}\)</span></p>
+<h3 id="熵">熵</h3>
+<p>热力学第二定律：</p>
+<ul>
+<li><p>开尔文表述：不可能从单一热源取热，把它全部变为功而不产生其他任何影响</p></li>
+<li><p>克劳修斯表述：热不可能自发地从低温物体传至高温物体</p></li>
+</ul>
+<p>可逆过程：若过程 <span class="math inline">\(A\rightarrow
+B\)</span>，存在另一过程 <span class="math inline">\(B\rightarrow
+A\)</span>，且周围一切各自回复原状，称可逆过程</p>
+<p>卡诺定理：</p>
+<ol type="1">
+<li><p>同样高低温热源之间工作的一切可逆机，效率都等于 <span
+class="math inline">\(1-\dfrac{T_2}{T_1}\)</span></p></li>
+<li><p>同样高低温热源之间工作的不可逆机效率 <span
+class="math inline">\(\eta\leqslant1-\dfrac{T_2}{T_1}\)</span></p></li>
+</ol>
+<p>熵：<span class="math inline">\(S_2-S_1=\int_1^2\dfrac{\delta
+Q}{T},\delta S=\dfrac{\delta Q}{T}\)</span> ，可逆过程熵变为0 <span
+class="math inline">\(\oint\dfrac{\delta Q}{T}=0\)</span></p>
+<p>设系统状态所包含的微观状态数为W，则有 <span
+class="math inline">\(S=k\ln W\)</span>，其中k为玻尔兹曼常量</p>
+<h2 id="振动">振动</h2>
+<h3 id="简谐振动">简谐振动</h3>
+<p>方程：<span
+class="math inline">\(\dfrac{d^2x}{dt^2}=\dfrac{F}{m}=-\dfrac{k}{m}x\)</span>，设
+<span class="math inline">\(\omega^2=\dfrac{k}{m}\)</span>，则有 <span
+class="math inline">\(\dfrac{d^2x}{dt^2}=-\omega^2x\)</span>，解得 <span
+class="math inline">\(x=A\cos(\omega t+\phi_0)\)</span></p>
+<p>特征量：</p>
+<ul>
+<li><p>振幅 <span
+class="math inline">\(|A|=\sqrt{x_0^2+\dfrac{v_0^2}{\omega^2}}\)</span></p></li>
+<li><p>初相 <span
+class="math inline">\(\phi_0=\arctan(-\dfrac{v_0}{\omega
+x_0})\)</span></p></li>
+<li><p>周期 <span
+class="math inline">\(T=\dfrac{2\pi}{\omega}=2\pi\sqrt{\dfrac{m}{k}}\)</span></p></li>
+<li><p>总能量 <span
+class="math inline">\(E=\frac{1}{2}kA^2\)</span></p></li>
+</ul>
+<p>常见举例：</p>
+<ul>
+<li><p>单摆：<span class="math inline">\(\theta=\theta_m\cos(\omega
+t+\phi_0)\)</span> <span
+class="math inline">\(T=2\pi\sqrt{\dfrac{l}{g}}\)</span> <span
+class="math inline">\(-mg\sin\theta=ml\dfrac{d^2\theta}{dt^2}\)</span></p></li>
+<li><p>复摆：<span class="math inline">\(\theta=\theta_m\cos(\omega
+t+\phi_0)\)</span> <span
+class="math inline">\(T=2\pi\sqrt{\dfrac{J}{mgh}}\)</span> <span
+class="math inline">\(-mgh\theta=J\dfrac{d^2\theta}{dt^2}\)</span>
+，其中h是质心到定轴的距离</p></li>
+</ul>
+<h3 id="其他振动">其他振动</h3>
+<h4 id="阻尼振动">阻尼振动</h4>
+<p><span class="math inline">\(f=-\mu v\)</span> ，<span
+class="math inline">\(\mu\)</span> 为阻力系数。设 <span
+class="math inline">\(\dfrac{\mu}{m}=2\delta\)</span> （<span
+class="math inline">\(\delta\)</span>为阻尼系数），则有</p>
+<p>弱阻尼：<span
+class="math inline">\(\delta^2&lt;\omega_0^2,x=Ae^{-\delta
+t}\cos(\sqrt{\omega_0^2-\delta^2}t+\phi)\)</span></p>
+<p>临界阻尼：<span
+class="math inline">\(\delta^2=\omega_0^2,x=(A+Bt)e^{-\delta
+t}\)</span></p>
+<p>过阻尼：<span
+class="math inline">\(\delta^2&gt;\omega_0^2,x=Ce^{-(\delta-\sqrt{\delta^2-\omega_0^2})t}+De^{-(\delta+\sqrt{\delta^2-\omega_0^2})t}\)</span></p>
+<h4 id="受迫振动">受迫振动</h4>
+<p><span class="math inline">\(F=F_0\cos wt\)</span></p>
+<p><span class="math inline">\(x=A_0e^{-\delta
+t}\cos(\sqrt{\omega_0^2-\delta^2}t+\phi_0^{&#39;})+A\cos(\omega
+t+\phi)\)</span> ，一段时间后为 <span
+class="math inline">\(x=A\cos(\omega t+\phi)\)</span> ，其中 <span
+class="math inline">\(A=\dfrac{F_0}{m\sqrt{(\omega_0^2-\omega^2)^2+4\delta^2\omega^2}}\)</span>
+，<span
+class="math inline">\(\tan\phi=-\dfrac{2\delta\omega}{\omega_0^2-\omega^2}\)</span></p>
+<h4 id="电磁震荡">*电磁震荡</h4>
+<h3 id="一维振动的合成">一维振动的合成</h3>
+<p>同频率：</p>
+<ol type="1">
+<li><p><span class="math inline">\(x_1=A_1\cos(\omega
+t+\phi_{01}),x_2=A_2\cos(\omega t+\phi_{02})\Rightarrow x=A\cos(\omega
+t+\phi_0)\)</span> ，其中</p>
+<p><span
+class="math inline">\(A=\sqrt{A_1^2+A_2^2+2A_1A_2\cos(\phi_{01}-\phi_{02})},\tan\phi_0=\dfrac{A_1\sin\phi_{01}+A_2\sin\phi_{02}}{A_1\cos\phi_{01}+A_2\cos\phi_{02}}\)</span></p></li>
+<li><p><span class="math inline">\(x_i=A\cos[\omega
+t+(i-1)\phi_0]\Rightarrow\sum\limits_{i=1}^nx_i=A\dfrac{\sin{\frac{n\phi_0}{2}}}{\sin{\frac{\phi_0}{2}}}\cos(\omega
+t+\frac{n-1}{2}\phi_0)\)</span></p></li>
+</ol>
+<p>不同频率：</p>
+<p><span class="math inline">\(x_1=A_1\cos(\omega
+t+\phi_{01}),x_2=A_2\cos(\omega t+\phi_{02})\)</span></p>
+<p>当 <span
+class="math inline">\(A_1=A_2=A,\phi_{01}=\phi_{02}=\phi_0\)</span>，有
+<span
+class="math inline">\(x=2A\cos(\dfrac{\omega_2-\omega_1}{2}t)\cos(\dfrac{\omega_2+\omega_1}{2}t+\phi_0)\)</span></p>
+<p>当上式满足 <span
+class="math inline">\(|\omega_1-\omega_2|&lt;&lt;\omega_1或\omega_2\)</span>，振幅随时间缓慢变化，变化频率即拍频
+<span
+class="math inline">\(=|\dfrac{\omega_1-\omega_2}{2\pi}|=|\nu_1-\nu_2|\)</span>
+称拍频</p>
+<h2 id="波">波</h2>
+<h3 id="介质的形变及其模量">介质的形变及其模量</h3>
+<ol type="1">
+<li><p>线变：设柱体长l，截面面积S，两端受力F，则 <span
+class="math inline">\(\dfrac{F}{S}=E\dfrac{\Delta
+l}{l}\)</span>。即线应变正比于正应力，其中 <span
+class="math inline">\(E\)</span> 称为弹性模量（杨氏模量）</p></li>
+<li><p>体变：设体积V，压强p，则有 <span class="math inline">\(\Delta
+p=-K\dfrac{\Delta V}{V}\)</span> ，其中K为体积模量</p></li>
+<li><p>切变：<span class="math inline">\(\dfrac{F}{S}=G\theta\)</span>
+，其中G为切变模量</p></li>
+</ol>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">绳索</th>
+<th style="text-align: center;">固体（横波）</th>
+<th style="text-align: center;">固体（纵波）</th>
+<th style="text-align: center;">流体（纵波）</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">波速</td>
+<td style="text-align: center;"><span
+class="math inline">\(\sqrt{\dfrac{F}{\rho_1}}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\sqrt{\dfrac{G}{\rho}}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\sqrt{\dfrac{E}{\rho}}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\sqrt{\dfrac{K}{\rho}}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>其中 <span class="math inline">\(\rho_1\)</span> 是线密度，<span
+class="math inline">\(\rho\)</span> 为密度</p>
+<h3 id="波的特征描述与波函数">波的特征描述与波函数</h3>
+<p>波长 <span
+class="math inline">\(\lambda\)</span>：同一波线上两个相邻的、相位差为
+<span class="math inline">\(2\pi\)</span> 的质元之间的距离</p>
+<p>周期 <span class="math inline">\(T\)</span>：波前进一个波长的时间</p>
+<p>波速 <span
+class="math inline">\(u\)</span>：单位时间内振动状态传播的距离</p>
+<p>角频率 <span
+class="math inline">\(\omega=2\pi\nu=\dfrac{2\pi}{T}\)</span></p>
+<p>角波数、空间角频率：<span
+class="math inline">\(k=\dfrac{2\pi}{\lambda}\)</span>
+，表示单位长度上波的相位的变化</p>
+<p>满足 <span
+class="math inline">\(u=\dfrac{\lambda}{T}=\nu\lambda\)</span></p>
+<p>波函数：<span
+class="math inline">\(\xi(\vec{r},t)=f(\vec{r},t)=f(x,y,z,t)\)</span></p>
+<p>平面简谐波：<span
+class="math inline">\(y(x,t)=A\cos[\omega(t-\frac{x}{u})+\phi_0]\)</span>
+，表示振幅为A、波速为u、波源初相 <span
+class="math inline">\(\phi_0\)</span>
+、波线上距原点为x、时间t时的振动方程</p>
+<p>平面波的波动方程：<span
+class="math inline">\(\dfrac{\partial^2y}{\partial
+x^2}=\dfrac{1}{u^2}\dfrac{\partial^2y}{\partial t^2}\)</span></p>
+<p>球面波：<span
+class="math inline">\(\xi=\dfrac{A_0r_0}{r}\cos[\omega(t-\frac{r}{u})-\phi_0]\)</span>
+，振幅和离开波源的距离成反比</p>
+<h3
+id="波的能量与强度声压声强与分贝">波的能量与强度、声压声强与分贝</h3>
+<p>在弦线中 <span class="math inline">\(x\)</span> 处取线元 <span
+class="math inline">\(\Delta x\)</span> 、线密度 <span
+class="math inline">\(\rho_l\)</span> 、张力 <span
+class="math inline">\(F\)</span>，则有</p>
+$$
+<span class="math display">\[\begin{aligned}
+
+\Delta E_k&amp;=\frac{1}{2}\rho_l\Delta x(\frac{\partial y}{\partial
+t})^2\\
+
+\Delta E_p&amp;=\frac{1}{2}F\Delta x(\frac{\partial y}{\partial x})^2
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>代入 <span class="math inline">\(u=\sqrt{\dfrac{F}{\rho_l}}\)</span>
+得 <span class="math inline">\(\Delta E_k=\Delta
+E_p=\frac{1}{2}\rho_lA^2\omega^2\Delta
+x\sin^2[\omega(t-\frac{x}{u})+\phi_0]\)</span>
+，即质元的动能与势能相等且同相位变化（<strong>与单一的简谐振动不同！</strong>）</p>
+<p>波的能量密度 <span class="math inline">\(w=\dfrac{\Delta E}{S\Delta
+x}=\rho_lA^2\omega^2\sin^2[\omega(t-\frac{x}{u})+\phi_0]\)</span></p>
+<p>平均能量密度 <span class="math inline">\(\bar{w}=\frac{1}{2}\rho
+A^2\omega^2\)</span></p>
+<p>平均能流（单位时间内通过介质中某截面S的波动能量）：<span
+class="math inline">\(\bar{P}=\bar{w}uS\)</span></p>
+<p>平均能流密度（声强）：<span
+class="math inline">\(I=\bar{w}u=\frac{1}{2}\rho_lu\omega^2A^2=\frac{1}{2}Z\omega^2A^2\)</span>
+，单位 <span class="math inline">\(W/m^2\)</span> ，其中 <span
+class="math inline">\(Z=\rho_lu\)</span> 称特性阻抗</p>
+<p>声压：<span class="math inline">\(p=-\rho\omega
+uA\sin[\omega(t-\frac{x}{u})+\phi_0]\)</span> ，记 <span
+class="math inline">\(p_m=\rho u\omega A\)</span> ，称声压振幅</p>
+<p>声强级（分贝）：<span
+class="math inline">\(I_L=10\lg\dfrac{I}{I_0}\)</span> ，其中 <span
+class="math inline">\(I_0=10^{-12}W/m^2\)</span> ，是人类听觉下限</p>
+<h3 id="电磁波">*电磁波</h3>
+<h3 id="波的谜之操作">波的谜之操作</h3>
+<h4 id="理论基础">理论基础</h4>
+<p>惠更斯原理：介质中任一波面上的各点，都可看成是产生球面子波的波源；在其后的任一时刻，这些子波的包络面构成新的波面。</p>
+<p>波的叠加原理：在几列波相遇的区域内，任一质元振动的位移是各列波单独传播时在该点引起的位移的矢量和。</p>
+<h4 id="反射与折射">反射与折射</h4>
+<p>类似光</p>
+<h4 id="衍射">衍射</h4>
+<p>波传播过程中当遇到障碍物时，能绕过障碍物发生偏折的现象</p>
+<h4 id="干涉">干涉</h4>
+<p>两列波在空间相遇叠加，结果在空间的某些地方振动始终加强，而在空间的另一些地方振动始终减弱或完全消失的现象。</p>
+<p>相干波：能产生干涉现象的波</p>
+<p>相干条件：两列波频率相同、振动方向相同、相位差恒定</p>
+<p>设有两相干源 <span class="math inline">\(S_1\)</span> ，<span
+class="math inline">\(S_2\)</span> ，波在距波源为 <span
+class="math inline">\(r_1\)</span> ，<span
+class="math inline">\(r_2\)</span> 的 <span
+class="math inline">\(P\)</span> 点相遇，波动方程分别为</p>
+$$
+<span class="math display">\[\begin{aligned}
+
+y_1&amp;=A_1\cos(\omega t+\phi_{01}-\frac{2\pi r_1}{\lambda})\\
+
+y_2&amp;=A_2\cos(\omega t+\phi_{02}-\frac{2\pi r_2}{\lambda})
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>则有</p>
+$$
+<span class="math display">\[\begin{aligned}
+
+y_1+y_2&amp;=A\cos(\omega t+\phi_0)\\
+
+\Delta\phi&amp;=\phi_{02}-\phi_{01}-2\pi\frac{r_2-r_1}{\lambda}\\
+
+A&amp;=\sqrt{A_1^2+A_2^2+2A_1A_2\cos\Delta\phi}\\
+
+\tan\phi_0&amp;=\dfrac{A_1\sin(\phi_{01}-\frac{2\pi
+r_1}{\lambda})+A_2\sin(\phi_{02}-\frac{2\pi
+r_2}{\lambda})}{A_1\cos(\phi_{01}-\frac{2\pi
+r_1}{\lambda})+A_2\cos(\phi_{02}-\frac{2\pi r_2}{\lambda})}\\
+
+I&amp;=I_1+I_2+2\sqrt{I_1I_2}\cos\Delta\phi
+
+\end{aligned}\]</span>
+<p>$$</p>
+<h4 id="驻波">驻波</h4>
+<p>两列振幅相同的相干波沿相反方向传播叠加而成</p>
+$$
+<span class="math display">\[\begin{aligned}
+
+y_1&amp;=A\cos[2\pi(\frac{t}{T}-\frac{x}{\lambda})]\\
+
+y_2&amp;=A\cos[2\pi(\frac{t}{T}+\frac{x}{\lambda})]\\
+
+y_1+y_2&amp;=2A\cos\frac{2\pi}{\lambda}x\cos\frac{2\pi}{T}t
+
+\end{aligned}\]</span>
+<p>$$</p>
+<p>振幅：每个点振幅不变，但不同位置振幅不同。不动的质元称波节，振幅最大的称波腹。相邻的波节、波腹相距
+<span class="math inline">\(\dfrac{\lambda}{2}\)</span></p>
+<p>相位：同一分段内各点振动相位相同，一个波节的两侧相邻分段内的各振动点反相位</p>
+<p>能量：波节处只有势能，波腹处只有动能</p>
+<h4 id="半波损失">半波损失</h4>
+<p><span class="math inline">\(\rho u\)</span>
+较大称波密介质，较小称波疏介质。当波从波疏介质向波密介质传播时，入射波在反射点反射时有相位
+<span class="math inline">\(\pi\)</span> 的突变，称之为半波损失。</p>
+<h3 id="多普勒效应">多普勒效应</h3>
+<p>设观测者相对介质运动速度为 <span class="math inline">\(v_R\)</span>
+，向波源方向运动取正；波源相对于介质运动速度为 <span
+class="math inline">\(v_S\)</span> ，向观测者方向运动为正；波速为 <span
+class="math inline">\(u\)</span></p>
+<p>设波源的频率为 <span class="math inline">\(\nu_S\)</span>
+，观测者收到的频率为 <span class="math inline">\(\nu_R\)</span></p>
+<p>则有 <span
+class="math inline">\(\nu_R=\dfrac{u+v_R}{u-v_S}\nu_S\)</span></p>
+<p>*电磁波则化为 <span
+class="math inline">\(\nu_R=\sqrt{\dfrac{c+v}{c-v}}\nu_S\)</span></p>
+<p>*冲击波：波源速度超过波速，马赫数即 <span
+class="math inline">\(\dfrac{u_S}{u}\)</span> ，<span
+class="math inline">\(\sin\alpha=\dfrac{u}{u_S}\)</span></p>
+<h2 id="光学">光学</h2>
+<h3 id="几何光学简介">*几何光学简介</h3>
+<p>直线传播、独立传播、折射与反射定律</p>
+<p><span
+class="math inline">\(\dfrac{1}{u}+\dfrac{1}{v}=\dfrac{1}{f}\)</span></p>
+<h3 id="光的相干">光的相干</h3>
+<p>光的叠加：<span
+class="math inline">\(I=\dfrac{1}{2}\sqrt{\dfrac{\varepsilon}{\mu}}E_0^2\propto\vec{E}^2,I_P=I_1+I_1+2\sqrt{I_1I_2}\cos[(\phi_1-\phi_2)-\dfrac{\omega(r_1-r_2)}{c}]\)</span></p>
+<p>相干条件：同频率、相位差恒定、光矢量振动方向平行且振幅相差不大</p>
+<p>获得方法：分波阵面法、分振幅法</p>
+<p>光程：真空中为光走过的距离，介质中为发生相同相变需要在真空中走过的距离，即
+<span class="math inline">\(r&#39;=nr\)</span></p>
+<p>光程差：<span class="math inline">\(\delta\)</span> ，则相位差 <span
+class="math inline">\(\Delta\phi=\dfrac{2\pi}{\lambda}\delta\)</span>
+，且透镜不改变光程差</p>
+<p>干涉条纹的可见度：<span
+class="math inline">\(V=\dfrac{I_{\max}-I_{\min}}{I_{\max}+I_{\min}}=\dfrac{2\sqrt{\frac{I_2}{I_1}}}{1+\frac{I_2}{I_1}}\)</span></p>
+<h4 id="杨氏干涉实验">杨氏干涉实验</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218094602706.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218094602706" />
+<figcaption aria-hidden="true">image-20231218094602706</figcaption>
+</figure>
+<p><span class="math inline">\(\delta=r_2-r_1\approx d\sin\theta\approx
+d\dfrac{x}{D},\Delta\phi=\dfrac{2\pi}{\lambda}\delta\)</span></p>
+<p>明纹：<span class="math inline">\(x_{\pm k}=\pm
+k\dfrac{D}{d}\lambda,k=0,1,2...\)</span></p>
+<p>暗纹：<span class="math inline">\(x_{\pm 2k+1}=\pm
+(2k+1)\dfrac{D}{d}\lambda,k=0,1,2...\)</span></p>
+<p>相邻明暗条纹间距：<span class="math inline">\(\Delta
+x=\dfrac{D}{d}\lambda\)</span></p>
+<p>光源线度的约束条件：<span
+class="math inline">\(b&lt;\dfrac{B}{d}\lambda\)</span> ，<span
+class="math inline">\(B\)</span> 是光源到2小孔的板之间的距离</p>
+<h4 id="劳埃德镜实验">劳埃德镜实验</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218105005487.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218105005487" />
+<figcaption aria-hidden="true">image-20231218105005487</figcaption>
+</figure>
+<h4 id="薄膜干涉">薄膜干涉</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218105606726.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218105606726" />
+<figcaption aria-hidden="true">image-20231218105606726</figcaption>
+</figure>
+<p><strong>注意是否有半波损失</strong></p>
+<h4 id="劈尖干涉">劈尖干涉</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218105845796.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218105845796" />
+<figcaption aria-hidden="true">image-20231218105845796</figcaption>
+</figure>
+<p>两相邻明条纹对应的厚度差 <span class="math inline">\(\Delta
+d=\dfrac{\lambda}{2n_2}\)</span> ，间距 <span
+class="math inline">\(l=\dfrac{\lambda}{2n_2\theta}\)</span></p>
+<h4 id="牛顿环">牛顿环</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218192505501.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218192505501" />
+<figcaption aria-hidden="true">image-20231218192505501</figcaption>
+</figure>
+<p>明纹：<span
+class="math inline">\(r=\sqrt{(2k-1)\dfrac{R\lambda}{2}},k=1,2,3...\)</span></p>
+<p>暗纹：<span class="math inline">\(r=\sqrt{k\lambda
+R},k=0,1,2\)</span></p>
+<h4 id="迈克耳孙干涉仪">迈克耳孙干涉仪</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218194701314.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218194701314" />
+<figcaption aria-hidden="true">image-20231218194701314</figcaption>
+</figure>
+<p><span class="math inline">\(M_1\)</span> 平移 <span
+class="math inline">\(\Delta d\)</span> 时，干涉条纹移过N条，则 <span
+class="math inline">\(\lambda=\dfrac{2\Delta d}{N}\)</span></p>
+<h3 id="光的衍射">光的衍射</h3>
+<p>光在传播过程中遇到大小与波长近似的障碍物时，能绕过障碍物，偏离直线传播的现象</p>
+<p>菲涅尔衍射：光源与衍射屏、衍射屏与接收屏为有限远</p>
+<p>夫琅禾费衍射：均为无限远</p>
+<p>惠更斯-菲涅尔原理：从同一波阵面上各点发出的子波都是相干波，在空间某点相遇时，将进行相干叠加</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218195431717.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218195431717" />
+<figcaption aria-hidden="true">image-20231218195431717</figcaption>
+</figure>
+<h4 id="夫琅禾费衍射">夫琅禾费衍射</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218195526995.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218195526995" />
+<figcaption aria-hidden="true">image-20231218195526995</figcaption>
+</figure>
+<p>半波带法：若通过缝的光恰能分为偶数个半波带，则全部干涉相消（暗纹），否则为明纹</p>
+<p>暗纹：<span
+class="math inline">\(a\sin\varphi=\pm2k\dfrac{\lambda}{2},k=1,2,3...\)</span>
+（倾斜入射时为 <span
+class="math inline">\(a(\sin\varphi\pm\sin\theta)\)</span> ）</p>
+<p>明纹：<span
+class="math inline">\(a\sin\varphi=\pm(2k+1)\dfrac{\lambda}{2},k=1,2,3...\)</span></p>
+<p>中央明纹：<span class="math inline">\(\varphi=0\)</span></p>
+<p>角宽度：<span
+class="math inline">\(\Delta\varphi=\dfrac{\lambda}{a}\)</span>
+，线宽度：<span class="math inline">\(\Delta
+x_0=f\tan\varphi=f\dfrac{\lambda}{a}\)</span>
+。中央明纹角宽度、线宽度均为2倍</p>
+<p>光强分布：<span
+class="math inline">\(I_\varphi=I_m(\dfrac{\sin\alpha}{\alpha})^2\)</span>
+，<span class="math inline">\(I_m\)</span> 为中央明纹中心处的光强，<span
+class="math inline">\(\alpha=\dfrac{\pi
+a\sin\varphi}{\lambda}\)</span></p>
+<h4 id="分辨功能">分辨功能</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231218202254866.png" srcset="/img/loading.gif" lazyload
+alt="image-20231218202254866" />
+<figcaption aria-hidden="true">image-20231218202254866</figcaption>
+</figure>
+<h4 id="光栅衍射">光栅衍射</h4>
+<p>光栅：大量等宽等间距的平行狭缝（或反射面）</p>
+<p>a是透光部分的宽度，b是不透光部分的宽度，则光栅常数 <span
+class="math inline">\(d=a+b\)</span></p>
+<p>光栅的夫琅禾费衍射=单缝衍射+多光束干涉</p>
+<p>光栅方程：<span class="math inline">\(d\sin\varphi=\pm
+k\lambda,k=0,1,2,...\)</span> 主极大明纹</p>
+<p>暗纹：<span
+class="math inline">\(d\sin\varphi=\pm\dfrac{m\lambda}{N},m\ne
+kN\)</span></p>
+<p>明纹缺级：干涉极大但衍射极小，<span
+class="math inline">\(\dfrac{d}{a}=\dfrac{k}{k&#39;}\)</span></p>
+<p>光强：</p>
+<p><span class="math inline">\(\alpha=\dfrac{\beta}{2}=\dfrac{\pi
+a\sin\varphi}{\lambda},\Delta\varphi=\dfrac{2\pi}{\lambda}(a+b)\sin\varphi\)</span>
+其中 <span class="math inline">\(\varphi\)</span> 含义与单缝衍射相同</p>
+<p>则 <span
+class="math inline">\(I_0=I_m(\dfrac{\sin\alpha}{\alpha})^2(\dfrac{\sin\frac{N\Delta\varphi}{2}}{\sin\frac{\Delta\varphi}{2}})^2\)</span></p>
+<p>光栅的分辨本领：</p>
+<p>把 <span class="math inline">\(\lambda\)</span> 和 <span
+class="math inline">\(\lambda+\Delta\lambda\)</span> 分开的能力，定义为
+<span class="math inline">\(R=\dfrac{\lambda}{\Delta\lambda}\)</span>
+，计算得 <span class="math inline">\(R=kN\)</span>
+，k为主极大级次，N为总缝数</p>
+<h4 id="x射线衍射">X射线衍射</h4>
+<p>布拉格公式 <span
+class="math inline">\(2d\sin\varphi=k\lambda\)</span></p>
+<h3 id="光的偏振">光的偏振</h3>
+<h4 id="原理与分类">原理与分类</h4>
+<p>原理：光矢量 <span class="math inline">\(\vec{E}\)</span>
+与光的传播方向垂直，但 <span class="math inline">\(\vec{E}\)</span>
+在与传播方向垂直的平面内可有不同振动方向、状态</p>
+<ul>
+<li><p>线偏振光：光矢量始终沿某一方向振动</p></li>
+<li><p>自然光：各个方向都有大小、前后不同的光矢量的振动，是对称的</p></li>
+<li><p>部分偏振光：自然光的振动可分解为垂直的两个方向，部分移去其中一个矢量</p></li>
+<li><p>圆（椭圆）偏振光：光矢量绕着光的传播方向旋转，旋转角速度对应于光的角频率。可看成2个振动相互垂直、相位差为
+<span class="math inline">\(\dfrac{\pi}{2}\)</span>
+的线偏振光的合成</p></li>
+</ul>
+<p>表示方法：</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231219222339407.png" srcset="/img/loading.gif" lazyload
+alt="image-20231219222339407" />
+<figcaption aria-hidden="true">image-20231219222339407</figcaption>
+</figure>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231219222349776.png" srcset="/img/loading.gif" lazyload
+alt="image-20231219222349776" />
+<figcaption aria-hidden="true">image-20231219222349776</figcaption>
+</figure>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231219222358180.png" srcset="/img/loading.gif" lazyload
+alt="image-20231219222358180" />
+<figcaption aria-hidden="true">image-20231219222358180</figcaption>
+</figure>
+<h4 id="起偏与检偏">起偏与检偏</h4>
+<h5 id="概念">概念</h5>
+<p>起偏：用起偏器（如偏振片）从自然光获得偏振光</p>
+<p>偏振片：只允许沿某个方向振动的光矢量透过，此方向称偏振化方向</p>
+<p>检偏：分析光的偏振态</p>
+<h5 id="两大定律">两大定律</h5>
+<p>马吕斯定律：</p>
+<p>强度为 <span class="math inline">\(I_0\)</span>
+的线偏振光，通过检偏振器后，透射光的强度为 <span
+class="math inline">\(I=I_0\cos^2\alpha\)</span> 。其中 <span
+class="math inline">\(\alpha\)</span>
+为线偏振光的光振动方向与检偏器的偏振化方向的夹角。自然光通过后强度减半。</p>
+<p>自然光反射、折射后产生部分偏振光</p>
+<p>布儒斯特定律：</p>
+<p>当入射角 <span class="math inline">\(i_B\)</span> 与折射角 <span
+class="math inline">\(\gamma\)</span> 满足 <span
+class="math inline">\(i_B+\gamma=90^\circ\)</span>
+时，反射光为振动方向垂直于入射面的线偏振光。此时入射角称布儒斯特角或起偏角，且有
+<span class="math inline">\(\tan i_B=\dfrac{n_2}{n_1}\)</span></p>
+<h5 id="产生方法">产生方法</h5>
+<p>玻璃片堆，多次反射、折射后，可使反射光强度较高，且折射光的偏振度足够高</p>
+<h4 id="双折射">双折射</h4>
+<h5 id="概念-1">概念</h5>
+<p>一束光入射到各向异性介质后，出现两束折射光：寻常光（o光）与非常光（e光）。其中o光遵循折射定律而e光不遵循。o光的光矢量振动方向与o光主平面垂直，e光的光矢量振动方向与e光主平面平行，光轴在入射面时，振动方向相互垂直</p>
+<p>光轴：当光沿此方向入射传播时，不发生双折射。可分为单轴晶体、双轴晶体</p>
+<p>主平面：晶体中光的传播方向与光轴构成的平面</p>
+<p>惠更斯解释：光在晶体中的传播速度与光的传播方向（e光）和偏振状态有关。</p>
+<p><span class="math inline">\(n_e&gt;n_o\)</span>
+称正晶体，反之称负晶体</p>
+<h5 id="一些镜子">一些镜子</h5>
+<p>尼科耳棱镜：方解石切半+加拿大树胶，射出一束振动方向在纸面内的线偏振光</p>
+<p>沃拉斯顿棱镜：两块方解石、光轴方向垂直、斜向拼接，射出两束分开的、振动方向垂直的线偏振光</p>
+<p>波晶片：表面与晶体光轴平行。当线偏振光垂直表面入射时，设 <span
+class="math inline">\(\alpha\)</span> 为振动方向与光轴的夹角，则 <span
+class="math inline">\(E_o=E\sin\alpha,E_e=E\cos\alpha,\delta=|n_o-n_e|d\)</span>
+。射出两束传播方向相同、振动方向相互垂直、频率相等、相位差恒定的线偏振光。</p>
+<p>光程差为 <span class="math inline">\(\dfrac{1}{4}\lambda\)</span>
+的称 <span class="math inline">\(\dfrac{1}{4}\)</span>
+波片，类推有半波片、全波片</p>
+<h5 id="偏振光的干涉">*偏振光的干涉</h5>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231221143642279.png" srcset="/img/loading.gif" lazyload
+alt="image-20231221143642279" />
+<figcaption aria-hidden="true">image-20231221143642279</figcaption>
+</figure>
+<p>光强分布：</p>
+<ol type="1">
+<li><p>自然光到线偏振光，光强变为 <span
+class="math inline">\(\dfrac{1}{2}I_0\)</span> ，振幅为 <span
+class="math inline">\(A_1\)</span></p></li>
+<li><p>波晶片中 <span
+class="math inline">\(A_{1o}=A_1\cos\alpha,A_{1e}=A_1\sin\alpha,\Delta\varphi=\dfrac{2\pi}{\lambda}|n_o-n_e|d\)</span></p></li>
+<li><p>偏振片P2中 <span
+class="math inline">\(A_{2o}=A_{1o}\sin\beta,A_{2e}=A_{1e}\cos\beta,\Delta\varphi=\dfrac{2\pi}{\lambda}|n_o-n_e|d+\pi\)</span></p></li>
+</ol>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231221144529306.png" srcset="/img/loading.gif" lazyload
+alt="image-20231221144529306" />
+<figcaption aria-hidden="true">image-20231221144529306</figcaption>
+</figure>
+<p>此例中有附加相位差的原因为 <span
+class="math inline">\(\vec{A_{2e}}\)</span> 和 <span
+class="math inline">\(\vec{A_{2o}}\)</span> 方向相反</p>
+<p>屏幕上光强 <span class="math inline">\(I\propto
+A^2=A_{2o}^2+A_{2e}^2+2A_{2o}A_{2e}\cos\Delta\varphi\)</span></p>
+<p>干涉相长：<span
+class="math inline">\(\Delta\varphi=\dfrac{2\pi}{\lambda}|n_o-n_e|d+\pi=2k\pi\)</span>
+，其中 <span class="math inline">\(k=1,2,3,...\)</span></p>
+<p>干涉相消：<span
+class="math inline">\(\Delta\varphi=\dfrac{2\pi}{\lambda}|n_o-n_e|d+\pi=(2k+1)\pi\)</span>
+，其中 <span class="math inline">\(k=0,1,2,3,...\)</span></p>
+<h5 id="人为双折射">*人为双折射</h5>
+<p>光弹效应：<span class="math inline">\(|n_o-n_e|=cp\)</span>
+，c是与材料有关的常数，p为样品材料中的应力</p>
+<p>电光效应：<span class="math inline">\(|n_o-n_e|=kE^2\)</span>
+，k为液体的克尔常数，E为外加电场的电场强度</p>
+<h5 id="旋光性">*旋光性</h5>
+<p>线偏振光通过某些透明物质时，振动面将以光的传播方向为轴线旋转一定角度
+<span class="math inline">\(\theta=ad\)</span>
+。a（旋光率）与物质性质、波长有关，d为厚度</p>
+<h2 id="量子物理">量子物理</h2>
+<h3 id="热辐射与量子假设">热辐射与量子假设</h3>
+<h4 id="辐出度基尔霍夫辐射定律">辐出度、基尔霍夫辐射定律</h4>
+<p>辐出度：物体在温度T下单位表面在单位时间内发出的各种波长的总辐射能，记为
+<span class="math inline">\(M(T)\)</span> ，单位 <span
+class="math inline">\(W/m^2\)</span></p>
+<p>单色辐出度：一定温度T下，单位时间内从物体表面单位面元上发射的波长在
+<span class="math inline">\(\lambda\sim\lambda+d\lambda\)</span>
+内的辐射能 <span class="math inline">\(dM_{\lambda}\)</span> 与波长间隔
+<span class="math inline">\(d\lambda\)</span> 的比值。<span
+class="math inline">\(M_\lambda(T)=\dfrac{dM_\lambda}{d\lambda}\)</span></p>
+<p>单色吸收比：温度T时，物体吸收波长在 <span
+class="math inline">\(\lambda\sim\lambda+d\lambda\)</span>
+内的辐射能与相应范围内的入射能之比，介于0和1之间，记为 <span
+class="math inline">\(\alpha(\lambda,T)\)</span>
+。当值为1时，为黑体。</p>
+<p>热辐射是连续的，频谱分布随温度变化，辐射本领强吸收本领也强</p>
+<p>基尔霍夫辐射定律：处于热辐射平衡态的物体，单色辐出度与单色吸收系数的比值都相等，且等于同温度下黑体的单色辐出度</p>
+<p><span
+class="math inline">\(\dfrac{M_{1\lambda}(T)}{\alpha_1(\lambda,T)}=\dfrac{M_{2\lambda}(T)}{\alpha_2(\lambda,T)}=...=M_{B\lambda}(T)\)</span></p>
+<h4 id="黑体辐射定律">黑体辐射定律</h4>
+<p>斯特藩-玻耳兹曼定律： <span
+class="math inline">\(M_B(T)=\int_0^{\infty}M_{B\lambda}(T)d\lambda=\sigma
+T^4\)</span> ，其中 <span
+class="math inline">\(\sigma\approx5.67\times10^{-8}W/(m^2\cdot
+K^4)\)</span> ，称斯特藩常量</p>
+<p>维恩位移定律：峰值波长 <span class="math inline">\(\lambda_m\)</span>
+满足 <span class="math inline">\(T\lambda_m=b\)</span>
+，其中b为维恩常量， <span class="math inline">\(b\approx
+2.898\times10^{-3}m\cdot K\)</span></p>
+<p>普朗克公式：<span class="math inline">\(M_{B\lambda}(T)=\dfrac{2\pi
+c^2h}{\lambda^5}\dfrac{1}{e^{\tfrac{hc}{\lambda kT}}-1}\)</span>
+，其中k为玻尔兹曼常量</p>
+<p>量子假说：电磁辐射的能量交换只能是量子化的</p>
+<h3 id="光的粒子性">光的粒子性</h3>
+<h4 id="光电效应">光电效应</h4>
+<p>光电效应：光照射某些金属时，能从表面释放出电子</p>
+<p>遏止电压 <span class="math inline">\(U_a\)</span> ：<span
+class="math inline">\(\dfrac{1}{2}mv_m^2=eU_a\)</span></p>
+<p>遏制频率（红限）：<span class="math inline">\(h\nu_0=W_0\)</span></p>
+<p>爱因斯坦光电效应方程：<span
+class="math inline">\(h\nu=\dfrac{1}{2}mv_m^2+A\)</span></p>
+<h4 id="康普顿散射">康普顿散射</h4>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20231221182623231.png" srcset="/img/loading.gif" lazyload
+alt="image-20231221182623231" />
+<figcaption aria-hidden="true">image-20231221182623231</figcaption>
+</figure>
+<p><span
+class="math inline">\(\Delta\lambda=\dfrac{h}{m_0c}(1-\cos\varphi)=2\lambda_c\sin^2\dfrac{\varphi}{2}\)</span>
+，其中 <span class="math inline">\(\lambda_c=\dfrac{h}{m_0c}\)</span>
+称康普顿波长</p>
+<p>对于光： <span
+class="math inline">\(E=h\nu,p=\dfrac{h}{\lambda},m=\dfrac{h}{c\lambda}\)</span></p>
+<h3 id="波尔氢原子理论">波尔氢原子理论</h3>
+<p>氢原子光谱线系：<span
+class="math inline">\(\dfrac{1}{\lambda}=R(\dfrac{1}{k^2}-\dfrac{1}{n^2}),n=k+1,k+2,...\)</span>
+其中 <span
+class="math inline">\(R=\dfrac{me^4}{8\varepsilon_0^2h^3c}=1.097373\times10^7m^{-1}\)</span>
+称里德伯常数，k=2时是巴尔末线系</p>
+<p>波尔理论的基本假设：</p>
+<ol type="1">
+<li><p>定态假设。原子只能处于一系列不连续的能量状态中</p></li>
+<li><p>频率条件。跃迁时，吸收 <span
+class="math inline">\(\nu_{kn}=\dfrac{|E_n-E_k|}{h}\)</span>
+能量</p></li>
+<li><p>量子化条件。电子绕核作圆周运动时的角动量L是量子化的，只能取 <span
+class="math inline">\(\hbar=\dfrac{h}{2\pi}\)</span> 的整数倍，其中
+<span class="math inline">\(\hbar\)</span> 是约化普朗克常量</p></li>
+</ol>
+<p>轨道半径 <span
+class="math inline">\(r_n=n^2\dfrac{\varepsilon_0h^2}{\pi
+me^2}=n^2r_1,n=1,2,3...\)</span></p>
+<p>原子能量 <span
+class="math inline">\(E_n=-\dfrac{e^2}{8\pi\varepsilon_0r_n}=-\dfrac{1}{n^2}\dfrac{me^4}{8\varepsilon_0^2h^2},n=1,2,3...\)</span>
+，其中 <span class="math inline">\(E_1=-13.6eV\)</span></p>
+<h3 id="德布罗意波不确定性原理">德布罗意波、不确定性原理</h3>
+<p>物质波 <span
+class="math inline">\(\lambda=\dfrac{h}{p}=\dfrac{h}{m_0v}\sqrt{1-\dfrac{v^2}{c^2}}\)</span></p>
+<p>动量-坐标不确定关系 <span class="math inline">\(\Delta x\Delta
+p_x\geqslant\dfrac{\hbar}{2}\)</span></p>
+<p>能量-时间不确定关系 <span class="math inline">\(\Delta E\Delta
+t\geqslant\dfrac{\hbar}{2}\)</span>
+，如原子能级宽度和原子在该能级的平均寿命之间的关系</p>
+<h3 id="波函数与薛定谔方程">波函数与薛定谔方程</h3>
+<h4 id="一堆方程">一堆方程</h4>
+<p>物质波的波函数 <span class="math inline">\(\Psi\)</span> 的模的平方
+<span class="math inline">\(|\Psi(\vec{r},t)|^2\)</span>
+代表t时刻，r端点处单位体积中发现一个粒子的概率，称概率密度</p>
+<p>波函数应满足以下要求：</p>
+<ol type="1">
+<li>有限性：概率为有限值</li>
+<li>归一性：<span
+class="math inline">\(\iiint\limits_\Omega|\Psi(\vec{r},t)|^2dV=1\)</span></li>
+<li>单值性：概率密度在任意位置、时刻都是确定的</li>
+<li>连续性：势场性质与边界条件要求波函数及其一阶导数连续</li>
+</ol>
+<p>状态叠加原理：若体系具有一些列互异的可能状态 <span
+class="math inline">\(\{\Psi_1,\Psi_2...\}\)</span> ，则其线性组合 <span
+class="math inline">\(\Psi=\sum C_n\Psi_n\)</span>
+也是该体系的一个可能状态</p>
+<p>一维自由粒子的波函数： <span
+class="math inline">\(\Psi(x,t)=\Psi_0e^{-i\frac{1}{\hbar}(Et-px)}\)</span>
+三维：<span
+class="math inline">\(\Psi(\vec{r},t)=\Psi_0e^{-\frac{i}{\hbar}(Et-\vec{p}\vec{x})}\)</span></p>
+<p>一维自由粒子波函数满足的微分方程：<span
+class="math inline">\(i\hbar\dfrac{\partial\Psi}{\partial
+t}=-\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial x^2}\)</span></p>
+<p>势场中 <span class="math inline">\(E=\dfrac{p^2}{2m}+V(x,t)\)</span>
+，有 <span class="math inline">\(i\hbar\dfrac{\partial\Psi}{\partial
+t}=-\dfrac{\hbar^2}{2m}\dfrac{\partial^2\Psi}{\partial
+x^2}+V\Psi\)</span></p>
+<p>当势场与时间无关、粒子能量取定值时，有定态波函数 <span
+class="math inline">\(\Psi(x,t)=\Psi(x)e^{-\frac{i}{\hbar}Et}\)</span>
+，一维定态薛定谔方程 <span
+class="math inline">\(\dfrac{d^2\psi(x)}{dx^2}+\dfrac{2m}{\hbar^2}(E-V)\psi(x)=0\)</span></p>
+<p>三维定态薛定谔方程 <span
+class="math inline">\(\nabla^2\psi(\vec{r})+\dfrac{2m}{\hbar^2}(E-V)\psi(\vec{r})=0\)</span></p>
+<h4 id="一维无限深势阱">一维无限深势阱</h4>
+<p>势能函数满足 <span class="math inline">\(V(x)=\begin{cases}0,\
+0&lt;x&lt;a \\ \infty,\ 其他\end{cases}\)</span>
+，类似金属内部自由电子的运动</p>
+<p>解一维定态薛定谔方程得 <span
+class="math inline">\(E_n=\dfrac{h^2}{8ma^2}n^2,\ n=1,2,3,...\)</span>
+其中 <span class="math inline">\(E_1\)</span> 称零点能。波长 <span
+class="math inline">\(\lambda_n=\dfrac{2a}{n}\)</span></p>
+<p>波函数为 <span
+class="math inline">\(\Psi_n(x,t)=\pm\sqrt{\dfrac{2}{a}}\sin\dfrac{n\pi}{a}xe^{-\tfrac{i}{\hbar}E_nt}\)</span></p>
+<h4 id="势垒穿透">*势垒穿透</h4>
+<p>势能函数满足 <span class="math inline">\(V(x)=\begin{cases}0,\
+x\leqslant0 \\ U_0,\ x&gt;0\end{cases}\)</span></p>
+<p>粒子从 <span class="math inline">\(-\infty\)</span> 处以能量E入射，
+<span class="math inline">\(E&lt;U_0\)</span>
+，类似金属或半导体接触处</p>
+<p>解一维定态薛定谔方程得</p>
+<p>入射波、反射波： <span
+class="math inline">\(\Psi_1(x)=Ae^{ik_1x}+Be^{-ik_1x},k_1=\sqrt{\dfrac{2mE}{\hbar^2}}\)</span></p>
+<p>透射波： <span
+class="math inline">\(\Psi_2(x)=Ce^{-k_2x}=Ce^{-\tfrac{1}{\hbar}\sqrt{2m(U_0-E)}x}\)</span></p>
+<p>若势垒有限宽，即 <span class="math inline">\(V(x)=\begin{cases}0,\
+x\leqslant0 \\ U_0,\ 0&lt;x&lt;a\\ 0,x\geqslant a\end{cases}\)</span>
+，则波穿过后以平面波的形式继续前进，振幅为 <span
+class="math inline">\(\Psi_2(a)=Ce^{-\tfrac{a}{\hbar}\sqrt{2m(U_0-E)}}\)</span></p>
+<h4 id="一维谐振子">*一维谐振子</h4>
+<p>势能 <span
+class="math inline">\(V(x)=\dfrac{1}{2}kx^2=\dfrac{1}{2}m\omega^2x^2\)</span></p>
+<p>谐振子的定态薛定谔方程 <span
+class="math inline">\(\dfrac{d^2\psi(x)}{dx^2}+\dfrac{2m}{\hbar^2}(E-\dfrac{1}{2}m\omega^2x^2)\psi(x)=0\)</span></p>
+<p>解得 <span
+class="math inline">\(E_n=(n+\dfrac{1}{2})\hbar\omega=(n+\dfrac{1}{2})h\nu,n=0,1,2...\)</span></p>
+<h4 id="氢原子">*氢原子</h4>
+<p><span
+class="math inline">\(\nabla^2\psi(\vec{r})+\dfrac{2m}{\hbar^2}(E-V)\psi(\vec{r})=0\)</span>
+，<span
+class="math inline">\(V(r)=-\dfrac{e^2}{4\pi\varepsilon_0r}\)</span></p>
+<p><span
+class="math inline">\(E_n=-\dfrac{me^4}{8h^2\varepsilon_0^2}\dfrac{1}{n^2}=-\dfrac{13.6}{n^2}(eV),n=1,2,3...\)</span>
+<span class="math inline">\(n\)</span> 为主量子数</p>
+<p><span
+class="math inline">\(L=\sqrt{l(l+1)}\hbar,l=0,1,...n-1\)</span> ，其中
+<span class="math inline">\(l\)</span> 称角（副）量子数</p>
+<p>角动量在空间的取向也是量子化的，<span
+class="math inline">\(L_z=m_l\hbar,m_l=0,\pm1,...\pm l\)</span> ，<span
+class="math inline">\(m_l\)</span> 称磁量子数</p>
+<p>波函数 <span
+class="math inline">\(\Psi_{n,l,m_l}(r,\theta,\varphi)=R_{nl}(r)Y_{lm_l}(\theta,\varphi)\)</span>
+，可分为镜像波函数、角向波函数</p>
+<h3 id="原子中的电子">原子中的电子</h3>
+<h4 id="电子自旋与四个量子数">电子自旋与四个量子数</h4>
+<p>自旋量子数s，自旋磁量子数 <span class="math inline">\(m_S\)</span>
+，自旋角动量 <span class="math inline">\(S=\sqrt{s(s+1)}\hbar\)</span>
+自旋角动量在外磁场方向的投影 <span
+class="math inline">\(S_z=m_S\hbar\)</span></p>
+<p>原子中的电子运动由4个量子数决定</p>
+<ol type="1">
+<li>主量子数 <span class="math inline">\(n=1,2,3...\)</span>
+，大体决定原子中电子的能量</li>
+<li>角量子数 <span class="math inline">\(l=0,1,2...(n-1)\)</span>
+，决定电子轨道角动量大小 <span
+class="math inline">\(L=\sqrt{l(l+1)}\hbar\)</span></li>
+<li>磁量子数 <span class="math inline">\(m_l=0,\pm1,\pm2,...\pm
+l\)</span> ，决定电子的轨道角动量在外磁场方向的投影 <span
+class="math inline">\(L_z=m_l\hbar\)</span></li>
+<li>自旋磁量子数 <span
+class="math inline">\(m_s=\pm\dfrac{1}{2}\)</span>
+，决定电子的自旋角动量在外磁场方向的投影 <span
+class="math inline">\(S_z=m_s\hbar\)</span></li>
+</ol>
+<h4 id="电子壳层结构">电子壳层结构</h4>
+<p>泡利不相容原理：同一原子中，不可能有两个或两个以上的电子具有完全相同的量子状态</p>
+<p>主量子数为n的壳层内最多容纳 <span
+class="math inline">\(Z_n=2n^2\)</span> 个电子，l支壳层最多容纳 <span
+class="math inline">\(2(2l+1)\)</span></p>
+<p>能量最小原理：原子系统处于正常状态时，每个电子趋向占有最低的能级</p>
+<p>主量子数n对应 <span class="math inline">\(1s,2s,...ns\)</span>
+，角量子数l则对应 <span class="math inline">\(4s,4p,4d,4f...\)</span>
+中的spdf</p>
+<p>经验规律： <span class="math inline">\(n+0.7l\)</span>
+的值越小，能级越低</p>
+<p>填充顺序： <span
+class="math inline">\(1s,2s,2p,3s,3p,4s,3d,4p,5s,4d,5p,6s,4f,5d,6p...\)</span></p>
+<figure>
+<img
+src="https://img-blog.csdnimg.cn/img_convert/df87013877101c94316fec62af77c22e.png" srcset="/img/loading.gif" lazyload
+alt="img" />
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>大物2笔记</div>
+      <div>https://solor-wind.github.io/2024/01/14/大物2笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月14日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/14/%E7%A6%BB%E6%95%A32%E7%AC%94%E8%AE%B0/" title="离散2笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">离散2笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/14/%E6%A6%82%E7%BB%9F%E7%AC%94%E8%AE%B0/" title="概统笔记">
+                        <span class="hidden-mobile">概统笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
