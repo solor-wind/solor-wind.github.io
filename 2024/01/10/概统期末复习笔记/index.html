@@ -16,12 +16,12 @@
   <meta name="author" content="gpf">
   <meta name="keywords" content="">
   
-    <meta name="description" content="$\mathcal{Author:gpf}$    随机事件的概率概念$P(A)&#x3D;0\nRightarrow A&#x3D;\emptyset$  $A\cap B&#x3D;\emptyset\nRightarrow$ $A$、$B$ 独立 $A$、$B$ 独立 $\nRightarrow\bar{A}$、$B$ 独立 互不相容（交集为空）、互逆根据事件定义，独立根据概率定义 公式加法公式：$P(A+B)&#x3D;P(A">
+    <meta name="description" content="\(\mathcal{Author:gpf}\)  随机事件的概率 概念 \(P(A)&#x3D;0\nRightarrow A&#x3D;\emptyset\) \(A\cap B&#x3D;\emptyset\nRightarrow\) \(A\)、\(B\) 独立 \(A\)、\(B\) 独立 \(\nRightarrow\bar{A}\)、\(B\) 独立 互不相容（交集为空）、互逆根据事件定义，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="solor-wind&#39;s blog">
 <meta property="og:url" content="https://solor-wind.github.io/2024/01/10/%E6%A6%82%E7%BB%9F%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="solor-wind&#39;s blog">
-<meta property="og:description" content="$\mathcal{Author:gpf}$    随机事件的概率概念$P(A)&#x3D;0\nRightarrow A&#x3D;\emptyset$  $A\cap B&#x3D;\emptyset\nRightarrow$ $A$、$B$ 独立 $A$、$B$ 独立 $\nRightarrow\bar{A}$、$B$ 独立 互不相容（交集为空）、互逆根据事件定义，独立根据概率定义 公式加法公式：$P(A+B)&#x3D;P(A">
+<meta property="og:description" content="\(\mathcal{Author:gpf}\)  随机事件的概率 概念 \(P(A)&#x3D;0\nRightarrow A&#x3D;\emptyset\) \(A\cap B&#x3D;\emptyset\nRightarrow\) \(A\)、\(B\) 独立 \(A\)、\(B\) 独立 \(\nRightarrow\bar{A}\)、\(B\) 独立 互不相容（交集为空）、互逆根据事件定义，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-10T09:20:16.757Z">
 <meta property="article:modified_time" content="2024-01-10T09:20:38.029Z">
@@ -273,400 +273,783 @@
               <div class="markdown-body">
                 
                 <blockquote>
-<p>$\mathcal{Author:gpf}$  </p>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
 </blockquote>
-<h2 id="随机事件的概率"><a href="#随机事件的概率" class="headerlink" title="随机事件的概率"></a>随机事件的概率</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>$P(A)=0\nRightarrow A=\emptyset$ </p>
-<p>$A\cap B=\emptyset\nRightarrow$ $A$、$B$ 独立</p>
-<p>$A$、$B$ 独立 $\nRightarrow\bar{A}$、$B$ 独立</p>
+<h2 id="随机事件的概率">随机事件的概率</h2>
+<h3 id="概念">概念</h3>
+<p><span class="math inline">\(P(A)=0\nRightarrow
+A=\emptyset\)</span></p>
+<p><span class="math inline">\(A\cap B=\emptyset\nRightarrow\)</span>
+<span class="math inline">\(A\)</span>、<span
+class="math inline">\(B\)</span> 独立</p>
+<p><span class="math inline">\(A\)</span>、<span
+class="math inline">\(B\)</span> 独立 <span
+class="math inline">\(\nRightarrow\bar{A}\)</span>、<span
+class="math inline">\(B\)</span> 独立</p>
 <p>互不相容（交集为空）、互逆根据事件定义，独立根据概率定义</p>
-<h3 id="公式"><a href="#公式" class="headerlink" title="公式"></a>公式</h3><p>加法公式：$P(A+B)=P(A)+P(B)-P(AB)$ </p>
-<p>条件概率：$P(A|B)=\dfrac{P(AB)}{P(B)}$ </p>
-<p>全概率公式：$P(A)=\sum\limits<em>{i=1}^nP(B_i)P(A|B_i)$，其中 $\sum\limits</em>{i=1}^nP(B_i)=S$、$P(B_i)&gt;0$ 且 $B_i$ 互不相容</p>
-<p>另有 $P(A)=P(AB)+P(A\bar{B})$ </p>
-<p>贝叶斯公式：$P(A|B)=\dfrac{P(A)P(B|A)}{P(B)}=\dfrac{P(A)P(B|A)}{P(A)P(B|A)+P(\bar{A})P(B|\bar{A})}$ </p>
-<h2 id="随机变量及其分布"><a href="#随机变量及其分布" class="headerlink" title="随机变量及其分布"></a>随机变量及其分布</h2><h3 id="一维随机变量"><a href="#一维随机变量" class="headerlink" title="一维随机变量"></a>一维随机变量</h3><h4 id="两点分布"><a href="#两点分布" class="headerlink" title="两点分布"></a>两点分布</h4><h4 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h4><p>$P{X=k}=e^{-\lambda}\dfrac{\lambda^k}{k!},k=0,1,2…$ 其中 $\lambda&gt;0$，记作 $X\sim\Pi(\lambda)$ </p>
-<p>重要公式：$e^x=\sum\limits_{k=0}^{+\infty}\dfrac{x^k}{k!}$ </p>
-<h4 id="几何分布"><a href="#几何分布" class="headerlink" title="几何分布"></a>几何分布</h4><p>n次伯努利实验中，实验k次才成功一次的概率</p>
-<p>$P{x=k}=(1-p)^{k-1}p,k=1,2,…$ ，记为 $X\sim GE(p)$ </p>
-<h4 id="超几何分布"><a href="#超几何分布" class="headerlink" title="超几何分布"></a>超几何分布</h4><p>书上定义：</p>
+<h3 id="公式">公式</h3>
+<p>加法公式：<span
+class="math inline">\(P(A+B)=P(A)+P(B)-P(AB)\)</span></p>
+<p>条件概率：<span
+class="math inline">\(P(A|B)=\dfrac{P(AB)}{P(B)}\)</span></p>
+<p>全概率公式：<span
+class="math inline">\(P(A)=\sum\limits_{i=1}^nP(B_i)P(A|B_i)\)</span>，其中
+<span class="math inline">\(\sum\limits_{i=1}^nP(B_i)=S\)</span>、<span
+class="math inline">\(P(B_i)&gt;0\)</span> 且 <span
+class="math inline">\(B_i\)</span> 互不相容</p>
+<p>另有 <span class="math inline">\(P(A)=P(AB)+P(A\bar{B})\)</span></p>
+<p>贝叶斯公式：<span
+class="math inline">\(P(A|B)=\dfrac{P(A)P(B|A)}{P(B)}=\dfrac{P(A)P(B|A)}{P(A)P(B|A)+P(\bar{A})P(B|\bar{A})}\)</span></p>
+<h2 id="随机变量及其分布">随机变量及其分布</h2>
+<h3 id="一维随机变量">一维随机变量</h3>
+<h4 id="两点分布">两点分布</h4>
+<h4 id="泊松分布">泊松分布</h4>
+<p><span
+class="math inline">\(P\{X=k\}=e^{-\lambda}\dfrac{\lambda^k}{k!},k=0,1,2...\)</span>
+其中 <span class="math inline">\(\lambda&gt;0\)</span>，记作 <span
+class="math inline">\(X\sim\Pi(\lambda)\)</span></p>
+<p>重要公式：<span
+class="math inline">\(e^x=\sum\limits_{k=0}^{+\infty}\dfrac{x^k}{k!}\)</span></p>
+<h4 id="几何分布">几何分布</h4>
+<p>n次伯努利实验中，实验k次才成功一次的概率</p>
+<p><span class="math inline">\(P\{x=k\}=(1-p)^{k-1}p,k=1,2,...\)</span>
+，记为 <span class="math inline">\(X\sim GE(p)\)</span></p>
+<h4 id="超几何分布">超几何分布</h4>
+<p>书上定义：</p>
 <p>M件正品，N件次品，从中任意取n件，取到的次品数X。</p>
-<p>$P{X=k}=\dfrac{C<em>N^kC_M^{n-k}}{C</em>{M+N}^n},k=0,1,2…l,l=\min{n,N}$ </p>
+<p><span
+class="math inline">\(P\{X=k\}=\dfrac{C_N^kC_M^{n-k}}{C_{M+N}^n},k=0,1,2...l,l=\min\{n,N\}\)</span></p>
 <p>讲义、高中、百度百科定义：</p>
 <p>N件产品，M件次品，从中任意取n件，取到的次品数X。</p>
-<p>$P{X=k}=\dfrac{C<em>M^kC</em>{N-M}^{n-k}}{C_N^n},k=0,1,2…l,l=\min{n,M}$ ，记为 $X\sim H(n,M,N)$ </p>
-<p>N、M较大时，可用二项分布逼近，$p=\dfrac{M}{N}$ </p>
-<h4 id="二项分布"><a href="#二项分布" class="headerlink" title="二项分布"></a>二项分布</h4><p>$P{X=k}=C_n^kp^k(1-p)^{n-k}$ ，记作 $X\sim B(n,p)$ </p>
-<p>当n很大、p较小时，二项分布近似于泊松分布，且有 $C_n^kp^k(1-p)^{n-k}\approx\dfrac{e^{-\lambda}\lambda^k}{k!}$，其中 $\lambda=np$ </p>
-<h4 id="均匀分布"><a href="#均匀分布" class="headerlink" title="均匀分布"></a>均匀分布</h4><h4 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h4><p>$f(x)=\begin{cases}\lambda e^{-\lambda x}&amp;x\geqslant0\0&amp;x<0\end{cases}$ ，其中 $\lambda>0$ 为常数，称服从参数为 $\lambda$ 的指数分布</p>
+<p><span
+class="math inline">\(P\{X=k\}=\dfrac{C_M^kC_{N-M}^{n-k}}{C_N^n},k=0,1,2...l,l=\min\{n,M\}\)</span>
+，记为 <span class="math inline">\(X\sim H(n,M,N)\)</span></p>
+<p>N、M较大时，可用二项分布逼近，<span
+class="math inline">\(p=\dfrac{M}{N}\)</span></p>
+<h4 id="二项分布">二项分布</h4>
+<p><span class="math inline">\(P\{X=k\}=C_n^kp^k(1-p)^{n-k}\)</span>
+，记作 <span class="math inline">\(X\sim B(n,p)\)</span></p>
+<p>当n很大、p较小时，二项分布近似于泊松分布，且有 <span
+class="math inline">\(C_n^kp^k(1-p)^{n-k}\approx\dfrac{e^{-\lambda}\lambda^k}{k!}\)</span>，其中
+<span class="math inline">\(\lambda=np\)</span></p>
+<h4 id="均匀分布">均匀分布</h4>
+<h4 id="指数分布">指数分布</h4>
+<p><span class="math inline">\(f(x)=\begin{cases}\lambda e^{-\lambda
+x}&amp;x\geqslant0\\0&amp;x&lt;0\end{cases}\)</span> ，其中 <span
+class="math inline">\(\lambda&gt;0\)</span> 为常数，称服从参数为 <span
+class="math inline">\(\lambda\)</span> 的指数分布</p>
 <p>指数分布具有无后效性</p>
-<h4 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h4><p>$f(x)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{-\tfrac{(x-\mu)^2}{2\sigma^2}},-\infty&lt;x&lt;+\infty$ ，记作 $X\sim N(\mu,\sigma^2)$ </p>
-<p>重要公式：$\int_{-\infty}^{+\infty}e^{-x^2}dx=\sqrt{\pi}$ </p>
-<p>$F(x)=\Phi(\frac{x-\mu}{\sigma})$ </p>
-<p>$\Gamma(x)=\int_0^{+\infty}t^{x-1}e^{-t}dt$ ，$\Gamma(x+1)=x\Gamma(x)$ ，$\Gamma(n)=(n-1)!$ ，$\Gamma(\frac{1}{2})=\sqrt{\pi}$ </p>
-<h3 id="二维随机变量"><a href="#二维随机变量" class="headerlink" title="二维随机变量"></a>二维随机变量</h3><p>二维正态分布：</p>
-<p>$f(x,y)=\dfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}e^{-\tfrac{1}{2(1-\rho^2)}[(\tfrac{x-\mu_1}{\sigma_1})^2-2\rho\tfrac{x-\mu_1}{\sigma_1}\tfrac{y-\mu_2}{\sigma_2}+(\tfrac{y-\mu_2}{\sigma_2})^2]}$  ，$(X,Y)\sim N(\mu_1,\sigma_1^2;\mu_2,\sigma_2^2;\rho)$ </p>
-<p>条件分布：$F<em>{X|Y}(x)=\int</em>{-\infty}^{x}\dfrac{f(u,y)}{f<em>Y(y)}du,f</em>{X|Y}(x)=\dfrac{f(x,y)}{f_Y(y)}$  </p>
-<p>X、Y独立：$F(x,y)=F_X(x)F_Y(y),f(x,y)=f_X(x)f_Y(y)$，并且任意 $U=g(X),V=f(Y)$，U,V相互独立</p>
-<h3 id="复合随机变量"><a href="#复合随机变量" class="headerlink" title="复合随机变量"></a>复合随机变量</h3><h4 id="一般方法"><a href="#一般方法" class="headerlink" title="一般方法"></a>一般方法</h4><ul>
-<li>一维：记 $Y=g(X),D_y={x|g(x)\leqslant y}=g^{-1}{(-\infty,y]}$，则有</li>
+<h4 id="正态分布">正态分布</h4>
+<p><span
+class="math inline">\(f(x)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{-\tfrac{(x-\mu)^2}{2\sigma^2}},-\infty&lt;x&lt;+\infty\)</span>
+，记作 <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span></p>
+<p>重要公式：<span
+class="math inline">\(\int_{-\infty}^{+\infty}e^{-x^2}dx=\sqrt{\pi}\)</span></p>
+<p><span
+class="math inline">\(F(x)=\Phi(\frac{x-\mu}{\sigma})\)</span></p>
+<p><span
+class="math inline">\(\Gamma(x)=\int_0^{+\infty}t^{x-1}e^{-t}dt\)</span>
+，<span class="math inline">\(\Gamma(x+1)=x\Gamma(x)\)</span> ，<span
+class="math inline">\(\Gamma(n)=(n-1)!\)</span> ，<span
+class="math inline">\(\Gamma(\frac{1}{2})=\sqrt{\pi}\)</span></p>
+<h3 id="二维随机变量">二维随机变量</h3>
+<p>二维正态分布：</p>
+<p><span
+class="math inline">\(f(x,y)=\dfrac{1}{2\pi\sigma_1\sigma_2\sqrt{1-\rho^2}}e^{-\tfrac{1}{2(1-\rho^2)}[(\tfrac{x-\mu_1}{\sigma_1})^2-2\rho\tfrac{x-\mu_1}{\sigma_1}\tfrac{y-\mu_2}{\sigma_2}+(\tfrac{y-\mu_2}{\sigma_2})^2]}\)</span>
+，<span class="math inline">\((X,Y)\sim
+N(\mu_1,\sigma_1^2;\mu_2,\sigma_2^2;\rho)\)</span></p>
+<p>条件分布：<span
+class="math inline">\(F_{X|Y}(x)=\int_{-\infty}^{x}\dfrac{f(u,y)}{f_Y(y)}du,f_{X|Y}(x)=\dfrac{f(x,y)}{f_Y(y)}\)</span></p>
+<p>X、Y独立：<span
+class="math inline">\(F(x,y)=F_X(x)F_Y(y),f(x,y)=f_X(x)f_Y(y)\)</span>，并且任意
+<span class="math inline">\(U=g(X),V=f(Y)\)</span>，U,V相互独立</p>
+<h3 id="复合随机变量">复合随机变量</h3>
+<h4 id="一般方法">一般方法</h4>
+<ul>
+<li>一维：记 <span class="math inline">\(Y=g(X),D_y=\{x|g(x)\leqslant
+y\}=g^{-1}\{(-\infty,y]\}\)</span>，则有</li>
 </ul>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[
 \begin{aligned}
-F_Y(y)&=p\{Y\leqslant y\}=P\{g(X)\leqslant y\}\\
-&=P\{X\in D_y\}=\int_{D_y}f(x)dx\\
-f_Y(y)&=F_Y(y)'
-\end{aligned}</script><ul>
-<li>二维：记 $Z=g(X,Y),D_z={(x,y)|g(x,y\leqslant z)}$，则有</li>
+F_Y(y)&amp;=p\{Y\leqslant y\}=P\{g(X)\leqslant y\}\\
+&amp;=P\{X\in D_y\}=\int_{D_y}f(x)dx\\
+f_Y(y)&amp;=F_Y(y)&#39;
+\end{aligned}
+\]</span></p>
+<ul>
+<li>二维：记 <span
+class="math inline">\(Z=g(X,Y),D_z=\{(x,y)|g(x,y\leqslant
+z)\}\)</span>，则有</li>
 </ul>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[
 \begin{aligned}
-F_Z(z)&=p\{Z\leqslant z\}=P\{g(X,Y)\leqslant z\}\\
-&=P\{(X,Y)\in D_z\}=\iint\limits_{D_y}f(x,y)dxdy\\
-f_Z(z)&=F_Z(z)'
-\end{aligned}</script><h4 id="特殊方法"><a href="#特殊方法" class="headerlink" title="特殊方法"></a>特殊方法</h4><ul>
-<li><p>一维概率密度，$Y=g(X)$ 且g严格单调，有 $f_Y(y)=f(g^{-1}(y))\cdot|(g^{-1}(y))’|$ </p>
-</li>
-<li><p>$Z=X+Y$ </p>
-</li>
+F_Z(z)&amp;=p\{Z\leqslant z\}=P\{g(X,Y)\leqslant z\}\\
+&amp;=P\{(X,Y)\in D_z\}=\iint\limits_{D_y}f(x,y)dxdy\\
+f_Z(z)&amp;=F_Z(z)&#39;
+\end{aligned}
+\]</span></p>
+<h4 id="特殊方法">特殊方法</h4>
+<ul>
+<li><p>一维概率密度，<span class="math inline">\(Y=g(X)\)</span>
+且g严格单调，有 <span
+class="math inline">\(f_Y(y)=f(g^{-1}(y))\cdot|(g^{-1}(y))&#39;|\)</span></p></li>
+<li><p><span class="math inline">\(Z=X+Y\)</span></p></li>
 </ul>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[
 \begin{aligned}
-F_Z(z)&=P\{Z\leqslant z\}=P\{X+Y\leqslant z\}\\
-&=\iint\limits_{D_z}f(x,y)dxdy\\
-&=\int_{-\infty}^{+\infty}[\int_{-\infty}^{z-x}f(x,y)dy]dx\\
-&=\int_{-\infty}^{+\infty}[\int_{-\infty}^{z}f(x,t-x)dt]dx\\
-&=\int_{-\infty}^{z}[\int_{-\infty}^{+\infty}f(x,t-x)dx]dt\\
-f_Z(z)&=\int_{-\infty}^{+\infty}f(x,z-x)dx
-\end{aligned}</script><ul>
-<li>$Z=\max{X,Y}$ </li>
+F_Z(z)&amp;=P\{Z\leqslant z\}=P\{X+Y\leqslant z\}\\
+&amp;=\iint\limits_{D_z}f(x,y)dxdy\\
+&amp;=\int_{-\infty}^{+\infty}[\int_{-\infty}^{z-x}f(x,y)dy]dx\\
+&amp;=\int_{-\infty}^{+\infty}[\int_{-\infty}^{z}f(x,t-x)dt]dx\\
+&amp;=\int_{-\infty}^{z}[\int_{-\infty}^{+\infty}f(x,t-x)dx]dt\\
+f_Z(z)&amp;=\int_{-\infty}^{+\infty}f(x,z-x)dx
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Z=\max\{X,Y\}\)</span></li>
 </ul>
-<script type="math/tex; mode=display">
+<p><span class="math display">\[
 \begin{aligned}
-F_{\max}(z)&=P\{Z\leqslant z\}=P\{\max\{X,Y\}\leqslant z\}\\
-&=P\{X\leqslant z,Y\leqslant z\}=F(z,z)\\
-&=\int_{-\infty}^z\int_{-\infty}^zf(x,y)dxdy\\
-&=F_X(z)\cdot F_Y(z)（X与Y独立）
-\end{aligned}</script><ul>
-<li>$Z=\min{X,Y}$ </li>
+F_{\max}(z)&amp;=P\{Z\leqslant z\}=P\{\max\{X,Y\}\leqslant z\}\\
+&amp;=P\{X\leqslant z,Y\leqslant z\}=F(z,z)\\
+&amp;=\int_{-\infty}^z\int_{-\infty}^zf(x,y)dxdy\\
+&amp;=F_X(z)\cdot F_Y(z)（X与Y独立）
+\end{aligned}
+\]</span></p>
+<ul>
+<li><span class="math inline">\(Z=\min\{X,Y\}\)</span></li>
 </ul>
 <p>法一：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
+$$
+<span class="math display">\[\begin{aligned}
 
-F_{\min}(z)&=P\{Z\leqslant z\}=P\{\min\{X,Y\}\leqslant z\}\\
+F_{\min}(z)&amp;=P\{Z\leqslant z\}=P\{\min\{X,Y\}\leqslant z\}\\
 
-&=P(\{X\leqslant z\}+\{Y\leqslant z\})\\
+&amp;=P(\{X\leqslant z\}+\{Y\leqslant z\})\\
 
-&=P\{X\leqslant z\}+P\{Y\leqslant z\}-P\{X\leqslant z,Y\leqslant z\}\\
+&amp;=P\{X\leqslant z\}+P\{Y\leqslant z\}-P\{X\leqslant z,Y\leqslant
+z\}\\
 
-&=F_X(z)+F_Y(z)-F(z,z)
+&amp;=F_X(z)+F_Y(z)-F(z,z)
 
-\end{aligned}</script><p>法二：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
+\end{aligned}\]</span>
+<p>$$</p>
+<p>法二：</p>
+$$
+<span class="math display">\[\begin{aligned}
 
-F_{\min}(z)&=P\{Z\leqslant z\}=P\{\min\{X,Y\}\leqslant z\}\\
+F_{\min}(z)&amp;=P\{Z\leqslant z\}=P\{\min\{X,Y\}\leqslant z\}\\
 
-&=1-P\{\min\{X,Y\}>z\}=1-P\{X>z,Y>z\}\\
+&amp;=1-P\{\min\{X,Y\}&gt;z\}=1-P\{X&gt;z,Y&gt;z\}\\
 
-&=1-\iint\limits_{x>z\atop y>z}f(x,y)dxdy\\
+&amp;=1-\iint\limits_{x&gt;z\atop y&gt;z}f(x,y)dxdy\\
 
-&=1-[1-F_X(z)]\cdot[1-F_Y(z)] （X，Y独立）
+&amp;=1-[1-F_X(z)]\cdot[1-F_Y(z)] （X，Y独立）
 
-\end{aligned}</script><h4 id="特殊分布"><a href="#特殊分布" class="headerlink" title="特殊分布"></a>特殊分布</h4><p>若 $X<em>i\sim N(\mu_i,\sigma_i^2)$，且<strong>相互独立</strong>，则有 $Z=\sum\limits</em>{i=1}^nk<em>iX_i+b\sim N(\sum\limits</em>{i=1}^nk<em>i\mu_i,\sum\limits</em>{i=1}^nk_i^2\sigma_i^2)$ </p>
-<p>若 $X\sim \Pi(\lambda_1),Y\sim\Pi(\lambda_2)$，且<strong>相互独立</strong>，则有 $Z=X+Y\sim\Pi(\lambda_1+\lambda_2)$ </p>
-<h2 id="随机变量的数字特征"><a href="#随机变量的数字特征" class="headerlink" title="随机变量的数字特征"></a>随机变量的数字特征</h2><h3 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h3><h4 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h4><p>离散：$E(X)=EX=\sum\limits_{k=1}^{+\infty}x_kp_k$ </p>
-<p>连续：$EX=\int_{-\infty}^{+\infty}xf(x)dx$ </p>
-<p>二维：$E(XY)=\sum\limits<em>i\sum\limits_jx_iy_jp</em>{ij}=\int<em>{-\infty}^{+\infty}\int</em>{-\infty}^{+\infty}xyf(x,y)dxdy$ </p>
-<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><ul>
-<li><p>$Y=g(X),则EY=\int_{-\infty}^{+\infty}g(X)f(x)dx$     *要求积分绝对收敛</p>
-</li>
-<li><p>$C$ 为常数，则 $E(C)=C$ </p>
-</li>
-<li><p>$E(CX)=CE(X)$    $E(X+Y)=EX+EY$ </p>
-</li>
-<li><p>若X,Y<strong>独立</strong>，则 $E(XY)=EX\cdot EY$ </p>
-</li>
-</ul>
-<h3 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h3><h4 id="基本定义-1"><a href="#基本定义-1" class="headerlink" title="基本定义"></a>基本定义</h4><p>$DX=D(X)=E(X-EX)^2$ ，$\sqrt{DX}$ 称标准差（均方差）</p>
-<h4 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h4><ul>
-<li><p>$DX=EX^2-(EX)^2$ 非常重要，经常使用！！！</p>
-</li>
-<li><p>$C$ 为常数，$D(C)=0$ </p>
-</li>
-<li><p>$D(CX)=C^2DX$ </p>
-</li>
-<li><p>X,Y<strong>独立</strong>，则 $D(aX+bY+c)=a^2DX+b^2DY$ </p>
-</li>
-<li><p>若 $EX^2$ 存在，则 $k=EX$ 时，有 $\min{E(X-k)^2}=DX$ </p>
-</li>
-</ul>
-<h3 id="其他特征"><a href="#其他特征" class="headerlink" title="其他特征"></a>其他特征</h3><h4 id="协方差"><a href="#协方差" class="headerlink" title="协方差"></a>协方差</h4><p>$cov(X,Y)=E(X-EX)(Y-EY)$ ，可记为 $\sigma_{XY}$ </p>
+\end{aligned}\]</span>
+<p>$$</p>
+<h4 id="特殊分布">特殊分布</h4>
+<p>若 <span class="math inline">\(X_i\sim
+N(\mu_i,\sigma_i^2)\)</span>，且<strong>相互独立</strong>，则有 <span
+class="math inline">\(Z=\sum\limits_{i=1}^nk_iX_i+b\sim
+N(\sum\limits_{i=1}^nk_i\mu_i,\sum\limits_{i=1}^nk_i^2\sigma_i^2)\)</span></p>
+<p>若 <span class="math inline">\(X\sim
+\Pi(\lambda_1),Y\sim\Pi(\lambda_2)\)</span>，且<strong>相互独立</strong>，则有
+<span
+class="math inline">\(Z=X+Y\sim\Pi(\lambda_1+\lambda_2)\)</span></p>
+<h2 id="随机变量的数字特征">随机变量的数字特征</h2>
+<h3 id="期望">期望</h3>
+<h4 id="基本定义">基本定义</h4>
+<p>离散：<span
+class="math inline">\(E(X)=EX=\sum\limits_{k=1}^{+\infty}x_kp_k\)</span></p>
+<p>连续：<span
+class="math inline">\(EX=\int_{-\infty}^{+\infty}xf(x)dx\)</span></p>
+<p>二维：<span
+class="math inline">\(E(XY)=\sum\limits_i\sum\limits_jx_iy_jp_{ij}=\int_{-\infty}^{+\infty}\int_{-\infty}^{+\infty}xyf(x,y)dxdy\)</span></p>
+<h4 id="性质">性质</h4>
 <ul>
-<li><p>计算：$cov(X,Y)=E(XY)-EXEY$ </p>
-</li>
-<li><p>对称性：$cov(X,Y)=cov(Y,X)$ ，且 $cov(X,X)=DX$ </p>
-</li>
-<li><p>线性：$cov(aX,bY)=abcov(X,Y)$ </p>
-</li>
-<li><p>求和：$cov(\sum X_i,\sum Y_j)=\sum_i\sum_jcov(X_i,Y_j)$ </p>
-</li>
-<li><p>$D(\sum X<em>i)=\sum D(X_i)+\sum\sum</em>{i\ne j}cov(X_i,Y_j)$  </p>
-</li>
+<li><p><span
+class="math inline">\(Y=g(X),则EY=\int_{-\infty}^{+\infty}g(X)f(x)dx\)</span>
+*要求积分绝对收敛</p></li>
+<li><p><span class="math inline">\(C\)</span> 为常数，则 <span
+class="math inline">\(E(C)=C\)</span></p></li>
+<li><p><span class="math inline">\(E(CX)=CE(X)\)</span> <span
+class="math inline">\(E(X+Y)=EX+EY\)</span></p></li>
+<li><p>若X,Y<strong>独立</strong>，则 <span
+class="math inline">\(E(XY)=EX\cdot EY\)</span></p></li>
 </ul>
-<h4 id="相关系数"><a href="#相关系数" class="headerlink" title="相关系数"></a>相关系数</h4><p>$\rho(X,Y)=\dfrac{cov(X,Y)}{\sqrt{DXDY}}$， 记为 $\rho_{XY}$  </p>
+<h3 id="方差">方差</h3>
+<h4 id="基本定义-1">基本定义</h4>
+<p><span class="math inline">\(DX=D(X)=E(X-EX)^2\)</span> ，<span
+class="math inline">\(\sqrt{DX}\)</span> 称标准差（均方差）</p>
+<h4 id="性质-1">性质</h4>
 <ul>
-<li><p>独立一定不相关，不相关不一定独立</p>
-</li>
-<li><p>二维正态分布下，不相关=独立</p>
-</li>
+<li><p><span class="math inline">\(DX=EX^2-(EX)^2\)</span>
+非常重要，经常使用！！！</p></li>
+<li><p><span class="math inline">\(C\)</span> 为常数，<span
+class="math inline">\(D(C)=0\)</span></p></li>
+<li><p><span class="math inline">\(D(CX)=C^2DX\)</span></p></li>
+<li><p>X,Y<strong>独立</strong>，则 <span
+class="math inline">\(D(aX+bY+c)=a^2DX+b^2DY\)</span></p></li>
+<li><p>若 <span class="math inline">\(EX^2\)</span> 存在，则 <span
+class="math inline">\(k=EX\)</span> 时，有 <span
+class="math inline">\(\min\{E(X-k)^2\}=DX\)</span></p></li>
 </ul>
-<h3 id="矩、矩母函数、协方差矩阵"><a href="#矩、矩母函数、协方差矩阵" class="headerlink" title="*矩、矩母函数、协方差矩阵"></a>*矩、矩母函数、协方差矩阵</h3><p>$EX^n=\int_{-\infty}^{+\infty}x^nf(x)dx$ 为X的n阶矩，$E(X-EX)^n$ 称X的n阶中心矩</p>
-<p>X的期望存在，则X的矩母函数定义为 $M_X(s)=E(e^{sX})$ ，记为 $M(s)$ </p>
-<p>$EX^n=\dfrac{d^nM(s)}{ds^n}|_{s=0}$ </p>
-<p>正态分布 $X\sim N(0,\sigma^2)$ ，则有</p>
-<p>$EX^k=\dfrac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{+\infty}x^ke^{-\tfrac{x^2}{2\sigma^2}}dx=\sqrt{\frac{2}{\pi}}\sigma^k2^{\frac{(k-1)}{2}}\Gamma(\frac{k+1}{2})=\sigma^k(k-1)(k-3)…1$  </p>
-<p>对n维随机向量 $(X<em>1,X_2,…,X_n)$ ，若 $C</em>{ij}=Cov(X<em>i,X_j)=E[(X_i-EX_i)(X_j-EX_j)]$ 存在，则矩阵 $C=(C</em>{ij})_{n\times n}$ 称n维随机向量的协方差矩阵</p>
-<p>设 $X=(x_1,x_2,…,x_n)^T,U=(\mu_1,\mu_2,…,\mu_n)^T,C$ ，且n维随机变量 $(X_1,X_2,…,X_n)$ 概率密度满足 $f(x_1,x_2,…,x_n)=\dfrac{1}{(2\pi)^{\tfrac{n}{2}}(\det C)^{\tfrac{1}{2}}}\exp[-\dfrac{1}{2}(X-U)^TC^{-1}(X-U)]$ ，则称n维正态随机变量</p>
-<h3 id="常见分布的数字特征"><a href="#常见分布的数字特征" class="headerlink" title="常见分布的数字特征"></a>常见分布的数字特征</h3><div class="table-container">
+<h3 id="其他特征">其他特征</h3>
+<h4 id="协方差">协方差</h4>
+<p><span class="math inline">\(cov(X,Y)=E(X-EX)(Y-EY)\)</span> ，可记为
+<span class="math inline">\(\sigma_{XY}\)</span></p>
+<ul>
+<li><p>计算：<span
+class="math inline">\(cov(X,Y)=E(XY)-EXEY\)</span></p></li>
+<li><p>对称性：<span class="math inline">\(cov(X,Y)=cov(Y,X)\)</span>
+，且 <span class="math inline">\(cov(X,X)=DX\)</span></p></li>
+<li><p>线性：<span
+class="math inline">\(cov(aX,bY)=abcov(X,Y)\)</span></p></li>
+<li><p>求和：<span class="math inline">\(cov(\sum X_i,\sum
+Y_j)=\sum_i\sum_jcov(X_i,Y_j)\)</span></p></li>
+<li><p><span class="math inline">\(D(\sum X_i)=\sum
+D(X_i)+\sum\sum_{i\ne j}cov(X_i,Y_j)\)</span></p></li>
+</ul>
+<h4 id="相关系数">相关系数</h4>
+<p><span
+class="math inline">\(\rho(X,Y)=\dfrac{cov(X,Y)}{\sqrt{DXDY}}\)</span>，
+记为 <span class="math inline">\(\rho_{XY}\)</span></p>
+<ul>
+<li><p>独立一定不相关，不相关不一定独立</p></li>
+<li><p>二维正态分布下，不相关=独立</p></li>
+</ul>
+<h3 id="矩矩母函数协方差矩阵">*矩、矩母函数、协方差矩阵</h3>
+<p><span
+class="math inline">\(EX^n=\int_{-\infty}^{+\infty}x^nf(x)dx\)</span>
+为X的n阶矩，<span class="math inline">\(E(X-EX)^n\)</span>
+称X的n阶中心矩</p>
+<p>X的期望存在，则X的矩母函数定义为 <span
+class="math inline">\(M_X(s)=E(e^{sX})\)</span> ，记为 <span
+class="math inline">\(M(s)\)</span></p>
+<p><span
+class="math inline">\(EX^n=\dfrac{d^nM(s)}{ds^n}|_{s=0}\)</span></p>
+<p>正态分布 <span class="math inline">\(X\sim N(0,\sigma^2)\)</span>
+，则有</p>
+<p><span
+class="math inline">\(EX^k=\dfrac{1}{\sqrt{2\pi}\sigma}\int_{-\infty}^{+\infty}x^ke^{-\tfrac{x^2}{2\sigma^2}}dx=\sqrt{\frac{2}{\pi}}\sigma^k2^{\frac{(k-1)}{2}}\Gamma(\frac{k+1}{2})=\sigma^k(k-1)(k-3)...1\)</span></p>
+<p>对n维随机向量 <span class="math inline">\((X_1,X_2,...,X_n)\)</span>
+，若 <span
+class="math inline">\(C_{ij}=Cov(X_i,X_j)=E[(X_i-EX_i)(X_j-EX_j)]\)</span>
+存在，则矩阵 <span class="math inline">\(C=(C_{ij})_{n\times n}\)</span>
+称n维随机向量的协方差矩阵</p>
+<p>设 <span
+class="math inline">\(X=(x_1,x_2,...,x_n)^T,U=(\mu_1,\mu_2,...,\mu_n)^T,C\)</span>
+，且n维随机变量 <span class="math inline">\((X_1,X_2,...,X_n)\)</span>
+概率密度满足 <span
+class="math inline">\(f(x_1,x_2,...,x_n)=\dfrac{1}{(2\pi)^{\tfrac{n}{2}}(\det
+C)^{\tfrac{1}{2}}}\exp[-\dfrac{1}{2}(X-U)^TC^{-1}(X-U)]\)</span>
+，则称n维正态随机变量</p>
+<h3 id="常见分布的数字特征">常见分布的数字特征</h3>
 <table>
+
 <thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">形式</th>
-<th style="text-align:center">分布律/概率密度</th>
-<th style="text-align:center">EX</th>
-<th style="text-align:center">DX</th>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">形式</th>
+<th style="text-align: center;">分布律/概率密度</th>
+<th style="text-align: center;">EX</th>
+<th style="text-align: center;">DX</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:center">两点分布</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">$P(x=0)=1-p,P(x=1)=p$</td>
-<td style="text-align:center">p</td>
-<td style="text-align:center">p(1-p)</td>
+<tr class="odd">
+<td style="text-align: center;">两点分布</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span
+class="math inline">\(P(x=0)=1-p,P(x=1)=p\)</span></td>
+<td style="text-align: center;">p</td>
+<td style="text-align: center;">p(1-p)</td>
 </tr>
-<tr>
-<td style="text-align:center">二项分布</td>
-<td style="text-align:center">$X\sim B(n,p)$</td>
-<td style="text-align:center">$P(x=k)=C_n^kp^n(1-p)^{n-k}$</td>
-<td style="text-align:center">np</td>
-<td style="text-align:center">np(1-p)</td>
+<tr class="even">
+<td style="text-align: center;">二项分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+B(n,p)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(P(x=k)=C_n^kp^n(1-p)^{n-k}\)</span></td>
+<td style="text-align: center;">np</td>
+<td style="text-align: center;">np(1-p)</td>
 </tr>
-<tr>
-<td style="text-align:center">泊松分布</td>
-<td style="text-align:center">$X\sim \Pi(\lambda)$</td>
-<td style="text-align:center">$P{X=k}=e^{-\lambda}\frac{\lambda^k}{k!}$</td>
-<td style="text-align:center">$\lambda$</td>
-<td style="text-align:center">$\lambda$</td>
+<tr class="odd">
+<td style="text-align: center;">泊松分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+\Pi(\lambda)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(P\{X=k\}=e^{-\lambda}\frac{\lambda^k}{k!}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\lambda\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\lambda\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">几何分布</td>
-<td style="text-align:center">$X\sim GE(p)$</td>
-<td style="text-align:center">$P{x=k}=(1-p)^{k-1}p$</td>
-<td style="text-align:center">$\dfrac{1}{p}$</td>
-<td style="text-align:center">$\dfrac{1-p}{p^2}$</td>
+<tr class="even">
+<td style="text-align: center;">几何分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+GE(p)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(P\{x=k\}=(1-p)^{k-1}p\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{1}{p}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{1-p}{p^2}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">超几何分布</td>
-<td style="text-align:center">$X\sim H(n,M,N)$</td>
-<td style="text-align:center">$P{X=k}=\dfrac{C<em>M^kC</em>{N-M}^{n-k}}{C_N^n}$</td>
-<td style="text-align:center">$\dfrac{nM}{N}$</td>
-<td style="text-align:center">$\dfrac{nM}{N}(1-\dfrac{M}{N})\dfrac{N-n}{N-1}$</td>
+<tr class="odd">
+<td style="text-align: center;">超几何分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+H(n,M,N)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(P\{X=k\}=\dfrac{C_M^kC_{N-M}^{n-k}}{C_N^n}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{nM}{N}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{nM}{N}(1-\dfrac{M}{N})\dfrac{N-n}{N-1}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">均匀分布</td>
-<td style="text-align:center">$X\sim U(a,b)$</td>
-<td style="text-align:center">$f(x)=\dfrac{1}{b-a}$</td>
-<td style="text-align:center">$\dfrac{a+b}{2}$</td>
-<td style="text-align:center">$\dfrac{(b-a)^2}{12}$</td>
+<tr class="even">
+<td style="text-align: center;">均匀分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+U(a,b)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f(x)=\dfrac{1}{b-a}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{a+b}{2}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{(b-a)^2}{12}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">指数分布</td>
-<td style="text-align:center"></td>
-<td style="text-align:center">$f(x)=\lambda e^{-\lambda x},x\geqslant0$</td>
-<td style="text-align:center">$\dfrac{1}{\lambda}$</td>
-<td style="text-align:center">$\dfrac{1}{\lambda^2}$</td>
+<tr class="odd">
+<td style="text-align: center;">指数分布</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><span class="math inline">\(f(x)=\lambda
+e^{-\lambda x},x\geqslant0\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{1}{\lambda}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{1}{\lambda^2}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">正态分布</td>
-<td style="text-align:center">$X\sim N(\mu,\sigma^2)$</td>
-<td style="text-align:center">$f(x)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{-\tfrac{(x-\mu)^2}{2\sigma^2}}$</td>
-<td style="text-align:center">$\mu$</td>
-<td style="text-align:center">$\sigma^2$</td>
+<tr class="even">
+<td style="text-align: center;">正态分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+N(\mu,\sigma^2)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f(x)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{-\tfrac{(x-\mu)^2}{2\sigma^2}}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\mu\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\sigma^2\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">卡方分布</td>
-<td style="text-align:center">$X\sim \chi(n)$</td>
-<td style="text-align:center">$f(x)=\dfrac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\tfrac{n}{2}-1}e^{-\tfrac{x}{2}}$</td>
-<td style="text-align:center">n</td>
-<td style="text-align:center">2n</td>
+<tr class="odd">
+<td style="text-align: center;">卡方分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+\chi(n)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f(x)=\dfrac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\tfrac{n}{2}-1}e^{-\tfrac{x}{2}}\)</span></td>
+<td style="text-align: center;">n</td>
+<td style="text-align: center;">2n</td>
 </tr>
-<tr>
-<td style="text-align:center">t分布</td>
-<td style="text-align:center">$X\sim t(n)$</td>
-<td style="text-align:center">$f(t)=\dfrac{\Gamma(\frac{n+1}{2})}{\sqrt{n\pi}\Gamma(\frac{n}{2})}(1+\dfrac{t^2}{n})^{-\tfrac{n+1}{2}}$</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">$\dfrac{n}{n-2}$</td>
+<tr class="even">
+<td style="text-align: center;">t分布</td>
+<td style="text-align: center;"><span class="math inline">\(X\sim
+t(n)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f(t)=\dfrac{\Gamma(\frac{n+1}{2})}{\sqrt{n\pi}\Gamma(\frac{n}{2})}(1+\dfrac{t^2}{n})^{-\tfrac{n+1}{2}}\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><span
+class="math inline">\(\dfrac{n}{n-2}\)</span></td>
 </tr>
 </tbody>
 </table>
-</div>
-<h2 id="不等式与大数定律"><a href="#不等式与大数定律" class="headerlink" title="不等式与大数定律"></a>不等式与大数定律</h2><h3 id="概率不等式"><a href="#概率不等式" class="headerlink" title="概率不等式"></a>概率不等式</h3><p>柯西-许瓦茨不等式：$EX^2EY^2\geqslant(EXY)^2$ </p>
-<p>$(E|X+Y|^2)^{\frac{1}{2}}\leqslant(EX^2)^{\frac{1}{2}}+(EY^2)^{\frac{1}{2}}$ </p>
-<p>琴生不等式：若 $g(x)$ 是凸函数，则 $Eg(X)\geqslant g(EX)$ </p>
-<p>马尔可夫不等式：设随机变量X非负，则任意a&gt;0，k&gt;0，$P(X&gt;a)\leqslant\dfrac{EX^k}{a^k}$ </p>
-<p>切比雪夫不等式：设随机变量均值 $\mu$，方差 $\sigma^2$，则任意a&gt;0，$P(|X-\mu|\geqslant k)\leqslant\dfrac{\sigma^2}{k^2}$ </p>
-<p>弱大数定律：设 $X<em>i$ 是独立同分布的随机变量列，期望方差存在，则对任意 $\epsilon&gt;0$，  $\lim\limits</em>{n\to\infty}P(|\overline{X<em>n}-\mu|\geqslant\epsilon)=0$。其中，$\overline{X_n}=\dfrac{1}{n}\sum\limits</em>{i=1}^{i=n}X_i$ </p>
-<p>强大数定律：有限四阶矩存在，$P(\lim\limits_{n\to\infty}\overline{X_n}=\mu)=1$ </p>
-<h3 id="随机变量的极限"><a href="#随机变量的极限" class="headerlink" title="*随机变量的极限"></a>*随机变量的极限</h3><p>依概率收敛：$P(|X_n-X|\geqslant\varepsilon)\to0$，记为 $X_n\xrightarrow{P}X$ </p>
-<p>以概率1收敛：$P(\lim X_n=X)=1$ ，记为 $X_n\xrightarrow{as}X$ </p>
-<p>依分布收敛：$\lim P(X<em>n\leqslant x)=F_X(x),\lim F</em>{X_{n}}(x)=F_X(x)$ ，记为 $X_n\xrightarrow{d}X$ </p>
-<h3 id="中心极限定理"><a href="#中心极限定理" class="headerlink" title="中心极限定理"></a>中心极限定理</h3><p>独立同分布随机变量序列 $X<em>n$ ，期望方差存在，定义 $S_n=\sum\limits</em>{i=1}^{i=n}X_i,\xi_n=\dfrac{S_n-n\mu}{\sqrt{n\sigma^2}}$，则 $\xi_n\xrightarrow{d}N(0,1)$ </p>
-<p>即对充分大的n，可用 $S_n\sim N(n\mu,n\sigma^2)$ 逼近</p>
-<h2 id="统计总体与样本"><a href="#统计总体与样本" class="headerlink" title="统计总体与样本"></a>统计总体与样本</h2><h3 id="样本矩与统计量"><a href="#样本矩与统计量" class="headerlink" title="样本矩与统计量"></a>样本矩与统计量</h3><p>简单随机样本：样本之间相互独立，且与总体同分布</p>
-<p>设 $X_1,X_2,…X_n$ 为来自于总体X的一个样本</p>
-<p>样本均值：$\overline{X}=\dfrac{1}{n}\sum\limits_{i=1}^{n}X_i$ </p>
-<p>样本方差：$S^2=\dfrac{1}{n-1}\sum\limits_{i=1}^n(X_i-\overline{X})^2$ </p>
-<p>样本k阶矩（原点矩）：$A<em>k=\dfrac{1}{n}\sum\limits</em>{i=1}^nX_i^k$ </p>
-<p>样本k阶中心矩：$B<em>k=\dfrac{1}{n}\sum\limits</em>{i=1}^n(X_i-\overline{X})^k$ </p>
+<h2 id="不等式与大数定律">不等式与大数定律</h2>
+<h3 id="概率不等式">概率不等式</h3>
+<p>柯西-许瓦茨不等式：<span
+class="math inline">\(EX^2EY^2\geqslant(EXY)^2\)</span></p>
+<p><span
+class="math inline">\((E|X+Y|^2)^{\frac{1}{2}}\leqslant(EX^2)^{\frac{1}{2}}+(EY^2)^{\frac{1}{2}}\)</span></p>
+<p>琴生不等式：若 <span class="math inline">\(g(x)\)</span> 是凸函数，则
+<span class="math inline">\(Eg(X)\geqslant g(EX)\)</span></p>
+<p>马尔可夫不等式：设随机变量X非负，则任意a&gt;0，k&gt;0，<span
+class="math inline">\(P(X&gt;a)\leqslant\dfrac{EX^k}{a^k}\)</span></p>
+<p>切比雪夫不等式：设随机变量均值 <span
+class="math inline">\(\mu\)</span>，方差 <span
+class="math inline">\(\sigma^2\)</span>，则任意a&gt;0，<span
+class="math inline">\(P(|X-\mu|\geqslant
+k)\leqslant\dfrac{\sigma^2}{k^2}\)</span></p>
+<p>弱大数定律：设 <span class="math inline">\(X_i\)</span>
+是独立同分布的随机变量列，期望方差存在，则对任意 <span
+class="math inline">\(\epsilon&gt;0\)</span>， <span
+class="math inline">\(\lim\limits_{n\to\infty}P(|\overline{X_n}-\mu|\geqslant\epsilon)=0\)</span>。其中，<span
+class="math inline">\(\overline{X_n}=\dfrac{1}{n}\sum\limits_{i=1}^{i=n}X_i\)</span></p>
+<p>强大数定律：有限四阶矩存在，<span
+class="math inline">\(P(\lim\limits_{n\to\infty}\overline{X_n}=\mu)=1\)</span></p>
+<h3 id="随机变量的极限">*随机变量的极限</h3>
+<p>依概率收敛：<span
+class="math inline">\(P(|X_n-X|\geqslant\varepsilon)\to0\)</span>，记为
+<span class="math inline">\(X_n\xrightarrow{P}X\)</span></p>
+<p>以概率1收敛：<span class="math inline">\(P(\lim X_n=X)=1\)</span>
+，记为 <span class="math inline">\(X_n\xrightarrow{as}X\)</span></p>
+<p>依分布收敛：<span class="math inline">\(\lim P(X_n\leqslant
+x)=F_X(x),\lim F_{X_{n}}(x)=F_X(x)\)</span> ，记为 <span
+class="math inline">\(X_n\xrightarrow{d}X\)</span></p>
+<h3 id="中心极限定理">中心极限定理</h3>
+<p>独立同分布随机变量序列 <span class="math inline">\(X_n\)</span>
+，期望方差存在，定义 <span
+class="math inline">\(S_n=\sum\limits_{i=1}^{i=n}X_i,\xi_n=\dfrac{S_n-n\mu}{\sqrt{n\sigma^2}}\)</span>，则
+<span class="math inline">\(\xi_n\xrightarrow{d}N(0,1)\)</span></p>
+<p>即对充分大的n，可用 <span class="math inline">\(S_n\sim
+N(n\mu,n\sigma^2)\)</span> 逼近</p>
+<h2 id="统计总体与样本">统计总体与样本</h2>
+<h3 id="样本矩与统计量">样本矩与统计量</h3>
+<p>简单随机样本：样本之间相互独立，且与总体同分布</p>
+<p>设 <span class="math inline">\(X_1,X_2,...X_n\)</span>
+为来自于总体X的一个样本</p>
+<p>样本均值：<span
+class="math inline">\(\overline{X}=\dfrac{1}{n}\sum\limits_{i=1}^{n}X_i\)</span></p>
+<p>样本方差：<span
+class="math inline">\(S^2=\dfrac{1}{n-1}\sum\limits_{i=1}^n(X_i-\overline{X})^2\)</span></p>
+<p>样本k阶矩（原点矩）：<span
+class="math inline">\(A_k=\dfrac{1}{n}\sum\limits_{i=1}^nX_i^k\)</span></p>
+<p>样本k阶中心矩：<span
+class="math inline">\(B_k=\dfrac{1}{n}\sum\limits_{i=1}^n(X_i-\overline{X})^k\)</span></p>
 <p>以上四个都是随机变量，若用观察值代替，则分别是对应随机变量的观察值</p>
-<p>总体矩：$\mu=EX,\mu_k=EX^k,\nu_k=EX^k$ ，且有 $A_k\xrightarrow{P}\mu_k$ </p>
-<h3 id="常用统计量的分布"><a href="#常用统计量的分布" class="headerlink" title="常用统计量的分布"></a>常用统计量的分布</h3><h4 id="正态分布-1"><a href="#正态分布-1" class="headerlink" title="正态分布"></a>正态分布</h4><p>总体 $X\sim N(\mu,\sigma^2)$ </p>
-<p>$\overline{X}\sim N(\mu,\dfrac{\sigma^2}{n})$ </p>
-<p>$\dfrac{(n-1)}{\sigma^2}S^2\sim\chi^2(n-1)$ ，且样本均值与样本方差相互独立</p>
-<p>$\dfrac{\overline{X}-\mu}{\frac{S}{\sqrt{n}}}\sim t(n-1)$ </p>
-<h4 id="卡方分布"><a href="#卡方分布" class="headerlink" title="卡方分布"></a>卡方分布</h4><p>设 $X<em>1,X_2,…X_n$ 相互独立且都服从标准正态分布，则 $Y=\chi^2=\sum\limits</em>{i=1}^nX_i^2\sim\chi^2(n)$ </p>
-<p>概率密度为 $f(y)=\dfrac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}y^{\tfrac{n}{2}-1}e^{-\tfrac{y}{2}},(y&gt;0);EY=n,DY=2n$ </p>
-<p>若 $X_1\sim\chi^2(n_1),X_2\sim\chi^2(n_2)$ 且 $X_1$ 与 $X_2$ 相互独立，则 $X_1+X_2\sim\chi^2(n_1+n_2)$ </p>
-<h4 id="t分布"><a href="#t分布" class="headerlink" title="t分布"></a>t分布</h4><p>$X\sim N(0,1),Y\sim\chi^2(n)$ ，且X、Y相互独立，则 $T=\dfrac{X}{\sqrt{\frac{Y}{n}}}\sim t(n)$ ，n为自由度</p>
-<p>概率密度为 $f(t)=\dfrac{\Gamma(\frac{n+1}{2})}{\sqrt{n\pi}\Gamma(\frac{n}{2})}(1+\dfrac{t^2}{n})^{-\tfrac{n+1}{2}}$ </p>
-<p>满足 $F(t<em>{\alpha}(n))=\alpha$ 的点 $t</em>{\alpha}(n)$ 称t分布的 $\alpha$ 分位点，$t<em>{1-\alpha}(n)=-t</em>{\alpha}(n)$ </p>
+<p>总体矩：<span
+class="math inline">\(\mu=EX,\mu_k=EX^k,\nu_k=EX^k\)</span> ，且有 <span
+class="math inline">\(A_k\xrightarrow{P}\mu_k\)</span></p>
+<h3 id="常用统计量的分布">常用统计量的分布</h3>
+<h4 id="正态分布-1">正态分布</h4>
+<p>总体 <span class="math inline">\(X\sim N(\mu,\sigma^2)\)</span></p>
+<p><span class="math inline">\(\overline{X}\sim
+N(\mu,\dfrac{\sigma^2}{n})\)</span></p>
+<p><span
+class="math inline">\(\dfrac{(n-1)}{\sigma^2}S^2\sim\chi^2(n-1)\)</span>
+，且样本均值与样本方差相互独立</p>
+<p><span
+class="math inline">\(\dfrac{\overline{X}-\mu}{\frac{S}{\sqrt{n}}}\sim
+t(n-1)\)</span></p>
+<h4 id="卡方分布">卡方分布</h4>
+<p>设 <span class="math inline">\(X_1,X_2,...X_n\)</span>
+相互独立且都服从标准正态分布，则 <span
+class="math inline">\(Y=\chi^2=\sum\limits_{i=1}^nX_i^2\sim\chi^2(n)\)</span></p>
+<p>概率密度为 <span
+class="math inline">\(f(y)=\dfrac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}y^{\tfrac{n}{2}-1}e^{-\tfrac{y}{2}},(y&gt;0);EY=n,DY=2n\)</span></p>
+<p>若 <span
+class="math inline">\(X_1\sim\chi^2(n_1),X_2\sim\chi^2(n_2)\)</span> 且
+<span class="math inline">\(X_1\)</span> 与 <span
+class="math inline">\(X_2\)</span> 相互独立，则 <span
+class="math inline">\(X_1+X_2\sim\chi^2(n_1+n_2)\)</span></p>
+<h4 id="t分布">t分布</h4>
+<p><span class="math inline">\(X\sim N(0,1),Y\sim\chi^2(n)\)</span>
+，且X、Y相互独立，则 <span
+class="math inline">\(T=\dfrac{X}{\sqrt{\frac{Y}{n}}}\sim t(n)\)</span>
+，n为自由度</p>
+<p>概率密度为 <span
+class="math inline">\(f(t)=\dfrac{\Gamma(\frac{n+1}{2})}{\sqrt{n\pi}\Gamma(\frac{n}{2})}(1+\dfrac{t^2}{n})^{-\tfrac{n+1}{2}}\)</span></p>
+<p>满足 <span class="math inline">\(F(t_{\alpha}(n))=\alpha\)</span>
+的点 <span class="math inline">\(t_{\alpha}(n)\)</span> 称t分布的 <span
+class="math inline">\(\alpha\)</span> 分位点，<span
+class="math inline">\(t_{1-\alpha}(n)=-t_{\alpha}(n)\)</span></p>
 <p>当n很大时，t分布接近于标准正态分布</p>
-<h4 id="F分布"><a href="#F分布" class="headerlink" title="F分布"></a>F分布</h4><p>$X\sim\chi^2(n_1),Y\sim\chi^2(n_2)$ 且相互独立，则 $F=\dfrac{\frac{X}{n_1}}{\frac{Y}{n_2}}\sim F(n_1,n_2)$ </p>
-<p>概率分布为 $f(u)=\dfrac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gamma(\frac{n_2}{2})}(\frac{n_1}{n_2})(\frac{n_1}{n_2}u)^{\tfrac{n_1}{2}-1}(1+\frac{n_1}{n_2}u)^{-\tfrac{n_1+n_2}{2}},u&gt;0$  </p>
-<p>$F<em>{1-\alpha}(n_1,n_2)=\dfrac{1}{F</em>\alpha(n_2,n_1)}$ （分位点，非概率）</p>
-<h2 id="经典统计推断"><a href="#经典统计推断" class="headerlink" title="经典统计推断"></a>经典统计推断</h2><h3 id="参数点估计"><a href="#参数点估计" class="headerlink" title="参数点估计"></a>参数点估计</h3><h4 id="矩估计"><a href="#矩估计" class="headerlink" title="矩估计"></a>矩估计</h4><p>用样本矩估计总体矩，即有</p>
-<script type="math/tex; mode=display">
-\hat{\mu}=\dfrac{1}{n}\sum\limits_{i=1}^nX_i=\overline{X}\\
-
-\hat{\sigma^2}=\dfrac{1}{n}\sum\limits_{i=1}^n(X_i-\overline{X})^2=S^2</script><p>方法：先求对应的矩，然后用样本均值等矩估计随机变量表示参数，最后把样本值代入即可得到估计值</p>
-<h4 id="极大似然法（MLE）"><a href="#极大似然法（MLE）" class="headerlink" title="极大似然法（MLE）"></a>极大似然法（MLE）</h4><p>对于连续型总体，记 $L(\theta)=L(x<em>1,x_2,…,x_n;\theta)=\prod\limits</em>{i=1}^nf(x<em>i;\theta)$ 为似然函数，选取使 $L(\hat{\theta})=\max\limits</em>{\theta\in\Theta}L(\theta)$ 成立的 $\hat{\theta}$ 为 $\theta$ 的极大似然估计</p>
-<p>方法：求 $\dfrac{d}{d\theta}L(\theta)=0$ 或 $\dfrac{d}{d\theta}\ln L(\theta)=0$  </p>
-<h4 id="常见分布的估计值"><a href="#常见分布的估计值" class="headerlink" title="常见分布的估计值"></a>常见分布的估计值</h4><div class="table-container">
+<h4 id="f分布">F分布</h4>
+<p><span
+class="math inline">\(X\sim\chi^2(n_1),Y\sim\chi^2(n_2)\)</span>
+且相互独立，则 <span
+class="math inline">\(F=\dfrac{\frac{X}{n_1}}{\frac{Y}{n_2}}\sim
+F(n_1,n_2)\)</span></p>
+<p>概率分布为 <span
+class="math inline">\(f(u)=\dfrac{\Gamma(\frac{n_1+n_2}{2})}{\Gamma(\frac{n_1}{2})\Gamma(\frac{n_2}{2})}(\frac{n_1}{n_2})(\frac{n_1}{n_2}u)^{\tfrac{n_1}{2}-1}(1+\frac{n_1}{n_2}u)^{-\tfrac{n_1+n_2}{2}},u&gt;0\)</span></p>
+<p><span
+class="math inline">\(F_{1-\alpha}(n_1,n_2)=\dfrac{1}{F_\alpha(n_2,n_1)}\)</span>
+（分位点，非概率）</p>
+<h2 id="经典统计推断">经典统计推断</h2>
+<h3 id="参数点估计">参数点估计</h3>
+<h4 id="矩估计">矩估计</h4>
+<p>用样本矩估计总体矩，即有</p>
+<p>$$ =_{i=1}^nX_i=\</p>
+<p>=_{i=1}<sup>n(X_i-)</sup>2=S^2 $$</p>
+<p>方法：先求对应的矩，然后用样本均值等矩估计随机变量表示参数，最后把样本值代入即可得到估计值</p>
+<h4 id="极大似然法mle">极大似然法（MLE）</h4>
+<p>对于连续型总体，记 <span
+class="math inline">\(L(\theta)=L(x_1,x_2,...,x_n;\theta)=\prod\limits_{i=1}^nf(x_i;\theta)\)</span>
+为似然函数，选取使 <span
+class="math inline">\(L(\hat{\theta})=\max\limits_{\theta\in\Theta}L(\theta)\)</span>
+成立的 <span class="math inline">\(\hat{\theta}\)</span> 为 <span
+class="math inline">\(\theta\)</span> 的极大似然估计</p>
+<p>方法：求 <span
+class="math inline">\(\dfrac{d}{d\theta}L(\theta)=0\)</span> 或 <span
+class="math inline">\(\dfrac{d}{d\theta}\ln L(\theta)=0\)</span></p>
+<h4 id="常见分布的估计值">常见分布的估计值</h4>
 <table>
+
 <thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">矩估计</th>
-<th style="text-align:center">极大似然估计</th>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;">矩估计</th>
+<th style="text-align: center;">极大似然估计</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:center">二项分布</td>
-<td style="text-align:center">$\hat{p}=\dfrac{\bar{x_n}}{N}$</td>
-<td style="text-align:center">$\hat{p}=\dfrac{\bar{x_n}}{N}$</td>
+<tr class="odd">
+<td style="text-align: center;">二项分布</td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{p}=\dfrac{\bar{x_n}}{N}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{p}=\dfrac{\bar{x_n}}{N}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">泊松分布</td>
-<td style="text-align:center">$\hat{\lambda}=\bar{x_n}$</td>
-<td style="text-align:center">$\hat{\lambda}=\bar{x_n}$</td>
+<tr class="even">
+<td style="text-align: center;">泊松分布</td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\lambda}=\bar{x_n}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\lambda}=\bar{x_n}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">均匀分布</td>
-<td style="text-align:center">$\hat{b}=2\bar{x}_n$</td>
-<td style="text-align:center">$\hat{b}=\max x_i$</td>
+<tr class="odd">
+<td style="text-align: center;">均匀分布</td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{b}=2\bar{x}_n\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\hat{b}=\max
+x_i\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">指数分布</td>
-<td style="text-align:center">$\hat{\lambda}=\dfrac{1}{\bar{x_n}}$</td>
-<td style="text-align:center">$\hat{\lambda}=\dfrac{1}{\bar{x_n}}$</td>
+<tr class="even">
+<td style="text-align: center;">指数分布</td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\lambda}=\dfrac{1}{\bar{x_n}}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\lambda}=\dfrac{1}{\bar{x_n}}\)</span></td>
 </tr>
-<tr>
-<td style="text-align:center">正态分布</td>
-<td style="text-align:center">$\hat{\mu}=\bar{x_n}$</td>
-<td style="text-align:center">$\hat{\sigma^2}=\dfrac{1}{n}\sum(x_i-\hat{\mu})^2$</td>
+<tr class="odd">
+<td style="text-align: center;">正态分布</td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\mu}=\bar{x_n}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\hat{\sigma^2}=\dfrac{1}{n}\sum(x_i-\hat{\mu})^2\)</span></td>
 </tr>
 </tbody>
 </table>
-</div>
 <p>*除均匀分布外，表中估计值二者都一样</p>
-<h3 id="点估计的评价"><a href="#点估计的评价" class="headerlink" title="点估计的评价"></a>点估计的评价</h3><h4 id="无偏估计"><a href="#无偏估计" class="headerlink" title="无偏估计"></a>无偏估计</h4><p>设 $\hat{\theta}(x_1,x_2,…,x_n)$ 是未知参数 $\theta$ 的估计量，若 $E(\hat{\theta})=\theta$ ，则称 $\hat{\theta}$ 为 $\theta$ 的无偏估计</p>
-<p>样本均值和样本方差是总体均值、方差的无偏估计。但方差的矩估计、MLE估计 $\dfrac{1}{n}\sum(X_i-\overline{X_n})^2$ 不是无偏估计。均匀分布下MLE的估计不是无偏估计</p>
-<h4 id="最小方差无偏估计"><a href="#最小方差无偏估计" class="headerlink" title="最小方差无偏估计"></a>最小方差无偏估计</h4><p>设 $\hat{\theta_1}$ 为 $\theta$ 的一个无偏估计，若对 $\theta$ 的任一无偏估计 $\hat{\theta_2}$ ， $D(\hat{\theta_1})\leqslant D(\hat{\theta_2})$ 成立，则称 $\hat{\theta_1}$ 是 $\theta$ 的最小方差无偏估计</p>
-<p>正态总体下，$\mu$ 的最小方差线性无偏估计为样本均值</p>
+<h3 id="点估计的评价">点估计的评价</h3>
+<h4 id="无偏估计">无偏估计</h4>
+<p>设 <span class="math inline">\(\hat{\theta}(x_1,x_2,...,x_n)\)</span>
+是未知参数 <span class="math inline">\(\theta\)</span> 的估计量，若
+<span class="math inline">\(E(\hat{\theta})=\theta\)</span> ，则称 <span
+class="math inline">\(\hat{\theta}\)</span> 为 <span
+class="math inline">\(\theta\)</span> 的无偏估计</p>
+<p>样本均值和样本方差是总体均值、方差的无偏估计。但方差的矩估计、MLE估计
+<span
+class="math inline">\(\dfrac{1}{n}\sum(X_i-\overline{X_n})^2\)</span>
+不是无偏估计。均匀分布下MLE的估计不是无偏估计</p>
+<h4 id="最小方差无偏估计">最小方差无偏估计</h4>
+<p>设 <span class="math inline">\(\hat{\theta_1}\)</span> 为 <span
+class="math inline">\(\theta\)</span> 的一个无偏估计，若对 <span
+class="math inline">\(\theta\)</span> 的任一无偏估计 <span
+class="math inline">\(\hat{\theta_2}\)</span> ， <span
+class="math inline">\(D(\hat{\theta_1})\leqslant
+D(\hat{\theta_2})\)</span> 成立，则称 <span
+class="math inline">\(\hat{\theta_1}\)</span> 是 <span
+class="math inline">\(\theta\)</span> 的最小方差无偏估计</p>
+<p>正态总体下，<span class="math inline">\(\mu\)</span>
+的最小方差线性无偏估计为样本均值</p>
 <p>均匀分布的MLE估计比矩估计更有效</p>
-<h4 id="一致估计"><a href="#一致估计" class="headerlink" title="一致估计"></a>一致估计</h4><p>设 $\hat{\theta}(X_1,X_2,…,X_n)$ 是未知参数 $\theta$ 的估计量，若 $\hat{\theta_n}\xrightarrow{P}\theta$ ，则称 $\hat{\theta}$ 为 $\theta$ 的一致性估计（相合估计）</p>
+<h4 id="一致估计">一致估计</h4>
+<p>设 <span class="math inline">\(\hat{\theta}(X_1,X_2,...,X_n)\)</span>
+是未知参数 <span class="math inline">\(\theta\)</span> 的估计量，若
+<span class="math inline">\(\hat{\theta_n}\xrightarrow{P}\theta\)</span>
+，则称 <span class="math inline">\(\hat{\theta}\)</span> 为 <span
+class="math inline">\(\theta\)</span> 的一致性估计（相合估计）</p>
 <p>所有矩估计均为相合估计（事实上以概率1收敛，也称强相合估计），样本方差是相合估计</p>
-<h3 id="区间估计与置信区间"><a href="#区间估计与置信区间" class="headerlink" title="区间估计与置信区间"></a>区间估计与置信区间</h3><p>设总体分布有一未知参数 $\theta$ ，且 $x_1,x_2,..x_n$ 为来自总体的样本，若对给定的 $\alpha(0&lt;\alpha&lt;1)$ ，统计量 $\theta_1(x_1,…,x_n)$ 和 $\theta_2(x_1,…,x_n)$ 满足 $P{\theta_1\leqslant\theta\leqslant\theta_2}=1-\alpha$ ，则称区间 $[\theta_1,\theta_2]$ 是 $\theta$ 置信度为 $1-\alpha$ 的置信区间，$\theta_1$ 和 $\theta_1$ 分别为置信上限和置信下限，$1-\alpha$ 称置信度</p>
+<h3 id="区间估计与置信区间">区间估计与置信区间</h3>
+<p>设总体分布有一未知参数 <span class="math inline">\(\theta\)</span>
+，且 <span class="math inline">\(x_1,x_2,..x_n\)</span>
+为来自总体的样本，若对给定的 <span
+class="math inline">\(\alpha(0&lt;\alpha&lt;1)\)</span> ，统计量 <span
+class="math inline">\(\theta_1(x_1,...,x_n)\)</span> 和 <span
+class="math inline">\(\theta_2(x_1,...,x_n)\)</span> 满足 <span
+class="math inline">\(P\{\theta_1\leqslant\theta\leqslant\theta_2\}=1-\alpha\)</span>
+，则称区间 <span class="math inline">\([\theta_1,\theta_2]\)</span> 是
+<span class="math inline">\(\theta\)</span> 置信度为 <span
+class="math inline">\(1-\alpha\)</span> 的置信区间，<span
+class="math inline">\(\theta_1\)</span> 和 <span
+class="math inline">\(\theta_1\)</span> 分别为置信上限和置信下限，<span
+class="math inline">\(1-\alpha\)</span> 称置信度</p>
 <p>方法：求参数的估计，找到服从的分布，根据置信度确定上下限，代入具体样本值进行计算。具体类型如下</p>
-<h4 id="正态总体均值和方差的区间估计"><a href="#正态总体均值和方差的区间估计" class="headerlink" title="正态总体均值和方差的区间估计"></a>正态总体均值和方差的区间估计</h4><p>设总体 $X\sim N(\mu,\sigma^2)$，$x_1,x_2,…,x_n$ 为来自于总体的样本</p>
+<h4 id="正态总体均值和方差的区间估计">正态总体均值和方差的区间估计</h4>
+<p>设总体 <span class="math inline">\(X\sim
+N(\mu,\sigma^2)\)</span>，<span
+class="math inline">\(x_1,x_2,...,x_n\)</span> 为来自于总体的样本</p>
 <p>方差DX已知，对EX进行区间估计：</p>
-<p>统计量 $\dfrac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}}\sim N(0,1)$ ，则置信区间为 $[\bar{x}-z<em>{1-\tfrac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}},\bar{x}+z</em>{1-\tfrac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}}]$ </p>
+<p>统计量 <span
+class="math inline">\(\dfrac{\bar{x}-\mu}{\frac{\sigma}{\sqrt{n}}}\sim
+N(0,1)\)</span> ，则置信区间为 <span
+class="math inline">\([\bar{x}-z_{1-\tfrac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}},\bar{x}+z_{1-\tfrac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}}]\)</span></p>
 <p>方差DX未知，对EX进行区间估计：</p>
-<p>用样本方差代替总体方差，则有 $\dfrac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}\sim t(n-1)$ ，置信区间为 $[\bar{x}-t<em>{1-\tfrac{\alpha}{2}}(n-1)\dfrac{s}{\sqrt{n}},\bar{x}+t</em>{1-\tfrac{\alpha}{2}}(n-1)\dfrac{s}{\sqrt{n}}]$ </p>
+<p>用样本方差代替总体方差，则有 <span
+class="math inline">\(\dfrac{\bar{x}-\mu}{\frac{s}{\sqrt{n}}}\sim
+t(n-1)\)</span> ，置信区间为 <span
+class="math inline">\([\bar{x}-t_{1-\tfrac{\alpha}{2}}(n-1)\dfrac{s}{\sqrt{n}},\bar{x}+t_{1-\tfrac{\alpha}{2}}(n-1)\dfrac{s}{\sqrt{n}}]\)</span></p>
 <p>方差DX的区间估计：</p>
-<p>$\dfrac{(n-1)s^2}{\sigma^2}\sim\chi^2(n-1)$ ，置信区间 $[\dfrac{(n-1)s^2}{\chi^2<em>{1-\frac{\alpha}{2}}(n-1)},\dfrac{(n-1)s^2}{\chi^2</em>{\frac{\alpha}{2}}(n-1)}]$ </p>
-<h4 id="假设检验"><a href="#假设检验" class="headerlink" title="假设检验"></a>假设检验</h4><p>第一类错误：原假设正确，但抽样得到的结论否定原假设</p>
+<p><span
+class="math inline">\(\dfrac{(n-1)s^2}{\sigma^2}\sim\chi^2(n-1)\)</span>
+，置信区间 <span
+class="math inline">\([\dfrac{(n-1)s^2}{\chi^2_{1-\frac{\alpha}{2}}(n-1)},\dfrac{(n-1)s^2}{\chi^2_{\frac{\alpha}{2}}(n-1)}]\)</span></p>
+<h4 id="假设检验">假设检验</h4>
+<p>第一类错误：原假设正确，但抽样得到的结论否定原假设</p>
 <p>第二类错误：原假设错误，抽样得到的结论不拒绝原假设</p>
-<p>记第一类错误的概率为 $\alpha$ （显著性水平），第二类错误的概率为 $\beta$ ，</p>
+<p>记第一类错误的概率为 <span class="math inline">\(\alpha\)</span>
+（显著性水平），第二类错误的概率为 <span
+class="math inline">\(\beta\)</span> ，</p>
 <p>方差已知，正态总体均值的假设检验</p>
-<p>$H<em>0:\mu=\mu_0;\ H_1:\mu\ne\mu_0$ 检验用的统计量 $U=\dfrac{\bar{x}-\mu_0}{\frac{\sigma}{\sqrt{n}}}\sim N(0,1)$ ，设检验水平 $\alpha$ ，则有 $P{|\dfrac{\bar{x}-\mu_0}{\frac{\sigma}{\sqrt{n}}}|&gt;z</em>{1-\frac{\alpha}{2}}}=\alpha$ ，因而拒绝域为 $D=(-\infty,-z<em>{1-\tfrac{\alpha}{2}}]\cup[z</em>{1-\tfrac{\alpha}{2}},+\infty)$ </p>
+<p><span class="math inline">\(H_0:\mu=\mu_0;\ H_1:\mu\ne\mu_0\)</span>
+检验用的统计量 <span
+class="math inline">\(U=\dfrac{\bar{x}-\mu_0}{\frac{\sigma}{\sqrt{n}}}\sim
+N(0,1)\)</span> ，设检验水平 <span class="math inline">\(\alpha\)</span>
+，则有 <span
+class="math inline">\(P\{|\dfrac{\bar{x}-\mu_0}{\frac{\sigma}{\sqrt{n}}}|&gt;z_{1-\frac{\alpha}{2}}\}=\alpha\)</span>
+，因而拒绝域为 <span
+class="math inline">\(D=(-\infty,-z_{1-\tfrac{\alpha}{2}}]\cup[z_{1-\tfrac{\alpha}{2}},+\infty)\)</span></p>
 <p>方差未知，均值检验</p>
-<p> $U=\dfrac{\bar{x}-\mu_0}{\frac{s}{\sqrt{n}}}\sim t(n-1)$ </p>
+<p><span
+class="math inline">\(U=\dfrac{\bar{x}-\mu_0}{\frac{s}{\sqrt{n}}}\sim
+t(n-1)\)</span></p>
 <p>方差的假设检验</p>
-<p>$W=\dfrac{(n-1)s^2}{\sigma<em>0^2}\sim\chi^2(n-1)$ ，拒绝域为 $D=(0,\chi</em>{1-\tfrac{\alpha}{2}}^2(n-1)][\chi_{\tfrac{\alpha}{2}}^2(n-1),+\infty)$ </p>
-<h2 id="随机过程"><a href="#随机过程" class="headerlink" title="随机过程"></a>随机过程</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>给定参数集 $T\subset(-\infty,+\infty)$ ，如果对于每个 $t\in T$ ，对应有随机变量 $X(t)=X(e,t)$ ，则称随机变量族 ${X(t),t\in T}$ 为随机过程</p>
-<p>对于参数集中任意n个元素，过程的n个状态为 $X(t_1)=X(e,t_1),X(t_2)=X(e,t_2)…$ ，这n个随机变量的联合分布函数 $F(x_1,…,x_n;t_1,…,t_n)=P{X(t_1)\leqslant x_1,…,X(t_n)\leqslant x_n}$ 称随机过程 $X(t)$ 的n维分布函数，$n=1,2,3…$ </p>
+<p><span
+class="math inline">\(W=\dfrac{(n-1)s^2}{\sigma_0^2}\sim\chi^2(n-1)\)</span>
+，拒绝域为 <span
+class="math inline">\(D=(0,\chi_{1-\tfrac{\alpha}{2}}^2(n-1)][\chi_{\tfrac{\alpha}{2}}^2(n-1),+\infty)\)</span></p>
+<h2 id="随机过程">随机过程</h2>
+<h3 id="基本概念">基本概念</h3>
+<p>给定参数集 <span
+class="math inline">\(T\subset(-\infty,+\infty)\)</span> ，如果对于每个
+<span class="math inline">\(t\in T\)</span> ，对应有随机变量 <span
+class="math inline">\(X(t)=X(e,t)\)</span> ，则称随机变量族 <span
+class="math inline">\(\{X(t),t\in T\}\)</span> 为随机过程</p>
+<p>对于参数集中任意n个元素，过程的n个状态为 <span
+class="math inline">\(X(t_1)=X(e,t_1),X(t_2)=X(e,t_2)...\)</span>
+，这n个随机变量的联合分布函数 <span
+class="math inline">\(F(x_1,...,x_n;t_1,...,t_n)=P\{X(t_1)\leqslant
+x_1,...,X(t_n)\leqslant x_n\}\)</span> 称随机过程 <span
+class="math inline">\(X(t)\)</span> 的n维分布函数，<span
+class="math inline">\(n=1,2,3...\)</span></p>
 <p>类似有n维概率密度</p>
-<p>若对于任何正整数n，随机过程的任意n个状态都是相互独立的，称此过程为独立过程， $F(x<em>1,x_2,…,x_n;t_1,t_2,…,t_n)=\prod\limits</em>{i=1}^nF(x_i;t_i),n=1,2,3,…$ </p>
-<h3 id="数字特征"><a href="#数字特征" class="headerlink" title="数字特征"></a>数字特征</h3><p>均值（函数） $\mu_x(t)=E[X(t)]$ </p>
-<p>均方值（函数） $\Psi_X^2(t)=E[X^2(t)]$ </p>
-<p>均方差 $\sigma_{X}^2(t)=D[X(t)]=E[X(t)-EX(t)]^2=E[X(t)-\mu_X(t)]^2=E[X^2(t)]-\mu_X^2(t)$ </p>
-<p>（自）相关函数 $R_X(t_1,t_2)=E[X(t_1)X(t_2)]$ </p>
-<p>（自）协方差函数 $C_X(t_1,t_2)=E{[X(t_1)-EX(t_1)][X(t_2)-EX(t_2)]}$ </p>
+<p>若对于任何正整数n，随机过程的任意n个状态都是相互独立的，称此过程为独立过程，
+<span
+class="math inline">\(F(x_1,x_2,...,x_n;t_1,t_2,...,t_n)=\prod\limits_{i=1}^nF(x_i;t_i),n=1,2,3,...\)</span></p>
+<h3 id="数字特征">数字特征</h3>
+<p>均值（函数） <span
+class="math inline">\(\mu_x(t)=E[X(t)]\)</span></p>
+<p>均方值（函数） <span
+class="math inline">\(\Psi_X^2(t)=E[X^2(t)]\)</span></p>
+<p>均方差 <span
+class="math inline">\(\sigma_{X}^2(t)=D[X(t)]=E[X(t)-EX(t)]^2=E[X(t)-\mu_X(t)]^2=E[X^2(t)]-\mu_X^2(t)\)</span></p>
+<p>（自）相关函数 <span
+class="math inline">\(R_X(t_1,t_2)=E[X(t_1)X(t_2)]\)</span></p>
+<p>（自）协方差函数 <span
+class="math inline">\(C_X(t_1,t_2)=E\{[X(t_1)-EX(t_1)][X(t_2)-EX(t_2)]\}\)</span></p>
 <p>其中，数字特征间的关系有：</p>
-<p> $\Psi_X^2(t)=R_X(t,t)$ </p>
-<p>$C_X(t_1,t_2)=R_X(t_1,t_2)-\mu_X(t_1)\mu_X(t_2)$ </p>
-<p>$\sigma_X^2(t)=\Psi_X^2(t)-\mu_X^2(t)$ </p>
-<p>两个随机过程的互相关函数 $R_{XY}(t_1,t_2)=E[X(t_1)Y(t_2)]$ </p>
-<h3 id="平稳过程"><a href="#平稳过程" class="headerlink" title="平稳过程"></a>平稳过程</h3><p>设随机过程 ${X(t),t\in T}$ ，如果对任意 $t_1,t_2,…,t_n\in T$ 和任意实数 $\varepsilon$ ，有 $t_1+\varepsilon,t_2+\varepsilon,…,t_n+\varepsilon\in T$ ， $F(x_1,x_2,…,x_n;t_1,t_2,…,t_n)=F(x_1,x_2,…,x_n;t_1+\varepsilon,t_2+\varepsilon,…,t_n+\varepsilon)$ 对任意n维分布函数都成立，则称 $X(t)$ 为严平稳过程</p>
-<p><strong>伯努利序列</strong>：独立重复进行某项试验，每次成功概率为p，失败为1-p，以 $X_n$ 表示第n次试验成功的次数，则 ${X_n,\ n=1,2,3}$ 是严平稳过程。（样本空间 $S={0,1}$ ）</p>
+<p><span class="math inline">\(\Psi_X^2(t)=R_X(t,t)\)</span></p>
+<p><span
+class="math inline">\(C_X(t_1,t_2)=R_X(t_1,t_2)-\mu_X(t_1)\mu_X(t_2)\)</span></p>
+<p><span
+class="math inline">\(\sigma_X^2(t)=\Psi_X^2(t)-\mu_X^2(t)\)</span></p>
+<p>两个随机过程的互相关函数 <span
+class="math inline">\(R_{XY}(t_1,t_2)=E[X(t_1)Y(t_2)]\)</span></p>
+<h3 id="平稳过程">平稳过程</h3>
+<p>设随机过程 <span class="math inline">\(\{X(t),t\in T\}\)</span>
+，如果对任意 <span class="math inline">\(t_1,t_2,...,t_n\in T\)</span>
+和任意实数 <span class="math inline">\(\varepsilon\)</span> ，有 <span
+class="math inline">\(t_1+\varepsilon,t_2+\varepsilon,...,t_n+\varepsilon\in
+T\)</span> ， <span
+class="math inline">\(F(x_1,x_2,...,x_n;t_1,t_2,...,t_n)=F(x_1,x_2,...,x_n;t_1+\varepsilon,t_2+\varepsilon,...,t_n+\varepsilon)\)</span>
+对任意n维分布函数都成立，则称 <span class="math inline">\(X(t)\)</span>
+为严平稳过程</p>
+<p><strong>伯努利序列</strong>：独立重复进行某项试验，每次成功概率为p，失败为1-p，以
+<span class="math inline">\(X_n\)</span> 表示第n次试验成功的次数，则
+<span class="math inline">\(\{X_n,\ n=1,2,3\}\)</span>
+是严平稳过程。（样本空间 <span class="math inline">\(S=\{0,1\}\)</span>
+）</p>
 <p>平稳过程（广义平稳过程）：</p>
-<ol>
-<li>$E[X^2(t)]$ 存在且有限</li>
-<li>$E[X(t)]=\mu_X$ 是常数</li>
-<li>任意 $t+\tau\in T,E[X(t)X(t+\tau)]=R_X(\tau)$ 仅依赖于 $\tau$ ，而与t无关</li>
+<ol type="1">
+<li><span class="math inline">\(E[X^2(t)]\)</span> 存在且有限</li>
+<li><span class="math inline">\(E[X(t)]=\mu_X\)</span> 是常数</li>
+<li>任意 <span class="math inline">\(t+\tau\in
+T,E[X(t)X(t+\tau)]=R_X(\tau)\)</span> 仅依赖于 <span
+class="math inline">\(\tau\)</span> ，而与t无关</li>
 </ol>
-<p>正态过程：任意n，$(X(t_1),X(t_2),…,X(t_n))$ 均服从正态分布</p>
+<p>正态过程：任意n，<span
+class="math inline">\((X(t_1),X(t_2),...,X(t_n))\)</span>
+均服从正态分布</p>
 <p>存在二阶矩的严平稳过程必为广义平稳过程，正态平稳过程是严平稳过程</p>
-<h3 id="遍历过程"><a href="#遍历过程" class="headerlink" title="遍历过程"></a>遍历过程</h3><p>设随机过程 ${X(t),t\in T=(-\infty,+\infty)}$ </p>
-<p>时间均值： $\overline{X(t)}=\lim\limits<em>{l\to+\infty}\dfrac{1}{2l}\int</em>{-l}^lX(e,t)dt$ </p>
-<p>时间相关函数： $\overline{X(t)X(t+\tau)}=\lim\limits<em>{l\to+\infty}\dfrac{1}{2l}\int</em>{-l}^lX(e,t)X(e,t+\tau)dt$ </p>
-<p>若 $P{\overline{X(t)}=E[X(t)]=\mu_X}=1$ ，则称过程 $X(t)$ 的均值具有各态遍历性。若 $P{\overline{X(t)X(t+\tau)}=E[X(t)X(t+\tau)]=R_X(\tau)}=1$ ，则称过程 $X(t)$ 的自相关函数具有各态遍历性。均值和自相关函数都具有各态遍历性的平稳过程称遍历过程</p>
-<p>设随机过程均方值存在且有限，则称二阶矩过程。设 ${X(t),t\in T}$ 为二阶矩过程</p>
-<ol>
-<li>对 $t<em>0\in T$ ，若 $\lim\limits</em>{t\to t_0}E|X(t)-X(t_0)|^2=0$ ，则称 $X(t)$ 在 $t_0\in T$ 处均方连续</li>
-<li>若 $X(t)$ 在每一个 $t_0\in T$ 处都均方连续，则称 ${X(t),t\in T}$ 是均方连续的</li>
+<h3 id="遍历过程">遍历过程</h3>
+<p>设随机过程 <span class="math inline">\(\{X(t),t\in
+T=(-\infty,+\infty)\}\)</span></p>
+<p>时间均值： <span
+class="math inline">\(\overline{X(t)}=\lim\limits_{l\to+\infty}\dfrac{1}{2l}\int_{-l}^lX(e,t)dt\)</span></p>
+<p>时间相关函数： <span
+class="math inline">\(\overline{X(t)X(t+\tau)}=\lim\limits_{l\to+\infty}\dfrac{1}{2l}\int_{-l}^lX(e,t)X(e,t+\tau)dt\)</span></p>
+<p>若 <span
+class="math inline">\(P\{\overline{X(t)}=E[X(t)]=\mu_X\}=1\)</span>
+，则称过程 <span class="math inline">\(X(t)\)</span>
+的均值具有各态遍历性。若 <span
+class="math inline">\(P\{\overline{X(t)X(t+\tau)}=E[X(t)X(t+\tau)]=R_X(\tau)\}=1\)</span>
+，则称过程 <span class="math inline">\(X(t)\)</span>
+的自相关函数具有各态遍历性。均值和自相关函数都具有各态遍历性的平稳过程称遍历过程</p>
+<p>设随机过程均方值存在且有限，则称二阶矩过程。设 <span
+class="math inline">\(\{X(t),t\in T\}\)</span> 为二阶矩过程</p>
+<ol type="1">
+<li>对 <span class="math inline">\(t_0\in T\)</span> ，若 <span
+class="math inline">\(\lim\limits_{t\to t_0}E|X(t)-X(t_0)|^2=0\)</span>
+，则称 <span class="math inline">\(X(t)\)</span> 在 <span
+class="math inline">\(t_0\in T\)</span> 处均方连续</li>
+<li>若 <span class="math inline">\(X(t)\)</span> 在每一个 <span
+class="math inline">\(t_0\in T\)</span> 处都均方连续，则称 <span
+class="math inline">\(\{X(t),t\in T\}\)</span> 是均方连续的</li>
 </ol>
-<p>设 ${X(t),t\in T=(-\infty,+\infty)}$ 是一均方连续的平稳过程，则时间均值具有各态遍历性的条件是 $\lim\limits_{t\to+\infty}\dfrac{1}{l}\int_0^{2l}(1-\dfrac{\tau}{2l})[R_X(\tau)-\mu_X^2]d\tau=0$ </p>
-<h3 id="马尔可夫链"><a href="#马尔可夫链" class="headerlink" title="马尔可夫链"></a>马尔可夫链</h3><p>设随机过程 ${X(t),t\in T}$ 的状态空间S为有限集或可列集，若对任意正整数n，T内任意n+1个参数 $t<em>1&lt;t_2&lt;…&lt;t_n&lt;t</em>{n+1}$ 和S内任意n+1个状态 $j<em>1,j_2,…,j_n,j</em>{n+1}$ ，条件概率 $P{X(t<em>{n+1})=j</em>{n+1}|X(t<em>1)=j_1,X(t_2)=j_2,…,X(t_n)=j_n}=P{X(t</em>{n+1})=j_{n+1}|X(t_n)=j_n}$ 恒成立，则称此过程为马尔可夫链，反映出的性质为无后效性。</p>
+<p>设 <span class="math inline">\(\{X(t),t\in
+T=(-\infty,+\infty)\}\)</span>
+是一均方连续的平稳过程，则时间均值具有各态遍历性的条件是 <span
+class="math inline">\(\lim\limits_{t\to+\infty}\dfrac{1}{l}\int_0^{2l}(1-\dfrac{\tau}{2l})[R_X(\tau)-\mu_X^2]d\tau=0\)</span></p>
+<h3 id="马尔可夫链">马尔可夫链</h3>
+<p>设随机过程 <span class="math inline">\(\{X(t),t\in T\}\)</span>
+的状态空间S为有限集或可列集，若对任意正整数n，T内任意n+1个参数 <span
+class="math inline">\(t_1&lt;t_2&lt;...&lt;t_n&lt;t_{n+1}\)</span>
+和S内任意n+1个状态 <span
+class="math inline">\(j_1,j_2,...,j_n,j_{n+1}\)</span> ，条件概率 <span
+class="math inline">\(P\{X(t_{n+1})=j_{n+1}|X(t_1)=j_1,X(t_2)=j_2,...,X(t_n)=j_n\}=P\{X(t_{n+1})=j_{n+1}|X(t_n)=j_n\}\)</span>
+恒成立，则称此过程为马尔可夫链，反映出的性质为无后效性。</p>
 <p>状态空间符合要求的独立过程是马尔可夫链</p>
-<p> $P{X(t<em>{m+1})=j|X(t_m)=i}=p</em>{ij}(t<em>m)$ 称 $X(t)$ 在时刻 $t_m$ 时由状态i一步转移到状态j的（一步）转移概率。n步为 $P{X(t</em>{m+n})=j|X(t<em>m)=i}=p</em>{ij}^{(n)}(t_m)$ </p>
-<h4 id="齐次马尔可夫链"><a href="#齐次马尔可夫链" class="headerlink" title="齐次马尔可夫链"></a>齐次马尔可夫链</h4><p>若一步转移概率不依赖于参数，即任意两个不相等的参数 $t<em>m,t_k$ ，有 $P{X(t</em>{m+1})=j|X(t<em>m)=i}=p</em>{ij}(t<em>m)=P{X(t</em>{k+1})=j|X(t_k)=i}$ ，称齐次马尔可夫链</p>
-<p>对于参数离散的齐次马尔可夫链，由转移概率 $p_{ij}$ 排序得转移概率矩阵（行和为1）</p>
-<script type="math/tex; mode=display">
+<p><span
+class="math inline">\(P\{X(t_{m+1})=j|X(t_m)=i\}=p_{ij}(t_m)\)</span> 称
+<span class="math inline">\(X(t)\)</span> 在时刻 <span
+class="math inline">\(t_m\)</span>
+时由状态i一步转移到状态j的（一步）转移概率。n步为 <span
+class="math inline">\(P\{X(t_{m+n})=j|X(t_m)=i\}=p_{ij}^{(n)}(t_m)\)</span></p>
+<h4 id="齐次马尔可夫链">齐次马尔可夫链</h4>
+<p>若一步转移概率不依赖于参数，即任意两个不相等的参数 <span
+class="math inline">\(t_m,t_k\)</span> ，有 <span
+class="math inline">\(P\{X(t_{m+1})=j|X(t_m)=i\}=p_{ij}(t_m)=P\{X(t_{k+1})=j|X(t_k)=i\}\)</span>
+，称齐次马尔可夫链</p>
+<p>对于参数离散的齐次马尔可夫链，由转移概率 <span
+class="math inline">\(p_{ij}\)</span> 排序得转移概率矩阵（行和为1）
+<span class="math display">\[
 P=\begin{pmatrix}
-p_{00}&p_{01}&\cdots&p_{0j}&\cdots\\
-p_{10}&p_{11}&\cdots&p_{1j}&\cdots\\
-\vdots&\vdots&\ &\vdots\\
-p_{i0}&p_{i1}&\cdots&p_{ij}&\cdots\\
-\vdots&\vdots&\ &\vdots
-\end{pmatrix}</script><p>马尔可夫链的多步转移公式： $P<em>{ij}^{(n+l)}(t_m)=\sum\limits_kp</em>{ik}^{(n)}(t<em>m)p</em>{kj}^{(l)}(t_{m+n})$ </p>
-<p>齐次情况下， $P^{(n)}=P^n$ </p>
-<h4 id="平稳分布"><a href="#平稳分布" class="headerlink" title="平稳分布"></a>平稳分布</h4><p>对齐次马尔科夫链，若存在概率分布 $\pi=(\pi<em>0,\pi_1,…,\pi_j,…)$ 满足 $\pi_j\geqslant0,\sum\limits</em>{j=0}^{+\infty}\pi<em>j=1$ 和 $\pi_j=\sum\limits</em>{i=0}^{+\infty}\pi<em>{ij}p</em>{ij},\ j=0,1,2,…$ 则称 $\pi$ 为平稳分布， $X(t)$ 是平稳齐次马尔可夫链</p>
+p_{00}&amp;p_{01}&amp;\cdots&amp;p_{0j}&amp;\cdots\\
+p_{10}&amp;p_{11}&amp;\cdots&amp;p_{1j}&amp;\cdots\\
+\vdots&amp;\vdots&amp;\ &amp;\vdots\\
+p_{i0}&amp;p_{i1}&amp;\cdots&amp;p_{ij}&amp;\cdots\\
+\vdots&amp;\vdots&amp;\ &amp;\vdots
+\end{pmatrix}
+\]</span> 马尔可夫链的多步转移公式： <span
+class="math inline">\(P_{ij}^{(n+l)}(t_m)=\sum\limits_kp_{ik}^{(n)}(t_m)p_{kj}^{(l)}(t_{m+n})\)</span></p>
+<p>齐次情况下， <span class="math inline">\(P^{(n)}=P^n\)</span></p>
+<h4 id="平稳分布">平稳分布</h4>
+<p>对齐次马尔科夫链，若存在概率分布 <span
+class="math inline">\(\pi=(\pi_0,\pi_1,...,\pi_j,...)\)</span> 满足
+<span
+class="math inline">\(\pi_j\geqslant0,\sum\limits_{j=0}^{+\infty}\pi_j=1\)</span>
+和 <span
+class="math inline">\(\pi_j=\sum\limits_{i=0}^{+\infty}\pi_{ij}p_{ij},\
+j=0,1,2,...\)</span> 则称 <span class="math inline">\(\pi\)</span>
+为平稳分布， <span class="math inline">\(X(t)\)</span>
+是平稳齐次马尔可夫链</p>
 
                 
               </div>
@@ -797,6 +1180,12 @@ p_{i0}&p_{i1}&\cdots&p_{ij}&\cdots\\
 
 
   
+
+
+  
+  
+
+
 
 
 
@@ -990,6 +1379,49 @@ p_{i0}&p_{i1}&\cdots&p_{ij}&\cdots\\
 
 
   <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 
