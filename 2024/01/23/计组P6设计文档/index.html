@@ -1,0 +1,1343 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计组P6的设计文档，采用verilog搭建具有乘除槽的流水线CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组P6设计文档">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/23/%E8%AE%A1%E7%BB%84P6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="计组P6的设计文档，采用verilog搭建具有乘除槽的流水线CPU">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-23T00:28:03.000Z">
+<meta property="article:modified_time" content="2024-01-23T01:10:15.073Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计组P6设计文档 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sth.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组P6设计文档"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 08:28" pubdate>
+          2024年1月23日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组P6设计文档</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>P6建议：在P5基础上添加乘除槽即可</p>
+<p>源代码：<a
+target="_blank" rel="noopener" href="https://github.com/solor-wind/BUAA_CO">solor-wind/BUAA_CO
+(github.com)</a></p>
+</blockquote>
+<h3 id="设计要求">设计要求</h3>
+<p>处理器应为五级流水线设计，支持如下指令集：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">add, </span><span class="hljs-keyword">sub, </span><span class="hljs-keyword">and, </span><span class="hljs-keyword">or, </span><span class="hljs-keyword">slt, </span><span class="hljs-keyword">sltu, </span><span class="hljs-keyword">lui</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">addi, </span><span class="hljs-keyword">andi, </span><span class="hljs-keyword">ori</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">lb, </span><span class="hljs-keyword">lh, </span><span class="hljs-keyword">lw, </span><span class="hljs-keyword">sb, </span><span class="hljs-keyword">sh, </span><span class="hljs-keyword">sw</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">mult, </span><span class="hljs-keyword">multu, </span><span class="hljs-keyword">div, </span><span class="hljs-keyword">divu, </span><span class="hljs-keyword">mfhi, </span><span class="hljs-keyword">mflo, </span><span class="hljs-keyword">mthi, </span><span class="hljs-keyword">mtlo</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">beq, </span><span class="hljs-keyword">bne, </span><span class="hljs-keyword">jal, </span><span class="hljs-keyword">jr</span><br></code></pre></td></tr></table></figure>
+<ol type="1">
+<li><p>直接通过顶层模块 mips.v 的 output 端口传出相应信号，不允许出现
+<code>display</code> 语句，具体要求见“在线测试相关说明”小节。</p></li>
+<li><p>要求存储器外置，即将 IM 和 DM 放置在 CPU 之外。P6 的 IM 和 DM
+两个模块被内置于官方评测的 testbench 中（官方使用的 tb
+已在“存储器外置”小节公开），<strong>不再需要</strong>大家自行实现 IM 和
+DM 模块。官方 tb 中实现的指令存储器（IM，instruction
+memory）和数据存储器（DM，data memory）的容量如下：</p>
+<ul>
+<li><p>IM：容量为 <strong>16KB</strong> (32bit/word ×
+<strong>4096word</strong>)</p></li>
+<li><p>DM：容量为 <strong>12KB</strong> (32bit/word ×
+<strong>3072word</strong>)</p></li>
+</ul></li>
+<li><p>需有单独的<strong>乘除法模块</strong>和<strong>数据扩展模块</strong>，我们会分别在“乘除模块”和“支持按字节访存”两个小节中中予以详细说明。</p></li>
+<li><p>最外层的 mips 模块的文件名必须为 mips.v ，该文件中的 module
+也必须命名为 <strong>mips</strong> 。</p></li>
+</ol>
+<h3 id="架构">架构</h3>
+<h3 id="模块规格">模块规格</h3>
+<h4 id="命名规则">命名规则</h4>
+<p>流水线信号共5级，IF/ID ID/EX EX/MEM MEM/WB，两个寄存器间的信号用
+<code>级别_数据/功能(_去向)</code> 命名。</p>
+<h4 id="共有信号">共有信号：</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_pc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的pc</td>
+<td style="text-align: center;">上一级（IF为out）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_pc_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的pc</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的指令</td>
+<td style="text-align: center;">上一级</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_instr_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的指令</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="if">IF</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，使pc保持不变</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IF_j</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">是否跳转</td>
+<td style="text-align: center;">ID_j_IF</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_pc4</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">ID_pc_IF</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IF_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从tb获取的指令</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_pc</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">IF级当前指令</td>
+<td style="text-align: center;">tb</td>
+</tr>
+</tbody>
+</table>
+<h4 id="id">ID</h4>
+<h5 id="接口">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，清空D级</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_pc_ID</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入指令的pc</td>
+<td style="text-align: center;">WB_pc_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_we</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">WB_we_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器</td>
+<td style="text-align: center;">WB_addr_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入的值</td>
+<td style="text-align: center;">WB_data_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;">EX_out，EX_data_WB，MEM_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_base</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">EX_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">EX_rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_j_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">跳转指示信号</td>
+<td style="text-align: center;">IF_j</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_pc_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">IF_pc4</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rs_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rt_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] grf [<span class="hljs-number">0</span>:<span class="hljs-number">31</span>];<span class="hljs-comment">//32个寄存器</span><br></code></pre></td></tr></table></figure>
+<h4 id="ex">EX</h4>
+<h5 id="接口-1">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">EX_rs_base</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">ID_rs_base</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rt</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td
+style="text-align: center;">参与运算的rt寄存器的值，可能从转发处来</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_new</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">表示E级产生了新的要写入寄存器的值</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">E级产生新值的寄存器地址</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_out</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">MEM_addr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rt_MEM</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">busy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">mul是否正忙</td>
+<td style="text-align: center;">mul</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量-1">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] out;<span class="hljs-comment">//即时给出运算结果，上升沿时赋给EX_out</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_tmp_new;<span class="hljs-comment">//同上，EX_new</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] EX_tmp_addr;<span class="hljs-comment">//EX_addr</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">2</span>:<span class="hljs-number">0</span>] start;<span class="hljs-comment">//从E级指令给出mul所需信号</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] hi;<span class="hljs-comment">//</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] lo;<br></code></pre></td></tr></table></figure>
+<h5 id="内部模块mul">内部模块——mul</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">start</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">开始运算信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算数rs</td>
+<td style="text-align: center;">EX_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算数rt</td>
+<td style="text-align: center;">EX_rt_use</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">busy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">正忙信号</td>
+<td style="text-align: center;">busy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">hi</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">乘法高位/除法余数</td>
+<td style="text-align: center;">out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">lo</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">乘法低位/除法的商</td>
+<td style="text-align: center;">out</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mem">MEM</h4>
+<h5 id="接口-2">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">MEM_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要读出的地址</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">读出的数据</td>
+<td style="text-align: center;">m_data_rdata</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_new</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">表示M级有了新的要写入寄存器的值</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_new_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">M级新值的寄存器地址</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">传向下一级的数据</td>
+<td style="text-align: center;">WB_lw_data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">WB_alu_data</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量-2">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">2</span>:<span class="hljs-number">0</span>] op;<span class="hljs-comment">//位扩展选择信号</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] data_out;<span class="hljs-comment">//原始读出数据</span><br></code></pre></td></tr></table></figure>
+<h5 id="内部模块">内部模块</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">读出地址的低位</td>
+<td style="text-align: center;">MEM_addr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Din</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">Din</td>
+<td style="text-align: center;">原始数据</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Op</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">Op</td>
+<td style="text-align: center;">扩展选择信号</td>
+<td style="text-align: center;">op</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Dout</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">Dout</td>
+<td style="text-align: center;">扩展后的数据</td>
+<td style="text-align: center;">MEM_data_WB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="wb">WB</h4>
+<p>输出均不是reg型</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">WB_lw_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从内存取出的数</td>
+<td style="text-align: center;">MEM_data_WB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_alu_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">EX_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_we_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">ID_we</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_addr_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器地址</td>
+<td style="text-align: center;">ID_addr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_data_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入寄存器的值</td>
+<td style="text-align: center;">ID_data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="冒险处理">冒险处理</h3>
+<h4 id="转发">转发</h4>
+<p>转发共5个接受：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rs_data;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rt_data;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_rs_base;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_rt;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] MEM_data;<br></code></pre></td></tr></table></figure>
+<p>共2处提供：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_out;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] WB_data_ID;<br></code></pre></td></tr></table></figure>
+<p>其中，2处提供接口还给出new信号与addr，代表新值产生且可用、要写入的寄存器编号</p>
+<p>接受者只需判断new与addr即可决定转发与否（有新值且可用就转发）</p>
+<h4 id="阻塞">阻塞</h4>
+<p><span class="math inline">\(T_{use}\)</span> 与 <span
+class="math inline">\(T_{new}\)</span> 的计算见表格</p>
+<p>采用Time模块传递计算结果，<code>[31:0] use_new</code>
+具体每位对应结果如下表</p>
+<p>[2][1][0]分别对应rs、rt、rd</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">rs</th>
+<th style="text-align: center;">rt</th>
+<th style="text-align: center;">rd</th>
+<th style="text-align: center;">[4]</th>
+<th style="text-align: center;">[2]</th>
+<th style="text-align: center;">[1]</th>
+<th style="text-align: center;">[0]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-&gt;</td>
+<td style="text-align: center;">use或new的数值</td>
+<td style="text-align: center;">&lt;-</td>
+<td style="text-align: center;">1代表正在算乘除法</td>
+<td style="text-align: center;">-&gt;</td>
+<td style="text-align: center;">0为use，1为new</td>
+<td style="text-align: center;">&lt;-</td>
+</tr>
+</tbody>
+</table>
+<p>若 <span class="math inline">\(T_{use}&lt;T_{new}\)</span>
+，或乘除类指令遇上busy，则执行阻塞操作：</p>
+<ol type="1">
+<li><p>冻结IF/ID</p></li>
+<li><p>清除ID/EX</p></li>
+<li><p>禁止PC</p></li>
+</ol>
+<h4 id="注意事项">注意事项</h4>
+<ul>
+<li><p>从W级转发到D级，采用D级内部转发（如beq）</p></li>
+<li><p>转发时如果地址是0寄存器应剔除</p></li>
+</ul>
+<h3 id="添加指令">添加指令</h3>
+<ol type="1">
+<li><p>添加到const里</p></li>
+<li><p>填写TIME表格，根据use和new更改M级中的MEM_new与MEM_new_addr，添加Time中的use与new值</p></li>
+<li><p>根据操作在每个模块添加行为</p>
+<ul>
+<li><p>IF：指令获取与延迟槽</p></li>
+<li><p>ID：给出跳转指令</p></li>
+<li><p>EX：各种计算行为、存储地址计算</p></li>
+<li><p>MEM：给出写入内存的地址、byte信号，对读出的数据进行加工</p></li>
+<li><p>WB：给出写寄存器信号、寄存器编号、数据</p></li>
+</ul></li>
+<li><p>每类指令对应行为（P5）</p>
+<ul>
+<li><p>cal：修改EX计算过程、添加WB回写信号，加入相关阻塞指令中（带cal的），加入相关转发指令中（同上，注意供需接口都有）。</p></li>
+<li><p>lw：修改EX计算过程、添加WB回写信号，……</p></li>
+<li><p>sw：修改EX计算过程、MEM写入，………</p></li>
+<li><p>j：修改ID跳转判断与跳转地址计算，加入阻塞、转发指令</p></li>
+<li><p>jal：修改ID跳转判断与跳转地址计算、EX算pc等、WB回写信号，阻塞转发</p></li>
+</ul></li>
+<li><p>是否有新的转发通路、阻塞可能</p></li>
+</ol>
+<h3 id="思考题与测试">思考题与测试</h3>
+<ol type="1">
+<li><p>为什么需要有单独的乘除法部件而不是整合进 ALU？为何需要有独立的
+HI、LO 寄存器？</p>
+<p>乘除法相较其他运算，复杂性更高且时间更长（延迟更大），与ALU分离有利于保持模块的清晰关系、缩短时钟周期。便于在本级存储运算结果而不是回写到寄存器，否则其他使用寄存器的指令均需要被阻塞，性能下降严重。</p></li>
+<li><p>真实的流水线 CPU
+是如何使用实现乘除法的？请查阅相关资料进行简单说明。</p>
+<p>类似于竖式乘法，乘数最低位*被乘数并累加右移直至每位乘数都算完，32位需5次加法-100周期的时间。</p>
+<p>类似于算式除法，每次尝试减去能减去的最大值（含比较过程），重复计算得商、余数</p></li>
+<li><p>请结合自己的实现分析，你是如何处理 Busy
+信号带来的周期阻塞的？</p>
+<p>当D级是乘除类指令且E级是乘除类指令或busy时，阻塞</p></li>
+<li><p>请问采用字节使能信号的方式处理写指令有什么好处？（提示：从清晰性、统一性等角度考虑）</p>
+<p>可读性好，当前执行的指令一目了然。字、半字、字节的处理具有统一性。</p></li>
+<li><p>请思考，我们在按字节读和按字节写时，实际从 DM 获得的数据和向 DM
+写入的数据是否是一字节？在什么情况下我们按字节读和按字节写的效率会高于按字读和按字写呢？</p>
+<p>不是。写入低位时，按字读和按字写效率近似，写入低位效率高于写入高位</p></li>
+<li><p>为了对抗复杂性你采取了哪些抽象和规范手段？这些手段在译码和处理数据冲突的时候有什么样的特点与帮助？</p>
+<ul>
+<li><p>const中定义指令编码，减少代码量、提高易读性</p></li>
+<li><p>time计算指令单独成一模块，采用列举法，便于新增指令</p></li>
+</ul></li>
+<li><p>在本实验中你遇到了哪些不同指令类型组合产生的冲突？你又是如何解决的？相应的测试样例是什么样的？</p>
+<p>见转发</p></li>
+<li><p>如果你是手动构造的样例，请说明构造策略，说明你的测试程序如何保证<strong>覆盖</strong>了所有需要测试的情况；如果你是<strong>完全随机</strong>生成的测试样例，请思考完全随机的测试程序有何不足之处；如果你在生成测试样例时采用了<strong>特殊的策略</strong>，比如构造连续数据冒险序列，请你描述一下你使用的策略如何<strong>结合了随机性</strong>达到强测的效果。</p></li>
+</ol>
+<h4 id="测试部分">测试部分</h4>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ori</span> $<span class="hljs-number">4</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">4</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">4</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">2</span>)s<br><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">4</span>,$<span class="hljs-number">4</span>,<span class="hljs-number">12</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sh</span> $<span class="hljs-number">3</span>,<span class="hljs-number">6</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sb</span> $<span class="hljs-number">4</span>,<span class="hljs-number">11</span>($<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h5 id="part1p4的数据测试">part1——P4的数据测试</h5>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs routeros">.data<br>.space 0x3000<br>.text<br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,2<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,3<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,4<br>ori <span class="hljs-variable">$5</span>,<span class="hljs-variable">$0</span>,5<br>ori <span class="hljs-variable">$6</span>,<span class="hljs-variable">$0</span>,6<br>ori <span class="hljs-variable">$7</span>,<span class="hljs-variable">$0</span>,7<br>ori <span class="hljs-variable">$8</span>,<span class="hljs-variable">$0</span>,8<br>ori <span class="hljs-variable">$9</span>,<span class="hljs-variable">$0</span>,9<br>ori <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,10<br>ori <span class="hljs-variable">$11</span>,<span class="hljs-variable">$0</span>,11<br>ori <span class="hljs-variable">$12</span>,<span class="hljs-variable">$0</span>,12<br>ori <span class="hljs-variable">$13</span>,<span class="hljs-variable">$0</span>,13<br>ori <span class="hljs-variable">$14</span>,<span class="hljs-variable">$0</span>,14<br>ori <span class="hljs-variable">$15</span>,<span class="hljs-variable">$0</span>,15<br>ori <span class="hljs-variable">$16</span>,<span class="hljs-variable">$0</span>,16<br>ori <span class="hljs-variable">$17</span>,<span class="hljs-variable">$0</span>,17<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$0</span>,18<br>ori <span class="hljs-variable">$19</span>,<span class="hljs-variable">$0</span>,19<br>ori <span class="hljs-variable">$20</span>,<span class="hljs-variable">$0</span>,20<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$0</span>,21<br>ori <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,22<br>ori <span class="hljs-variable">$23</span>,<span class="hljs-variable">$0</span>,23<br>ori <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,24<br>ori <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,25<br>ori <span class="hljs-variable">$26</span>,<span class="hljs-variable">$0</span>,26<br>ori <span class="hljs-variable">$27</span>,<span class="hljs-variable">$0</span>,27<br>ori <span class="hljs-variable">$28</span>,<span class="hljs-variable">$0</span>,28<br>ori <span class="hljs-variable">$29</span>,<span class="hljs-variable">$0</span>,29<br>ori <span class="hljs-variable">$30</span>,<span class="hljs-variable">$0</span>,30<br>ori <span class="hljs-variable">$31</span>,<span class="hljs-variable">$0</span>,0x310c<br><br><br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,1#<span class="hljs-variable">$0</span>应始终为0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,65535<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,12<br>lui <span class="hljs-variable">$5</span>,65535<br>lui <span class="hljs-variable">$6</span>,0<br>lui <span class="hljs-variable">$7</span>,8<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$8</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$2</span>#-1<br>lui <span class="hljs-variable">$9</span>,32767<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$9</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$2</span>#intmax<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$8</span><br>sub <span class="hljs-variable">$10</span>,<span class="hljs-variable">$8</span>,<span class="hljs-variable">$9</span>#-intmax-1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$10</span><br>sub <span class="hljs-variable">$11</span>,<span class="hljs-variable">$2</span>,<span class="hljs-variable">$4</span>#65523<br>sub <span class="hljs-variable">$12</span>,<span class="hljs-variable">$4</span>,<span class="hljs-variable">$2</span>#-65523<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$13</span>,<span class="hljs-variable">$11</span>,<span class="hljs-variable">$12</span>#0<br>sub <span class="hljs-variable">$14</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$5</span>#0<br><br>lui <span class="hljs-variable">$18</span>,0<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$18</span>,0x2ffc<br>sw <span class="hljs-variable">$10</span>,(<span class="hljs-variable">$18</span>)<br>sw <span class="hljs-variable">$11</span>,12280(<span class="hljs-variable">$0</span>)<br>sw <span class="hljs-variable">$12</span>,-4(<span class="hljs-variable">$4</span>)#8<br>lw <span class="hljs-variable">$15</span>,8(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$12</span>,-65533<br>lw <span class="hljs-variable">$16</span>,12284(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$10</span>,-intmax-1<br>lw <span class="hljs-variable">$17</span>,12280(<span class="hljs-variable">$0</span>)#11,65523<br><br>loop:<br>lui <span class="hljs-variable">$21</span>,0<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$21</span>,1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$19</span>,<span class="hljs-variable">$19</span>,<span class="hljs-variable">$21</span><br>beq <span class="hljs-variable">$19</span>,<span class="hljs-variable">$20</span>,loop#<span class="hljs-variable">$19</span>=21跳出<br><br>sub <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span>#<span class="hljs-variable">$22</span>=-20<br>loop2:<br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,loop2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span><br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,end<br>nop<br>end:<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$23</span>,<span class="hljs-variable">$23</span>,<span class="hljs-variable">$21</span><br><br>loop3:<br>jr <span class="hljs-variable">$ra</span><br>nop<br>jal loop3#往前跳<br>nop<br>jal loop4#往后跳<br>loop4:<br>nop<br>beq <span class="hljs-variable">$24</span>,<span class="hljs-variable">$21</span>,end2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$21</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$ra</span><br>jr <span class="hljs-variable">$25</span><br>end2:<br>nop<br>jal end2#原地蹦跶<br>nop<br></code></pre></td></tr></table></figure>
+<h5 id="part2冒险测试">part2——冒险测试</h5>
+<p><span class="math inline">\(A_9^4\)</span>？</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#add,sub,ori,lui,lw,sw,beq,jal,jr</span><br><span class="hljs-comment">#先把每个寄存器里的值搞成非0</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">2</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">4</span>,<span class="hljs-number">4</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">5</span>,$<span class="hljs-number">4</span>,$<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lui</span> $<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">6</span>,$<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">6</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">7</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">8</span>($<span class="hljs-number">0</span>)<br><br><span class="hljs-attribute">loop</span>:<br><span class="hljs-attribute">add</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">10</span>,$<span class="hljs-number">9</span><br><span class="hljs-attribute">beq</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">19</span>,loop<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">jal</span> loop2<br><span class="hljs-attribute">add</span> $<span class="hljs-number">12</span>,$<span class="hljs-number">11</span>,$<span class="hljs-number">11</span><br><span class="hljs-attribute">loop2</span>:<br><span class="hljs-attribute">sw</span> $ra,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $ra,$<span class="hljs-number">0</span>,<span class="hljs-number">0</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">30</span>,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">jr</span> $<span class="hljs-number">30</span><br><span class="hljs-attribute">nop</span><br></code></pre></td></tr></table></figure>
+<h5 id="part3新增指令测试">part3——新增指令测试</h5>
+<p>重点测试边缘数据</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">and</span> <span class="hljs-symbol">$</span><span class="hljs-number">1</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span><br><span class="hljs-keyword">or</span> <span class="hljs-symbol">$</span><span class="hljs-number">3</span>,<span class="hljs-symbol">$</span><span class="hljs-number">4</span>,<span class="hljs-symbol">$</span><span class="hljs-number">3</span><br>sub <span class="hljs-symbol">$</span><span class="hljs-number">5</span>,<span class="hljs-symbol">$</span><span class="hljs-number">5</span>,<span class="hljs-symbol">$</span><span class="hljs-number">6</span><br>slt <span class="hljs-symbol">$</span><span class="hljs-number">7</span>,<span class="hljs-symbol">$</span><span class="hljs-number">5</span>,<span class="hljs-symbol">$</span><span class="hljs-number">6</span><br>sltu <span class="hljs-symbol">$</span><span class="hljs-number">8</span>,<span class="hljs-symbol">$</span><span class="hljs-number">5</span>,<span class="hljs-symbol">$</span><span class="hljs-number">6</span><br>addi <span class="hljs-symbol">$</span><span class="hljs-number">9</span>,<span class="hljs-symbol">$</span><span class="hljs-number">9</span>,<span class="hljs-number">-1</span><br>andi <span class="hljs-symbol">$</span><span class="hljs-number">10</span>,<span class="hljs-symbol">$</span><span class="hljs-number">10</span>,<span class="hljs-number">-1</span><br>sb <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-number">-1</span>(<span class="hljs-symbol">$</span><span class="hljs-number">4</span>)<br>sh <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-number">0</span>(<span class="hljs-symbol">$</span><span class="hljs-number">0</span>)<br>lw <span class="hljs-symbol">$</span><span class="hljs-number">12</span>,<span class="hljs-number">0</span>(<span class="hljs-symbol">$</span><span class="hljs-number">0</span>)<br>lui <span class="hljs-symbol">$</span><span class="hljs-number">11</span> <span class="hljs-number">0x1111</span><br>ori <span class="hljs-symbol">$</span><span class="hljs-number">11</span> <span class="hljs-number">0x1111</span><br>sh <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-number">2</span>(<span class="hljs-symbol">$</span><span class="hljs-number">4</span>)<br>lb <span class="hljs-symbol">$</span><span class="hljs-number">13</span>,<span class="hljs-number">3</span>(<span class="hljs-symbol">$</span><span class="hljs-number">4</span>)<br>lh <span class="hljs-symbol">$</span><span class="hljs-number">14</span>,<span class="hljs-number">2</span>(<span class="hljs-symbol">$</span><span class="hljs-number">4</span>)<br><br>mult <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-symbol">$</span><span class="hljs-number">4</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">15</span><br>multu <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-symbol">$</span><span class="hljs-number">4</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">16</span><br><span class="hljs-built_in">div</span> <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-symbol">$</span><span class="hljs-number">4</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">17</span><br>divu <span class="hljs-symbol">$</span><span class="hljs-number">11</span>,<span class="hljs-symbol">$</span><span class="hljs-number">4</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">18</span><br>mthi <span class="hljs-symbol">$</span><span class="hljs-number">19</span><br>mtlo <span class="hljs-symbol">$</span><span class="hljs-number">20</span><br><br>lui <span class="hljs-symbol">$</span><span class="hljs-number">20</span>,<span class="hljs-number">0</span><br>ori <span class="hljs-symbol">$</span><span class="hljs-number">20</span>,<span class="hljs-number">1</span><br><span class="hljs-keyword">loop</span>:<br>bne <span class="hljs-symbol">$</span><span class="hljs-number">19</span>,<span class="hljs-symbol">$</span><span class="hljs-number">21</span>,<span class="hljs-keyword">loop</span><br>sub <span class="hljs-symbol">$</span><span class="hljs-number">21</span>,<span class="hljs-symbol">$</span><span class="hljs-number">21</span>,<span class="hljs-symbol">$</span><span class="hljs-number">20</span><br>nop<br><span class="hljs-comment">//重点测试符号乘除</span><br>lui <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-number">0x1111</span><br>ori <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-number">0x1111</span><br>add <span class="hljs-symbol">$</span><span class="hljs-number">3</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">0</span><br>mult <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">3</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">4</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">5</span><br>multu <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">3</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">6</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">7</span><br><br>ori <span class="hljs-symbol">$</span><span class="hljs-number">8</span>,<span class="hljs-symbol">$</span><span class="hljs-number">0</span>,<span class="hljs-number">13</span><br>add <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">8</span><br><span class="hljs-built_in">div</span> <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">8</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">9</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">10</span><br><span class="hljs-built_in">div</span> <span class="hljs-symbol">$</span><span class="hljs-number">8</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">11</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">12</span><br><span class="hljs-built_in">div</span> <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">3</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">13</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">14</span><br>divu <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">8</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">15</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">16</span><br>divu <span class="hljs-symbol">$</span><span class="hljs-number">8</span>,<span class="hljs-symbol">$</span><span class="hljs-number">2</span><br>mfhi <span class="hljs-symbol">$</span><span class="hljs-number">17</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">18</span><br>divu <span class="hljs-symbol">$</span><span class="hljs-number">2</span>,<span class="hljs-symbol">$</span><span class="hljs-number">3</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">19</span><br>mflo <span class="hljs-symbol">$</span><span class="hljs-number">20</span><br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CO/" class="category-chain-item">CO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组P6设计文档</div>
+      <div>https://solor-wind.github.io/2024/01/23/计组P6设计文档/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P7设计文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计组P7设计文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P5%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P5设计文档">
+                        <span class="hidden-mobile">计组P5设计文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

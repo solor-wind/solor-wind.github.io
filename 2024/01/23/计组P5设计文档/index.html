@@ -1,0 +1,1388 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计组P5的设计文档，采用verilog搭建流水线CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组P5设计文档">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/23/%E8%AE%A1%E7%BB%84P5%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="计组P5的设计文档，采用verilog搭建流水线CPU">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://solor-wind.github.io/img/CPU%E6%9E%B6%E6%9E%84.jpg">
+<meta property="article:published_time" content="2024-01-23T00:28:02.000Z">
+<meta property="article:modified_time" content="2024-01-23T01:10:18.318Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://solor-wind.github.io/img/CPU%E6%9E%B6%E6%9E%84.jpg">
+  
+  
+  
+  <title>计组P5设计文档 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sth.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组P5设计文档"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 08:28" pubdate>
+          2024年1月23日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组P5设计文档</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>P5建议：可以在P4的基础上先搭建没有转发、阻塞的流水线CPU，确认功能完善后逐步添加阻塞、转发通路。对于P5，转发与阻塞情况不多，也可采用列举法，后期改为TIME</p>
+<p>源代码：<a
+target="_blank" rel="noopener" href="https://github.com/solor-wind/BUAA_CO">solor-wind/BUAA_CO
+(github.com)</a></p>
+</blockquote>
+<h3 id="设计要求">设计要求</h3>
+<ol type="1">
+<li>处理器应支持如下指令集：{ add, sub, ori, lw, sw, beq, lui, jal, jr,
+nop }，为五级流水线设计。</li>
+<li>流水线的设计以追求性能为第一目标，因此必须尽最大可能<strong>支持转发</strong>以解决数据冒险。这一点在本
+project
+的最终成绩中所占比重较大，课上测试时会通过测试程序所运行的<strong>总周期数</strong>进行判定，望大家慎重对待。</li>
+<li>对于 b 类和 j 类指令，
+流水线设计必须<strong>支持延迟槽</strong>，因此设计需要注意使用
+<strong>PC@D + 8</strong>或<strong>PC@I + 4</strong>。</li>
+<li>为了解决数据冒险而设计的转发数据来源必须是<strong>某级流水线寄存器</strong>，<strong>不允许</strong>对功能部件的输出直接进行转发。</li>
+<li>指令存储器（IM，instruction memory）和数据存储器（DM，data
+memory）要求如下：
+<ul>
+<li>IM：容量为 <strong>16KiB</strong>（<strong>4096</strong> ×
+32bit）。</li>
+<li>DM：容量为 <strong>12KiB</strong>（<strong>3072</strong> ×
+32bit）。</li>
+</ul></li>
+<li>PC 的初始地址为 <strong>0x00003000</strong>，和 Mars
+中我们要求设置的代码初始地址相同。</li>
+<li>最外层的 mips 模块的文件名必须为 mips.v ，该文件中的 module
+也必须命名为 <strong>mips</strong> 。</li>
+</ol>
+<h3 id="模块规格">模块规格</h3>
+<h4 id="架构">架构</h4>
+<figure>
+<img src="/img/CPU架构.jpg" srcset="/img/loading.gif" lazyload alt="CPU架构" />
+<figcaption aria-hidden="true">CPU架构</figcaption>
+</figure>
+<h4 id="命名规则">命名规则</h4>
+<p>流水线信号共5级，IF/ID ID/EX EX/MEM MEM/WB，两个寄存器间的信号用
+<code>级别_数据/功能(_去向)</code> 命名。</p>
+<h4 id="控制器设计">控制器设计</h4>
+<h5 id="指令解读">指令解读</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">31-26</th>
+<th style="text-align: center;">25-21</th>
+<th style="text-align: center;">20-16</th>
+<th style="text-align: center;">15-11</th>
+<th style="text-align: center;">10-6</th>
+<th style="text-align: center;">5-0</th>
+<th style="text-align: center;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">add</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">rd</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">100000</td>
+<td style="text-align: center;">rd=rs+rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">sub</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">rd</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">100010</td>
+<td style="text-align: center;">rd=rs-rt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ori</td>
+<td style="text-align: center;">001101</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">rt=rs|im</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">lw</td>
+<td style="text-align: center;">100011</td>
+<td style="text-align: center;">base</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">rt=mem(base+of)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">sw</td>
+<td style="text-align: center;">101011</td>
+<td style="text-align: center;">base</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">mem(base+of)=rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">beq</td>
+<td style="text-align: center;">000100</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">PC+=4+of00?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">lui</td>
+<td style="text-align: center;">001111</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">rt=im(0*16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">jal</td>
+<td style="text-align: center;">000011</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">较为复杂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">jr</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">001000</td>
+<td style="text-align: center;">PC=rs</td>
+</tr>
+</tbody>
+</table>
+<p>jal：$31=PC+4，PC=PC[31:28]+index00</p>
+<h4 id="共有信号">共有信号：</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_pc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的pc</td>
+<td style="text-align: center;">上一级</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_pc_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的pc</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的指令</td>
+<td style="text-align: center;">上一级</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_instr_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的指令</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="if">IF</h4>
+<h5 id="接口">接口</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，使pc保持不变</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IF_j</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">是否跳转</td>
+<td style="text-align: center;">ID_j_IF</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_pc4</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">ID_pc_IF</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] IM [<span class="hljs-number">0</span>:<span class="hljs-number">4095</span>];<span class="hljs-comment">//存储指令</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] IF_pc;<span class="hljs-comment">//存储pc，同时也是当前的pc</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] IF_instr;<span class="hljs-comment">//当前的指令</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] pc_addr;<span class="hljs-comment">//方便截取特定位宽</span><br><span class="hljs-keyword">assign</span> pc_addr=IF_pc-<span class="hljs-number">32&#x27;h3000</span>;<br><span class="hljs-keyword">assign</span> IF_instr=IM[pc_addr[<span class="hljs-number">13</span>:<span class="hljs-number">2</span>]];<br></code></pre></td></tr></table></figure>
+<h4 id="id">ID</h4>
+<h5 id="接口-1">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，清空D级</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_pc_ID</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入指令的pc</td>
+<td style="text-align: center;">WB_pc_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_we</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">WB_we_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器</td>
+<td style="text-align: center;">WB_addr_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入的值</td>
+<td style="text-align: center;">WB_data_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;">EX_out，EX_data_WB，MEM_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_base</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">EX_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">EX_rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_j_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">跳转指示信号</td>
+<td style="text-align: center;">IF_j</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_pc_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">IF_pc4</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量-1">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rs_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rt_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] grf [<span class="hljs-number">0</span>:<span class="hljs-number">31</span>];<span class="hljs-comment">//32个寄存器</span><br></code></pre></td></tr></table></figure>
+<h4 id="ex">EX</h4>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">EX_rs_base</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">ID_rs_base</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rt_use</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td
+style="text-align: center;">参与运算的rt寄存器的值，可能从转发处来</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_rt</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td
+style="text-align: center;">传递rt供sw写入的值，也可能从转发处来</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_out</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">MEM_addr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_rt_MEM</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mem">MEM</h4>
+<h5 id="接口-2">接口</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">MEM_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入的地址</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入的数据</td>
+<td style="text-align: center;">EX_rt_MEM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">内存中读出的数据</td>
+<td style="text-align: center;">WB_lw_data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">WB_alu_data</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量-2">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] DM [<span class="hljs-number">0</span>:<span class="hljs-number">3071</span>];<br></code></pre></td></tr></table></figure>
+<h4 id="wb">WB</h4>
+<p>输出均不是reg型</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">WB_lw_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从内存取出的数</td>
+<td style="text-align: center;">MEM_data_WB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_alu_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">EX_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_we_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">ID_we</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_addr_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器地址</td>
+<td style="text-align: center;">ID_addr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_data_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入寄存器的值</td>
+<td style="text-align: center;">ID_data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="冒险处理">冒险处理</h3>
+<h4 id="t_use-与-t_new-的计算"><span
+class="math inline">\(T_{use}\)</span> 与 <span
+class="math inline">\(T_{new}\)</span> 的计算</h4>
+<h5 id="指令分类">指令分类</h5>
+<ul>
+<li><p>calr——2个use(rs,rt)，一个new(rd)</p>
+<p>add、sub</p></li>
+<li><p>cali——1个use(rs)，一个new(rt)</p>
+<p>ori、lui</p></li>
+<li><p>lw——1个use(rs/base)，一个new(rt)</p>
+<p>lw</p></li>
+<li><p>sw——2个use(rs,rt)，无new</p>
+<p>sw</p></li>
+<li><p>j_rs——1个use(rs)</p>
+<p>jr、beq</p></li>
+<li><p>j_rt——1个use(rt)</p>
+<p>beq</p></li>
+<li><p>jal——无法分类</p></li>
+</ul>
+<p>其中，beq从属于两种</p>
+<h5 id="列表">列表</h5>
+<table style="width:100%;">
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;"><span
+class="math inline">\(T_{use}\)</span></th>
+<th style="text-align: center;">转发接口</th>
+<th style="text-align: center;"><span
+class="math inline">\(E\_T_{new}\)</span></th>
+<th style="text-align: center;">提供接口</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">add</td>
+<td style="text-align: center;">calr</td>
+<td style="text-align: center;">1(rs,rt)</td>
+<td style="text-align: center;">ID_rs_base_EX,ID_rt_EX</td>
+<td style="text-align: center;">1(rd)</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">sub</td>
+<td style="text-align: center;">calr</td>
+<td style="text-align: center;">1(rs,rt)</td>
+<td style="text-align: center;">ID_rs_base_EX,ID_rt_EX</td>
+<td style="text-align: center;">1(rd)</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ori</td>
+<td style="text-align: center;">cali</td>
+<td style="text-align: center;">1(rs)</td>
+<td style="text-align: center;">ID_rs_base_EX</td>
+<td style="text-align: center;">1(rt)</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">lw</td>
+<td style="text-align: center;">lw</td>
+<td style="text-align: center;">1(base)</td>
+<td style="text-align: center;">ID_rs_base_EX</td>
+<td style="text-align: center;">2(rt)</td>
+<td style="text-align: center;">WB_data_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">sw</td>
+<td style="text-align: center;">sw</td>
+<td style="text-align: center;">1(rs),2(rt)</td>
+<td style="text-align: center;">ID_rs_base_EX,EX_rt_MEM</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">\</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">beq</td>
+<td style="text-align: center;">j_rs,j_rt</td>
+<td style="text-align: center;">0(rs,rt)</td>
+<td style="text-align: center;">ID_rs_data,ID_rt_data</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">\</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">lui</td>
+<td style="text-align: center;">cali</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">1(rt)</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">jal</td>
+<td style="text-align: center;">j</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">1($31)</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">jr</td>
+<td style="text-align: center;">j_rs</td>
+<td style="text-align: center;">0(rs)</td>
+<td style="text-align: center;">ID_rs_data</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: center;">\</td>
+</tr>
+</tbody>
+</table>
+<h4 id="暂停">暂停</h4>
+<h5 id="阻塞分类">阻塞分类</h5>
+<p>总原则： <span class="math inline">\(T_{use}&lt;E\_T_{new}\)</span>
+、 <span class="math inline">\(T_{use}&lt;M\_T_{new}\)</span>
+、地址相同</p>
+<p>大致有0&lt;1、0&lt;2、1&lt;2、0&lt;2(M级)四种类型，均需比较地址</p>
+<h5 id="执行操作">执行操作</h5>
+<p>若需要阻塞，则</p>
+<ol type="1">
+<li>冻结IF/ID</li>
+<li>清除ID/EX</li>
+<li>禁止PC</li>
+</ol>
+<h4 id="转发">转发</h4>
+<h5 id="接口-3">接口</h5>
+<p>见表格</p>
+<h5 id="注意事项">注意事项</h5>
+<ul>
+<li>从W级转发到D级，采用D级内部转发（如beq）</li>
+<li>从W级转发到E、M级，可利用WB的信号直接判断</li>
+<li>MEM写入内存的rt值从D到E再到M，要经过2次转发（如lw $3,0($0) sw
+$3,0($3)，因为阻塞了一次，W级产生的数据没办法转发到M级，只能是sw在E级时把W级的lw产生的数据转发）</li>
+<li>转发时如果地址是0寄存器应剔除</li>
+</ul>
+<h5 id="遇到的bug修复历史">遇到的bug&amp;修复历史</h5>
+<p>jr忘记加到阻塞里</p>
+<p>lw写入的是rt不是rd，阻塞判断错了</p>
+<p>先lw,后sw发生阻塞时，不能及时转发sw需要、lw产生的rt值</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ori</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">3</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">3</span>,<span class="hljs-number">0</span>($<span class="hljs-number">3</span>)<br></code></pre></td></tr></table></figure>
+<p>加指令：改const、改阻塞、改转发、</p>
+<h3 id="添加指令">添加指令</h3>
+<ol type="1">
+<li>添加到const里</li>
+<li>分类，想想有无新的转发通路/阻塞
+<ul>
+<li>cal：修改EX计算过程、添加WB回写信号，加入相关阻塞指令中（带cal的），加入相关转发指令中（同上，注意供需接口都有）。</li>
+<li>lw：修改EX计算过程、添加WB回写信号，……</li>
+<li>sw：修改EX计算过程、MEM写入，……但是注意“注意事项3”，修改rt在E级的转发</li>
+<li>j_rs：</li>
+<li>j_rt：修改ID跳转判断与跳转地址计算，加入阻塞、转发指令</li>
+<li>jal：修改ID跳转判断与跳转地址计算、EX算pc等、WB回写信号，阻塞转发</li>
+</ul></li>
+<li>在阻塞和转发中分别添加相应值，注意“注意事项3”</li>
+</ol>
+<h3 id="思考题">思考题</h3>
+<p>1、我们使用提前分支判断的方法尽早产生结果来减少因不确定而带来的开销，但实际上这种方法并非总能提高效率，请从流水线冒险的角度思考其原因并给出一个指令序列的例子。</p>
+<p>​ 提前分支判断使得beq的 <span class="math inline">\(T_{use}\)</span>
+为0，很容易发生阻塞，如</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">beq</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">0</span>,loop<br></code></pre></td></tr></table></figure>
+<p>​ 如果不提前判断，则可以使用转发解决（但这样好像会多流水一级？）</p>
+<p>2、因为延迟槽的存在，对于 jal
+等需要将指令地址写入寄存器的指令，要写回 PC +
+8，请思考为什么这样设计？</p>
+<p>​ jal执行后会无条件执行下一句（pc+4），但jr
+$ra执行时不会再执行延迟槽中的内容，因此是pc+8</p>
+<p>3、我们要求大家所有转发数据都来源于流水寄存器而不能是功能部件（如 DM
+、 ALU ），请思考为什么？</p>
+<p>​ 来自寄存器的输出是稳定的，而功能部件可能输出不稳定</p>
+<p>4、我们为什么要使用 GPR 内部转发？该如何实现？</p>
+<p>​ 为了将来自W级的输出及时写入寄存器（或及时使用）。实现见代码</p>
+<p>5、我们转发时数据的需求者和供给者可能来源于哪些位置？共有哪些转发数据通路？</p>
+<p>​ 见“冒险处理”</p>
+<p>6、在课上测试时，我们需要你现场实现新的指令，对于这些新的指令，你可能需要在原有的数据通路上做哪些扩展或修改？提示：你可以对指令进行分类，思考每一类指令可能修改或扩展哪些位置。</p>
+<p>​ 见“添加指令”</p>
+<p>7、确定你的译码方式，简要描述你的译码器架构，并思考该架构的优势以及不足。</p>
+<p>​
+分布式译码，每一级流水指令即可，无需流水控制信号，通过宏定义根据指令执行操作</p>
+<p>​ 不足：加指令时需要修改的部件较多</p>
+<h3 id="让我想想">让我想想</h3>
+<h4 id="测试部分">测试部分</h4>
+<h5 id="part1p4的数据测试">part1——P4的数据测试</h5>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs routeros">.data<br>.space 0x3000<br>.text<br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,2<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,3<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,4<br>ori <span class="hljs-variable">$5</span>,<span class="hljs-variable">$0</span>,5<br>ori <span class="hljs-variable">$6</span>,<span class="hljs-variable">$0</span>,6<br>ori <span class="hljs-variable">$7</span>,<span class="hljs-variable">$0</span>,7<br>ori <span class="hljs-variable">$8</span>,<span class="hljs-variable">$0</span>,8<br>ori <span class="hljs-variable">$9</span>,<span class="hljs-variable">$0</span>,9<br>ori <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,10<br>ori <span class="hljs-variable">$11</span>,<span class="hljs-variable">$0</span>,11<br>ori <span class="hljs-variable">$12</span>,<span class="hljs-variable">$0</span>,12<br>ori <span class="hljs-variable">$13</span>,<span class="hljs-variable">$0</span>,13<br>ori <span class="hljs-variable">$14</span>,<span class="hljs-variable">$0</span>,14<br>ori <span class="hljs-variable">$15</span>,<span class="hljs-variable">$0</span>,15<br>ori <span class="hljs-variable">$16</span>,<span class="hljs-variable">$0</span>,16<br>ori <span class="hljs-variable">$17</span>,<span class="hljs-variable">$0</span>,17<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$0</span>,18<br>ori <span class="hljs-variable">$19</span>,<span class="hljs-variable">$0</span>,19<br>ori <span class="hljs-variable">$20</span>,<span class="hljs-variable">$0</span>,20<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$0</span>,21<br>ori <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,22<br>ori <span class="hljs-variable">$23</span>,<span class="hljs-variable">$0</span>,23<br>ori <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,24<br>ori <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,25<br>ori <span class="hljs-variable">$26</span>,<span class="hljs-variable">$0</span>,26<br>ori <span class="hljs-variable">$27</span>,<span class="hljs-variable">$0</span>,27<br>ori <span class="hljs-variable">$28</span>,<span class="hljs-variable">$0</span>,28<br>ori <span class="hljs-variable">$29</span>,<span class="hljs-variable">$0</span>,29<br>ori <span class="hljs-variable">$30</span>,<span class="hljs-variable">$0</span>,30<br>ori <span class="hljs-variable">$31</span>,<span class="hljs-variable">$0</span>,0x310c<br><br><br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,1#<span class="hljs-variable">$0</span>应始终为0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,65535<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,12<br>lui <span class="hljs-variable">$5</span>,65535<br>lui <span class="hljs-variable">$6</span>,0<br>lui <span class="hljs-variable">$7</span>,8<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$8</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$2</span>#-1<br>lui <span class="hljs-variable">$9</span>,32767<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$9</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$2</span>#intmax<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$8</span><br>sub <span class="hljs-variable">$10</span>,<span class="hljs-variable">$8</span>,<span class="hljs-variable">$9</span>#-intmax-1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$10</span><br>sub <span class="hljs-variable">$11</span>,<span class="hljs-variable">$2</span>,<span class="hljs-variable">$4</span>#65523<br>sub <span class="hljs-variable">$12</span>,<span class="hljs-variable">$4</span>,<span class="hljs-variable">$2</span>#-65523<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$13</span>,<span class="hljs-variable">$11</span>,<span class="hljs-variable">$12</span>#0<br>sub <span class="hljs-variable">$14</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$5</span>#0<br><br>lui <span class="hljs-variable">$18</span>,0<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$18</span>,0x2ffc<br>sw <span class="hljs-variable">$10</span>,(<span class="hljs-variable">$18</span>)<br>sw <span class="hljs-variable">$11</span>,12280(<span class="hljs-variable">$0</span>)<br>sw <span class="hljs-variable">$12</span>,-4(<span class="hljs-variable">$4</span>)#8<br>lw <span class="hljs-variable">$15</span>,8(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$12</span>,-65533<br>lw <span class="hljs-variable">$16</span>,12284(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$10</span>,-intmax-1<br>lw <span class="hljs-variable">$17</span>,12280(<span class="hljs-variable">$0</span>)#11,65523<br><br>loop:<br>lui <span class="hljs-variable">$21</span>,0<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$21</span>,1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$19</span>,<span class="hljs-variable">$19</span>,<span class="hljs-variable">$21</span><br>beq <span class="hljs-variable">$19</span>,<span class="hljs-variable">$20</span>,loop#<span class="hljs-variable">$19</span>=21跳出<br><br>sub <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span>#<span class="hljs-variable">$22</span>=-20<br>loop2:<br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,loop2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span><br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,end<br>nop<br>end:<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$23</span>,<span class="hljs-variable">$23</span>,<span class="hljs-variable">$21</span><br><br>loop3:<br>jr <span class="hljs-variable">$ra</span><br>nop<br>jal loop3#往前跳<br>nop<br>jal loop4#往后跳<br>loop4:<br>nop<br>beq <span class="hljs-variable">$24</span>,<span class="hljs-variable">$21</span>,end2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$21</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$ra</span><br>jr <span class="hljs-variable">$25</span><br>end2:<br>nop<br>jal end2#原地蹦跶<br>nop<br></code></pre></td></tr></table></figure>
+<h5 id="part2冒险测试">part2——冒险测试</h5>
+<p><span class="math inline">\(A_9^4\)</span>？</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#add,sub,ori,lui,lw,sw,beq,jal,jr</span><br><span class="hljs-comment">#先把每个寄存器里的值搞成非0</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">2</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">4</span>,<span class="hljs-number">4</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">5</span>,$<span class="hljs-number">4</span>,$<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lui</span> $<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">6</span>,$<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">6</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">7</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">8</span>($<span class="hljs-number">0</span>)<br><br><span class="hljs-attribute">loop</span>:<br><span class="hljs-attribute">add</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">10</span>,$<span class="hljs-number">9</span><br><span class="hljs-attribute">beq</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">19</span>,loop<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">jal</span> loop2<br><span class="hljs-attribute">add</span> $<span class="hljs-number">12</span>,$<span class="hljs-number">11</span>,$<span class="hljs-number">11</span><br><span class="hljs-attribute">loop2</span>:<br><span class="hljs-attribute">sw</span> $ra,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $ra,$<span class="hljs-number">0</span>,<span class="hljs-number">0</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">30</span>,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">jr</span> $<span class="hljs-number">30</span><br><span class="hljs-attribute">nop</span><br></code></pre></td></tr></table></figure>
+<p>把mips.v里的转发、阻塞写到每个模块里，每个模块只需要针对当前指令给出addr和Tnew，ID给出Tuse</p>
+<p>为什么DM的rt需要在E、M级2次转发？</p>
+<p>大概因为sw在DM才用，lw的数据W级才有，错开就？</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CO/" class="category-chain-item">CO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组P5设计文档</div>
+      <div>https://solor-wind.github.io/2024/01/23/计组P5设计文档/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P6设计文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计组P6设计文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P4%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P4设计文档">
+                        <span class="hidden-mobile">计组P4设计文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

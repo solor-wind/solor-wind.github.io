@@ -1,0 +1,2011 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计组P7的设计文档，采用verilog搭建支持中断的流水线CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组P7设计文档">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/23/%E8%AE%A1%E7%BB%84P7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="计组P7的设计文档，采用verilog搭建支持中断的流水线CPU">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://solor-wind.github.io/img/%E5%BE%AE%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://solor-wind.github.io/img/%E8%AE%A1%E6%97%B6%E5%99%A8%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%9B%BE.jpg">
+<meta property="article:published_time" content="2024-01-23T00:28:04.000Z">
+<meta property="article:modified_time" content="2024-01-23T01:10:01.608Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://solor-wind.github.io/img/%E5%BE%AE%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png">
+  
+  
+  
+  <title>计组P7设计文档 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sth.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组P7设计文档"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 08:28" pubdate>
+          2024年1月23日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          46 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组P7设计文档</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>P7建议：先理解异常的处理过程，明确需要硬件完成是哪一部分，然后逐步搭建。（异常的处理和系统桥感觉相对独立？）</p>
+<p>源代码：<a
+target="_blank" rel="noopener" href="https://github.com/solor-wind/BUAA_CO">solor-wind/BUAA_CO
+(github.com)</a></p>
+</blockquote>
+<h2 id="设计要求架构与需求">设计要求、架构与需求</h2>
+<h3 id="设计要求">设计要求</h3>
+<p>处理器应为五级流水线设计，支持如下指令集：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">add, </span><span class="hljs-keyword">sub, </span><span class="hljs-keyword">and, </span><span class="hljs-keyword">or, </span><span class="hljs-keyword">slt, </span><span class="hljs-keyword">sltu, </span><span class="hljs-keyword">lui</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">addi, </span><span class="hljs-keyword">andi, </span><span class="hljs-keyword">ori</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">lb, </span><span class="hljs-keyword">lh, </span><span class="hljs-keyword">lw, </span><span class="hljs-keyword">sb, </span><span class="hljs-keyword">sh, </span><span class="hljs-keyword">sw</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">mult, </span><span class="hljs-keyword">multu, </span><span class="hljs-keyword">div, </span><span class="hljs-keyword">divu, </span><span class="hljs-keyword">mfhi, </span><span class="hljs-keyword">mflo, </span><span class="hljs-keyword">mthi, </span><span class="hljs-keyword">mtlo</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">beq, </span><span class="hljs-keyword">bne, </span><span class="hljs-keyword">jal, </span><span class="hljs-keyword">jr</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">mfc0,mtc0,eret,syscall</span><br></code></pre></td></tr></table></figure>
+<p>其他详见“P7提交要求”</p>
+<h3 id="任务需求">任务需求</h3>
+<p>说实话，P7的教程给出了大致框架，但很多地方的细节并未给出，或者分散在不同地方（不同章节、SMRL、设计文档等），难以明确需求与任务要求，从而导致实现困难，下面是个人的总结。</p>
+<h4 id="术语的明确">术语的明确</h4>
+<ul>
+<li>内部异常：指由于执行指令引发的异常，如算术溢出、地址未对齐等等</li>
+<li>外部中断：指外部引发的中断，如计时器、tb给出的中断信号等等</li>
+<li>异常/中断：以上两类事件的统称</li>
+</ul>
+<h4 id="任务">任务</h4>
+<h5 id="核心任务实现异常的处理">核心任务：实现异常的处理</h5>
+<h6 id="处理步骤">处理步骤</h6>
+<ol type="1">
+<li>根据当前CP0的SR状态、内部异常exc信号、外部中断HWint信号判断是否中断</li>
+<li>把宏观PC写入EPC（注意延迟槽指令），异常信息写入CP0的Cause寄存器，SR相应位置1进入内核态（处理中断过程中禁止嵌套中断）</li>
+<li>将PC调整到0x4180，清空宏观PC及之前的流水线寄存器</li>
+<li>执行异常处理程序（处理异常、响应中断、回到原来指令等操作都交给软件实现）</li>
+</ol>
+<h6 id="具体实现">具体实现</h6>
+<ul>
+<li>每一级新增异常判断，流水异常信号——对应步骤1</li>
+<li>每一级新增中断信号，进行清空操作——对应步骤2</li>
+<li>每一级针对新增的指令进行修改（要结合CP0的设计一起进行），完成阻塞和转发的修改——对应步骤4</li>
+<li>CP0的实现，包括接受内部异常与外部中断信号、给出中断信号、实现对三个寄存器的写入与读出。</li>
+</ul>
+<h6 id="一些细节">一些细节</h6>
+<ul>
+<li>CP0位置：我选择在E级，此时已经可以判断出所有类型，并且不会对乘除模块的寄存器、DM与外设、寄存器堆进行写入，同时可以参考乘除模块进行转发与阻塞的处理</li>
+<li>延迟槽的判断：直接引入M级指令，若M为跳转，则判断为延迟槽</li>
+<li>优先级：复位信号&gt;外部中断&gt;内部异常，这体现在Cause寄存器写入等方面</li>
+<li><code>HWint=&#123;3'b0,interrupt,timer0,timer1&#125;</code>
+（看了学长的博客才知道，根本没有6个中断）</li>
+</ul>
+<h5
+id="附属任务将cpu封装为单周期实现与外设沟通的系统桥">附属任务：将CPU封装为单周期，实现与外设沟通的系统桥</h5>
+<h6 id="封装为单周期">封装为单周期</h6>
+<p>考察CPU的功能，主要有以下几点：</p>
+<ul>
+<li>执行指令进行计算——需要IM接口(提供pc，获取指令)</li>
+<li>与外设进行读、写操作——需要DM等接口(提供addr、写入数据，获取读出数据)</li>
+<li>获取外部中断信号——2个timer和tb的中断</li>
+<li>老2样——clk与reset</li>
+<li>课程组检查寄存器的入口——寄存器堆相关信号</li>
+</ul>
+<h6 id="系统桥">系统桥</h6>
+<p>考察系统桥的功能，就是根据M级指令、地址、数据，向外设提供相应的写使能信号、写入数据，同时对来自外设的数据进行选择。因此，接口应该能实现以上功能。</p>
+<h3 id="架构">架构</h3>
+<figure>
+<img src="/img/微系统架构.png" srcset="/img/loading.gif" lazyload alt="微系统架构.png" />
+<figcaption aria-hidden="true">微系统架构.png</figcaption>
+</figure>
+<h2 id="模块规格">模块规格</h2>
+<h3 id="命名规则">命名规则</h3>
+<p>流水线信号共5级，IF/ID ID/EX EX/MEM MEM/WB，两个寄存器间的信号用
+<code>级别_数据/功能_去向</code> 命名。</p>
+<h3 id="cpu">CPU</h3>
+<h4 id="封装">封装</h4>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">reset</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">int_export</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">外部中断信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">int_timer0</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟中断信号0</td>
+<td style="text-align: center;">Timer0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">int_timer1</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟中断信号1</td>
+<td style="text-align: center;">Timer1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">macroscopic_pc</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">宏观pc</td>
+<td style="text-align: center;">EX/tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">i_inst_rdata</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">IM的指令</td>
+<td style="text-align: center;">IF_instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">i_inst_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">IF的pc</td>
+<td style="text-align: center;">IF_pc</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">w_grf_we</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">WB</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">w_grf_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">WB</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">w_grf_wdata</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">WB</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">w_inst_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">WB</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">m_inst_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">M级pc</td>
+<td style="text-align: center;">EX_pc_MEM/bridge</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">out_instr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入外设的指令</td>
+<td style="text-align: center;">EX_instr_MEM/bridge</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">out_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入外设的地址</td>
+<td style="text-align: center;">EX_out/bridge</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">out_WD</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入外设的数据</td>
+<td style="text-align: center;">EX_rt_MEM或W级转发</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">out_RD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从外设读取的数据</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+</tbody>
+</table>
+<h4 id="模块共有信号">模块共有信号：</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_pc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的pc</td>
+<td style="text-align: center;">上一级（IF为out）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_pc_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的pc</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">xx_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">当前级的指令</td>
+<td style="text-align: center;">上一级</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">xx_instr_yy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要传给下一级的指令</td>
+<td style="text-align: center;">下一级yy（WB无）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="if">IF</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">req</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">中断信号，跳至0x4180</td>
+<td style="text-align: center;">CP0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，使pc保持不变</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_j</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">是否跳转</td>
+<td style="text-align: center;">ID_j_IF</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IF_pc4</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">ID_pc_IF</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从tb获取的指令</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">IF_pc</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">IF级当前指令</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">IF_exc_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">内部异常信号</td>
+<td style="text-align: center;">ID</td>
+</tr>
+</tbody>
+</table>
+<h4 id="id">ID</h4>
+<h5 id="接口">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">req</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">中断信号，清空D级</td>
+<td style="text-align: center;">CP0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">stall</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">阻塞信号，清空D级</td>
+<td style="text-align: center;">staller</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EPC</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">CP0的EPC</td>
+<td style="text-align: center;">EX_rt(转发)、CP0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_pc_ID</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入指令的pc</td>
+<td style="text-align: center;">WB_pc_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_we</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">WB_we_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器</td>
+<td style="text-align: center;">WB_addr_ID</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入的值</td>
+<td style="text-align: center;">WB_data_ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_sign</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">转发选择，0为原值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;">EX_out，EX_data_WB，MEM_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">转发值</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_exc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">IF的异常信号</td>
+<td style="text-align: center;">IF</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_exc_EX</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">给EX的异常信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_rs_base</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">EX_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_rt</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">EX_rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ID_j_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">跳转指示信号</td>
+<td style="text-align: center;">IF_j</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ID_pc_IF</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">IF_pc4</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量与操作">内部变量与操作</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rs_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rt_use;<span class="hljs-comment">//搭配转发使用</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] grf [<span class="hljs-number">0</span>:<span class="hljs-number">31</span>];<span class="hljs-comment">//32个寄存器</span><br></code></pre></td></tr></table></figure>
+<h4 id="ex">EX</h4>
+<h5 id="接口-1">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">req</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">中断信号，清空本级</td>
+<td style="text-align: center;">CP0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rs_base</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rs寄存器的值</td>
+<td style="text-align: center;">ID_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_rt</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td
+style="text-align: center;">参与运算的rt寄存器的值，可能从转发处来</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_CP0</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从CP0读取的值</td>
+<td style="text-align: center;">CP0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_exc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从ID流水下来的内部异常信号</td>
+<td style="text-align: center;">ID</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_exc_CP0</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">传给CP0的内部异常信号</td>
+<td style="text-align: center;">CP0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_new</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">表示E级产生了新的要写入寄存器的值</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">E级产生新值的寄存器地址</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_out</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">MEM_addr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rt_MEM</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">rt寄存器的值</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">busy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">mul是否正忙</td>
+<td style="text-align: center;">mul</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] out;<span class="hljs-comment">//即时给出运算结果，上升沿时赋给EX_out</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_tmp_new;<span class="hljs-comment">//同上，EX_new</span><br><span class="hljs-keyword">reg</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] EX_tmp_addr;<span class="hljs-comment">//EX_addr</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">2</span>:<span class="hljs-number">0</span>] start;<span class="hljs-comment">//从E级指令给出mul所需信号,req时为0</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] hi;<span class="hljs-comment">//</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] lo;<br></code></pre></td></tr></table></figure>
+<h5 id="内部模块mul">内部模块——mul</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">start</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[2:0]</td>
+<td style="text-align: center;">开始运算信号</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算数rs</td>
+<td style="text-align: center;">EX_rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算数rt</td>
+<td style="text-align: center;">EX_rt_use</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">busy</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">正忙信号</td>
+<td style="text-align: center;">busy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">hi</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">乘法高位/除法余数</td>
+<td style="text-align: center;">out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">lo</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">乘法低位/除法的商</td>
+<td style="text-align: center;">out</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mem">MEM</h4>
+<h5 id="接口-2">接口</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">MEM_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要读出的地址</td>
+<td style="text-align: center;">EX_out</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">读出的数据</td>
+<td style="text-align: center;">bridge</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_new</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">表示M级有了新的要写入寄存器的值</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_new_addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">M级新值的寄存器地址</td>
+<td style="text-align: center;">instr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">传向下一级的数据</td>
+<td style="text-align: center;">WB_lw_data</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_data_WB</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">WB_alu_data</td>
+</tr>
+</tbody>
+</table>
+<h5 id="内部变量-1">内部变量</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">reg</span> [<span class="hljs-number">2</span>:<span class="hljs-number">0</span>] op;<span class="hljs-comment">//位扩展选择信号</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] data_out;<span class="hljs-comment">//原始读出数据</span><br></code></pre></td></tr></table></figure>
+<h5 id="内部模块ext">内部模块——ext</h5>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">读出地址的低位</td>
+<td style="text-align: center;">MEM_addr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Din</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">Din</td>
+<td style="text-align: center;">原始数据</td>
+<td style="text-align: center;">MEM_data</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Op</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">Op</td>
+<td style="text-align: center;">扩展选择信号</td>
+<td style="text-align: center;">op</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Dout</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">Dout</td>
+<td style="text-align: center;">扩展后的数据</td>
+<td style="text-align: center;">MEM_data_WB</td>
+</tr>
+</tbody>
+</table>
+<h4 id="wb">WB</h4>
+<p>输出均不是reg型</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">WB_lw_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从内存取出的数</td>
+<td style="text-align: center;">MEM_data_WB</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_alu_data</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">运算结果</td>
+<td style="text-align: center;">EX_data_WB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_we_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">寄存器写入信号</td>
+<td style="text-align: center;">ID_we</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WB_addr_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[4:0]</td>
+<td style="text-align: center;">要写入的寄存器地址</td>
+<td style="text-align: center;">ID_addr</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WB_data_ID</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">要写入寄存器的值</td>
+<td style="text-align: center;">ID_data</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cp0">CP0</h4>
+<p>位于E级，此时已经可以判断出所有异常类型，而且不会写入乘除模块、DM以及寄存器</p>
+<p>通过E级指令来写入/读出相应寄存器，读出/写入的值与E级其他指令一样流水</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">复位信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">HWint</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[5:0]</td>
+<td style="text-align: center;">输入中断信号</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">exc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">异常类型</td>
+<td style="text-align: center;">EX_exc_CP0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EX_pc</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">E级pc</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">E级指令</td>
+<td style="text-align: center;">EX</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">M级指令，判断延迟槽</td>
+<td style="text-align: center;">EX_instr_MEM</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EX_rt</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">写入CP0的数据</td>
+<td style="text-align: center;">EX_rt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CP0_rd</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从CP0读出的数据</td>
+<td style="text-align: center;">EX_CP0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">EPC</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">EPC</td>
+<td style="text-align: center;">IF</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Req</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">中断信号</td>
+<td style="text-align: center;">好多</td>
+</tr>
+</tbody>
+</table>
+<h5 id="寄存器对应位的功能">寄存器对应位的功能</h5>
+<p>其中，SR编号12，Cause编号13，EPC编号14</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">寄存器</th>
+<th style="text-align: center;">功能域</th>
+<th style="text-align: center;">位域</th>
+<th style="text-align: center;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">SR（State Register）</td>
+<td style="text-align: center;">IM（Interrupt Mask）</td>
+<td style="text-align: center;">15:10</td>
+<td style="text-align: center;">分别对应六个外部中断，相应位置 1
+表示允许中断，置 0 表示禁止中断。这是一个被动的功能，只能通过
+<code>mtc0</code>
+这个指令修改，通过修改这个功能域，我们可以屏蔽一些中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SR（State Register）</td>
+<td style="text-align: center;">EXL（Exception Level）</td>
+<td style="text-align: center;">1</td>
+<td
+style="text-align: center;">任何异常发生时置位，这会强制进入核心态（也就是进入异常处理程序）并禁止中断。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">SR（State Register）</td>
+<td style="text-align: center;">IE（Interrupt Enable）</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">全局中断使能，该位置 1 表示允许中断，置
+0 表示禁止中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Cause</td>
+<td style="text-align: center;">BD（Branch Delay）</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">当该位置 1 的时候，EPC
+指向当前指令的前一条指令（一定为跳转），否则指向当前指令。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Cause</td>
+<td style="text-align: center;">IP（Interrupt Pending）</td>
+<td style="text-align: center;">15:10</td>
+<td style="text-align: center;">为 6 位待决的中断位，分别对应 6
+个外部中断，相应位置 1 表示有中断，置 0
+表示无中断，将会每个周期被修改一次，修改的内容来自计时器和外部中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Cause</td>
+<td style="text-align: center;">ExcCode</td>
+<td style="text-align: center;">6:2</td>
+<td
+style="text-align: center;">异常编码，记录当前发生的是什么异常。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">EPC</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">记录异常处理结束后需要返回的 PC。</td>
+</tr>
+</tbody>
+</table>
+<h5 id="异常码">异常码</h5>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">异常与中断码</th>
+<th style="text-align: left;">助记符与名称</th>
+<th style="text-align: left;">指令与指令类型</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;"><code>Int</code> （外部中断）</td>
+<td style="text-align: left;">所有指令</td>
+<td style="text-align: left;">中断请求，来源于计时器与外部中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>AdEL</code> （取指异常）</td>
+<td style="text-align: left;">所有指令</td>
+<td style="text-align: left;">PC 地址未字对齐。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PC 地址超过
+<code>0x3000 ~ 0x6ffc</code>。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>AdEL</code> （取数异常）</td>
+<td style="text-align: left;"><code>lw</code></td>
+<td style="text-align: left;">取数地址未与 4 字节对齐。</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>lh</code></td>
+<td style="text-align: left;">取数地址未与 2 字节对齐。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>lh</code>, <code>lb</code></td>
+<td style="text-align: left;">取 Timer 寄存器的值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">load 型指令</td>
+<td style="text-align: left;">计算地址时加法溢出。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">load 型指令</td>
+<td style="text-align: left;">取数地址超出
+DM、Timer0、Timer1、中断发生器的范围。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><code>AdES</code> （存数异常）</td>
+<td style="text-align: left;"><code>sw</code></td>
+<td style="text-align: left;">存数地址未 4 字节对齐。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sh</code></td>
+<td style="text-align: left;">存数地址未 2 字节对齐。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sh</code>, <code>sb</code></td>
+<td style="text-align: left;">存 Timer 寄存器的值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">计算地址加法溢出。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">向计时器的 Count 寄存器存值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">存数地址超出
+DM、Timer0、Timer1、中断发生器的范围。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;"><code>Syscall</code> （系统调用）</td>
+<td style="text-align: left;"><code>syscall</code></td>
+<td style="text-align: left;">系统调用。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;"><code>RI</code>（未知指令）</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">未知的指令码。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;"><code>Ov</code>（溢出异常）</td>
+<td style="text-align: left;"><code>add</code>, <code>addi</code>,
+<code>sub</code></td>
+<td style="text-align: left;">算术溢出。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bridge">Bridge</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">MEM_instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">M级指令</td>
+<td style="text-align: center;">CPU</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">M级要读/写的地址</td>
+<td style="text-align: center;">CPU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MEM_WD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">M级要写入的数据</td>
+<td style="text-align: center;">CPU</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MEM_RD</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">传给M的从外设读取的数据</td>
+<td style="text-align: center;">CPU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WD</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">传给外设的写入的数据</td>
+<td style="text-align: center;">CPU</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">DM_RD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">从DM读出的数据</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">m_data_byteen</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[3:0]</td>
+<td style="text-align: center;">DM写使能</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">m_int_byteen</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">[3:0]</td>
+<td style="text-align: center;">外部中断写使能</td>
+<td style="text-align: center;">tb</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Timer0_RD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">Timer0读出的数据</td>
+<td style="text-align: center;">Timer0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Timer0_we</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Timer0写使能</td>
+<td style="text-align: center;">Timer0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Timer1_RD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">[31:0]</td>
+<td style="text-align: center;">Timer1读出的数据</td>
+<td style="text-align: center;">Timer1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Timer1_we</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Timer1写使能</td>
+<td style="text-align: center;">Timer1</td>
+</tr>
+</tbody>
+</table>
+<p>主要功能：根据从M级的指令、地址、数据，给出相应的读写信号、写入数据的预处理、读出数据的选择</p>
+<h3 id="timer">Timer</h3>
+<h2 id="冒险处理">冒险处理</h2>
+<p>新增了E级到D级的转发（eret）</p>
+<p>mfc0采用之前的转发就好</p>
+<p>mtc0采用之前的转发就好</p>
+<h4 id="转发">转发</h4>
+<p>转发共5个接受：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rs_data;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ID_rt_data;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_rs_base;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_rt;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] MEM_data;<br></code></pre></td></tr></table></figure>
+<p>共2处提供：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] EX_out;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] WB_data_ID;<br></code></pre></td></tr></table></figure>
+<p>其中，2处提供接口还给出new信号与addr，代表新值产生且可用、要写入的寄存器编号</p>
+<p>接受者只需判断new与addr即可决定转发与否（有新值且可用就转发）</p>
+<h4 id="阻塞">阻塞</h4>
+<p><span class="math inline">\(T_{use}\)</span> 与 <span
+class="math inline">\(T_{new}\)</span> 的计算见表格</p>
+<p>采用Time模块传递计算结果，<code>[31:0] use_new</code>
+具体每位对应结果如下表</p>
+<p>[2][1][0]分别对应rs、rt、rd</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">rs</th>
+<th style="text-align: center;">rt</th>
+<th style="text-align: center;">rd</th>
+<th style="text-align: center;">[4]</th>
+<th style="text-align: center;">[2]</th>
+<th style="text-align: center;">[1]</th>
+<th style="text-align: center;">[0]</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">-&gt;</td>
+<td style="text-align: center;">use或new的数值</td>
+<td style="text-align: center;">&lt;-</td>
+<td style="text-align: center;">1代表正在算乘除法</td>
+<td style="text-align: center;">-&gt;</td>
+<td style="text-align: center;">0为use，1为new</td>
+<td style="text-align: center;">&lt;-</td>
+</tr>
+</tbody>
+</table>
+<p>若 <span class="math inline">\(T_{use}&lt;T_{new}\)</span>
+，或乘除类指令遇上busy，则执行阻塞操作：</p>
+<ol type="1">
+<li>冻结IF/ID</li>
+<li>清除ID/EX</li>
+<li>禁止PC</li>
+</ol>
+<h4 id="注意事项">注意事项</h4>
+<ul>
+<li>从W级转发到D级，采用D级内部转发（如beq）</li>
+<li>转发时如果地址是0寄存器应剔除</li>
+</ul>
+<h2 id="添加指令">添加指令</h2>
+<ol type="1">
+<li><p>添加到const、IF已有指令里</p></li>
+<li><p>填写TIME表格，根据use和new更改M级中的MEM_new与MEM_new_addr，添加Time中的use与new值</p></li>
+<li><p>根据操作在每个模块添加行为</p>
+<ul>
+<li>IF：指令获取与延迟槽、未知指令与取指异常</li>
+<li>ID：给出跳转指令</li>
+<li>EX：各种计算行为、存储地址计算</li>
+<li>MEM：给出写入内存的地址、转发信号、对读出的数据进行加工</li>
+<li>WB：给出写寄存器信号、寄存器编号、数据</li>
+<li>Bridge：sw类指令给出使能信号判断</li>
+</ul></li>
+<li><p>每类指令对应行为（P5）</p>
+<ul>
+<li>cal：修改EX计算过程、添加WB回写信号，加入相关阻塞指令中（带cal的），加入相关转发指令中（同上，注意供需接口都有）。</li>
+<li>lw：修改EX计算过程、添加WB回写信号，……</li>
+<li>sw：修改EX计算过程、Bridge使能判断、MEM写入，………</li>
+<li>j：修改ID跳转判断与跳转地址计算，加入阻塞、转发指令</li>
+<li>jal：修改ID跳转判断与跳转地址计算、EX算pc等、WB回写信号，阻塞转发</li>
+</ul></li>
+<li><p>是否有新的转发通路、阻塞可能</p></li>
+</ol>
+<h2 id="思考bug与测试">思考、bug与测试</h2>
+<h4 id="思考题">思考题</h4>
+<ol type="1">
+<li><p>请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？</p>
+<p>当键盘、鼠标有输入时（状态更新或其他），向CPU发出中断信号，CPU接到中断信号后判断中断种类，并执行相应区域代码，完成输入信号的读取。其中，输入信号需要驱动程序的解读。</p></li>
+<li><p>请思考为什么我们的 CPU
+处理中断异常必须是已经指定好的地址？如果你的 CPU
+支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）</p>
+<p>必须是已经指定好的地址。处理中断异常程序的目的是维护系统、程序的正常运行，并返回错误信息。如果地址由用户自定义，可能地址无效产生新的异常、或处理程序也产生新的异常等，达不到目的。</p></li>
+<li><p>为何与外设通信需要 Bridge？</p>
+<p>外设种类很多而CPU指令集有限，因此要把外设的接口和CPU的接口通过系统桥连接起来，通过统一的方式，由系统桥选择相关信息的输入输出。</p></li>
+<li><p>请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并针对每一种模式绘制状态移图。</p>
+<figure>
+<img src="/img/计时器状态转换图.jpg" srcset="/img/loading.gif" lazyload alt="计时器状态转换图" />
+<figcaption aria-hidden="true">计时器状态转换图</figcaption>
+</figure>
+<p>state的状态转换其实 一样，区别在于从INT到IDLE这一步。</p>
+<p>模式0将ctrl[0]置0，IRQ仍然为1，让state在IDLE卡死</p>
+<p>模式1将IRQ置0，ctrl[0]仍然为1，让state能继续由IDLE到LOAD，顺便在这一过程中把IRQ置0，实现循环</p></li>
+<li><p>倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的
+CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在
+P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？</p>
+<p>EPC会存入0，跳转回正常指令的时候出错。pc、错误信息</p></li>
+<li><p>为什么 <code>jalr</code> 指令为什么不能写成
+<code>jalr $31, $31</code>？</p>
+<p>根据MARS的行为，jalr两个寄存器相同会导致先写入当前pc+4，再从寄存器取数跳转，实际上达不到跳转到$31的目的</p></li>
+<li><p>[P7 选做] 请详细描述你的测试方案及测试数据构造策略。</p>
+<p>详见“测试部分”</p></li>
+</ol>
+<h4 id="写p7遇到的bug">写P7遇到的bug</h4>
+<p>eret的跳转值要接受来自mtc0(E级)的转发，还要判断地址是不是EPC</p>
+<p>ID在中断时写寄存器操作不能停(相当于W级)</p>
+<p>未知指令少打了个sb、mtc0的指令编码敲错了</p>
+<p>计数器之间的地址不连续</p>
+<p>外部异常比内部异常优先写入Cause</p>
+<p>stall和req时应当保持pc</p>
+<p>判断溢出的实现有误，应严格按MARS文档来</p>
+<p>不管跳转指令是否跳转，其后的延迟槽指令都必须携带BD标记</p>
+<p>写入外设的数据和DM提前准备好的冲突</p>
+<p>应流水延迟槽标记，而非通过M级判断</p>
+<p>阻塞、中断的时候没管BD</p>
+<p>测测延迟槽阻塞、中断（已测）</p>
+<p>外部中断的时候，BD需要置1吗——需要</p>
+<p>SR的IP要每周期修改一次</p>
+<p>mtc0和mfc0如果超出12-14怎么办——不用管</p>
+<p>何时复位EXL——eret到CP0的下一上升沿</p>
+<p>取值异常或RI后视为nop提交至CP0</p>
+<p>未知指令判断时，mtc0？、</p>
+<p>在延迟槽中断后，修改pc使得在延迟槽重新执行，BD需要置1吗？——不需要</p>
+<p>eret处中断怎么办——不会出现tb中断</p>
+<p>从中断发生器（不是计时器）读出的数据应该保持0</p>
+<p>CP0部分位是只读，未使用的位应当保持为0！！！</p>
+<p>通过sw相应一些中断时，阻塞阻塞再eret？、</p>
+<p>mtc0、mfc0的rt和rd不要混！！！</p>
+<p>D/E流水线寄存器在阻塞的时候应当流水上一级pc和BD！！！</p>
+<p>好奇：课程组到底是怎么测试时钟中断的？</p>
+<p>优化：lui提前至D级实现、取消对0寄存器的阻塞</p>
+<h4 id="测试部分">测试部分</h4>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ori</span> $<span class="hljs-number">4</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">4</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">4</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">2</span>)s<br><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">4</span>,$<span class="hljs-number">4</span>,<span class="hljs-number">12</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sh</span> $<span class="hljs-number">3</span>,<span class="hljs-number">6</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sb</span> $<span class="hljs-number">4</span>,<span class="hljs-number">11</span>($<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h5 id="part1p4的数据测试">part1——P4的数据测试</h5>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs routeros">.data<br>.space 0x3000<br>.text<br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,2<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,3<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,4<br>ori <span class="hljs-variable">$5</span>,<span class="hljs-variable">$0</span>,5<br>ori <span class="hljs-variable">$6</span>,<span class="hljs-variable">$0</span>,6<br>ori <span class="hljs-variable">$7</span>,<span class="hljs-variable">$0</span>,7<br>ori <span class="hljs-variable">$8</span>,<span class="hljs-variable">$0</span>,8<br>ori <span class="hljs-variable">$9</span>,<span class="hljs-variable">$0</span>,9<br>ori <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,10<br>ori <span class="hljs-variable">$11</span>,<span class="hljs-variable">$0</span>,11<br>ori <span class="hljs-variable">$12</span>,<span class="hljs-variable">$0</span>,12<br>ori <span class="hljs-variable">$13</span>,<span class="hljs-variable">$0</span>,13<br>ori <span class="hljs-variable">$14</span>,<span class="hljs-variable">$0</span>,14<br>ori <span class="hljs-variable">$15</span>,<span class="hljs-variable">$0</span>,15<br>ori <span class="hljs-variable">$16</span>,<span class="hljs-variable">$0</span>,16<br>ori <span class="hljs-variable">$17</span>,<span class="hljs-variable">$0</span>,17<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$0</span>,18<br>ori <span class="hljs-variable">$19</span>,<span class="hljs-variable">$0</span>,19<br>ori <span class="hljs-variable">$20</span>,<span class="hljs-variable">$0</span>,20<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$0</span>,21<br>ori <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,22<br>ori <span class="hljs-variable">$23</span>,<span class="hljs-variable">$0</span>,23<br>ori <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,24<br>ori <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,25<br>ori <span class="hljs-variable">$26</span>,<span class="hljs-variable">$0</span>,26<br>ori <span class="hljs-variable">$27</span>,<span class="hljs-variable">$0</span>,27<br>ori <span class="hljs-variable">$28</span>,<span class="hljs-variable">$0</span>,28<br>ori <span class="hljs-variable">$29</span>,<span class="hljs-variable">$0</span>,29<br>ori <span class="hljs-variable">$30</span>,<span class="hljs-variable">$0</span>,30<br>ori <span class="hljs-variable">$31</span>,<span class="hljs-variable">$0</span>,0x310c<br><br><br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,1#<span class="hljs-variable">$0</span>应始终为0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,65535<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,12<br>lui <span class="hljs-variable">$5</span>,65535<br>lui <span class="hljs-variable">$6</span>,0<br>lui <span class="hljs-variable">$7</span>,8<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$8</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$2</span>#-1<br>lui <span class="hljs-variable">$9</span>,32767<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$9</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$2</span>#intmax<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$8</span><br>sub <span class="hljs-variable">$10</span>,<span class="hljs-variable">$8</span>,<span class="hljs-variable">$9</span>#-intmax-1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$10</span><br>sub <span class="hljs-variable">$11</span>,<span class="hljs-variable">$2</span>,<span class="hljs-variable">$4</span>#65523<br>sub <span class="hljs-variable">$12</span>,<span class="hljs-variable">$4</span>,<span class="hljs-variable">$2</span>#-65523<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$13</span>,<span class="hljs-variable">$11</span>,<span class="hljs-variable">$12</span>#0<br>sub <span class="hljs-variable">$14</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$5</span>#0<br><br>lui <span class="hljs-variable">$18</span>,0<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$18</span>,0x2ffc<br>sw <span class="hljs-variable">$10</span>,(<span class="hljs-variable">$18</span>)<br>sw <span class="hljs-variable">$11</span>,12280(<span class="hljs-variable">$0</span>)<br>sw <span class="hljs-variable">$12</span>,-4(<span class="hljs-variable">$4</span>)#8<br>lw <span class="hljs-variable">$15</span>,8(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$12</span>,-65533<br>lw <span class="hljs-variable">$16</span>,12284(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$10</span>,-intmax-1<br>lw <span class="hljs-variable">$17</span>,12280(<span class="hljs-variable">$0</span>)#11,65523<br><br>loop:<br>lui <span class="hljs-variable">$21</span>,0<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$21</span>,1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$19</span>,<span class="hljs-variable">$19</span>,<span class="hljs-variable">$21</span><br>beq <span class="hljs-variable">$19</span>,<span class="hljs-variable">$20</span>,loop#<span class="hljs-variable">$19</span>=21跳出<br><br>sub <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span>#<span class="hljs-variable">$22</span>=-20<br>loop2:<br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,loop2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span><br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,end<br>nop<br>end:<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$23</span>,<span class="hljs-variable">$23</span>,<span class="hljs-variable">$21</span><br><br>loop3:<br>jr <span class="hljs-variable">$ra</span><br>nop<br>jal loop3#往前跳<br>nop<br>jal loop4#往后跳<br>loop4:<br>nop<br>beq <span class="hljs-variable">$24</span>,<span class="hljs-variable">$21</span>,end2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$21</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$ra</span><br>jr <span class="hljs-variable">$25</span><br>end2:<br>nop<br>jal end2#原地蹦跶<br>nop<br></code></pre></td></tr></table></figure>
+<h5 id="part2p5冒险测试">part2——p5冒险测试</h5>
+<p><span class="math inline">\(A_9^4\)</span>？</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#add,sub,ori,lui,lw,sw,beq,jal,jr</span><br><span class="hljs-comment">#先把每个寄存器里的值搞成非0</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">2</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">2</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">4</span>,<span class="hljs-number">4</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">5</span>,$<span class="hljs-number">4</span>,$<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lui</span> $<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">6</span>,$<span class="hljs-number">6</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">sw</span> $<span class="hljs-number">6</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">7</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,<span class="hljs-number">2</span><br><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">sw</span> $<span class="hljs-number">8</span>,<span class="hljs-number">8</span>($<span class="hljs-number">0</span>)<br><br><span class="hljs-attribute">loop</span>:<br><span class="hljs-attribute">add</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">10</span>,$<span class="hljs-number">9</span><br><span class="hljs-attribute">beq</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">19</span>,loop<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">jal</span> loop2<br><span class="hljs-attribute">add</span> $<span class="hljs-number">12</span>,$<span class="hljs-number">11</span>,$<span class="hljs-number">11</span><br><span class="hljs-attribute">loop2</span>:<br><span class="hljs-attribute">sw</span> $ra,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">ori</span> $ra,$<span class="hljs-number">0</span>,<span class="hljs-number">0</span><br><span class="hljs-attribute">lw</span> $<span class="hljs-number">30</span>,<span class="hljs-number">12</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">jr</span> $<span class="hljs-number">30</span><br><span class="hljs-attribute">nop</span><br></code></pre></td></tr></table></figure>
+<h5 id="part3p6新增指令测试">part3——p6新增指令测试</h5>
+<p>重点测试边缘数据</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">and</span> $<span class="hljs-number">1</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">or</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">4</span>,$<span class="hljs-number">3</span><br><span class="hljs-attribute">sub</span> $<span class="hljs-number">5</span>,$<span class="hljs-number">5</span>,$<span class="hljs-number">6</span><br><span class="hljs-attribute">slt</span> $<span class="hljs-number">7</span>,$<span class="hljs-number">5</span>,$<span class="hljs-number">6</span><br><span class="hljs-attribute">sltu</span> $<span class="hljs-number">8</span>,$<span class="hljs-number">5</span>,$<span class="hljs-number">6</span><br><span class="hljs-attribute">addi</span> $<span class="hljs-number">9</span>,$<span class="hljs-number">9</span>,-<span class="hljs-number">1</span><br><span class="hljs-attribute">andi</span> $<span class="hljs-number">10</span>,$<span class="hljs-number">10</span>,-<span class="hljs-number">1</span><br><span class="hljs-attribute">sb</span> $<span class="hljs-number">11</span>,-<span class="hljs-number">1</span>($<span class="hljs-number">4</span>)<br><span class="hljs-attribute">sh</span> $<span class="hljs-number">11</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">lw</span> $<span class="hljs-number">12</span>,<span class="hljs-number">0</span>($<span class="hljs-number">0</span>)<br><span class="hljs-attribute">lui</span> $<span class="hljs-number">11</span> <span class="hljs-number">0</span>x1111<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">11</span> <span class="hljs-number">0</span>x1111<br><span class="hljs-attribute">sh</span> $<span class="hljs-number">11</span>,<span class="hljs-number">2</span>($<span class="hljs-number">4</span>)<br><span class="hljs-attribute">lb</span> $<span class="hljs-number">13</span>,<span class="hljs-number">3</span>($<span class="hljs-number">4</span>)<br><span class="hljs-attribute">lh</span> $<span class="hljs-number">14</span>,<span class="hljs-number">2</span>($<span class="hljs-number">4</span>)<br><br><span class="hljs-attribute">mult</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">4</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">15</span><br><span class="hljs-attribute">multu</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">4</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">16</span><br><span class="hljs-attribute">div</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">4</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">17</span><br><span class="hljs-attribute">divu</span> $<span class="hljs-number">11</span>,$<span class="hljs-number">4</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">18</span><br><span class="hljs-attribute">mthi</span> $<span class="hljs-number">19</span><br><span class="hljs-attribute">mtlo</span> $<span class="hljs-number">20</span><br><br><span class="hljs-attribute">lui</span> $<span class="hljs-number">20</span>,<span class="hljs-number">0</span><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">20</span>,<span class="hljs-number">1</span><br><span class="hljs-attribute">loop</span>:<br><span class="hljs-attribute">bne</span> $<span class="hljs-number">19</span>,$<span class="hljs-number">21</span>,loop<br><span class="hljs-attribute">sub</span> $<span class="hljs-number">21</span>,$<span class="hljs-number">21</span>,$<span class="hljs-number">20</span><br><span class="hljs-attribute">nop</span><br><span class="hljs-comment">#重点测试符号乘除</span><br><span class="hljs-attribute">lui</span> $<span class="hljs-number">2</span>,<span class="hljs-number">0</span>x1111<br><span class="hljs-attribute">ori</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,<span class="hljs-number">0</span>x1111<br><span class="hljs-attribute">add</span> $<span class="hljs-number">3</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">0</span><br><span class="hljs-attribute">mult</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">4</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">5</span><br><span class="hljs-attribute">multu</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">6</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">7</span><br><br><span class="hljs-attribute">ori</span> $<span class="hljs-number">8</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">13</span><br><span class="hljs-attribute">add</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">8</span><br><span class="hljs-attribute">div</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">8</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">9</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">10</span><br><span class="hljs-attribute">div</span> $<span class="hljs-number">8</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">11</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">12</span><br><span class="hljs-attribute">div</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">13</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">14</span><br><span class="hljs-attribute">divu</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">8</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">15</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">16</span><br><span class="hljs-attribute">divu</span> $<span class="hljs-number">8</span>,$<span class="hljs-number">2</span><br><span class="hljs-attribute">mfhi</span> $<span class="hljs-number">17</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">18</span><br><span class="hljs-attribute">divu</span> $<span class="hljs-number">2</span>,$<span class="hljs-number">3</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">19</span><br><span class="hljs-attribute">mflo</span> $<span class="hljs-number">20</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="part4p7中断异常测试">part4——p7中断异常测试</h5>
+<p>异常全覆盖</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">ori </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">1</span>,<span class="hljs-number">0x1c01</span><br><span class="hljs-keyword">mtc0 </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">12</span><br><br><span class="hljs-comment">#pc地址未对齐</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,<span class="hljs-number">0x300a</span><br><span class="hljs-keyword">jr </span>$<span class="hljs-number">2</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><span class="hljs-comment">#顺便延迟槽</span><br><span class="hljs-comment">#pc地址超范围</span><br><span class="hljs-keyword">jr </span>$<span class="hljs-number">2</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">3</span>,$<span class="hljs-number">3</span>,<span class="hljs-number">0x0003</span><br><br><span class="hljs-comment">#lw、lh没有字对齐</span><br><span class="hljs-keyword">lw </span>$<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">3</span>)<br><span class="hljs-keyword">lh </span>$<span class="hljs-number">2</span>,<span class="hljs-number">1</span>($<span class="hljs-number">0</span>)<br><span class="hljs-comment">#lh、lb取Timer寄存器的值</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">4</span>,$<span class="hljs-number">4</span>,<span class="hljs-number">0x7f00</span><br><span class="hljs-keyword">lw </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">4</span>)<span class="hljs-comment">#应该没错</span><br><span class="hljs-keyword">lh </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">4</span>)<br><span class="hljs-keyword">lb </span>$<span class="hljs-number">5</span>,<span class="hljs-number">20</span>($<span class="hljs-number">4</span>)<br><span class="hljs-comment">#计算地址加法溢出</span><br><span class="hljs-keyword">lui </span>$<span class="hljs-number">6</span>,<span class="hljs-number">65535</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">6</span>,$<span class="hljs-number">6</span>,<span class="hljs-number">65535</span><br><span class="hljs-keyword">lw </span>$<span class="hljs-number">7</span>,<span class="hljs-number">1</span>($<span class="hljs-number">6</span>)<br><span class="hljs-comment">#取数地址超出范围</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">7</span>,<span class="hljs-number">0x7f0c</span><br><span class="hljs-keyword">lw </span>$<span class="hljs-number">7</span>,<span class="hljs-number">0</span>($<span class="hljs-number">7</span>)<br><br><span class="hljs-comment">#sw、sh没有字对齐</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">2</span>,<span class="hljs-number">0</span>($<span class="hljs-number">3</span>)<br><span class="hljs-keyword">sh </span>$<span class="hljs-number">2</span>,<span class="hljs-number">1</span>($<span class="hljs-number">0</span>)<br><span class="hljs-comment">#sh、sb取Timer寄存器的值</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">4</span>)<span class="hljs-comment">#应该没错</span><br><span class="hljs-keyword">sh </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">4</span>)<br><span class="hljs-keyword">sb </span>$<span class="hljs-number">5</span>,<span class="hljs-number">20</span>($<span class="hljs-number">4</span>)<br><span class="hljs-comment">#计算地址加法溢出</span><br><span class="hljs-keyword">lui </span>$<span class="hljs-number">6</span>,<span class="hljs-number">65535</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">6</span>,$<span class="hljs-number">6</span>,<span class="hljs-number">65535</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">7</span>,<span class="hljs-number">1</span>($<span class="hljs-number">6</span>)<br><span class="hljs-comment">#向计时器Count寄存器存值</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">7</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">7</span>)<br><span class="hljs-comment">#存数地址超出范围</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">7</span>,<span class="hljs-number">100</span>($<span class="hljs-number">7</span>)<br><br><span class="hljs-comment">#syscall</span><br><span class="hljs-keyword">syscall</span><br><span class="hljs-keyword"></span><br><span class="hljs-comment">#RI</span><br><span class="hljs-keyword">nor </span>$<span class="hljs-number">2</span>,$<span class="hljs-number">3</span>,$<span class="hljs-number">4</span><br><br><span class="hljs-comment">#算术溢出</span><br><span class="hljs-keyword">addi </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-keyword">sub </span>$<span class="hljs-number">8</span>,$<span class="hljs-number">0</span>,$<span class="hljs-number">1</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">9</span>,$<span class="hljs-number">8</span>,$<span class="hljs-number">6</span><span class="hljs-comment">#不应溢出</span><br><span class="hljs-keyword">sub </span>$<span class="hljs-number">9</span>,$<span class="hljs-number">6</span>,$<span class="hljs-number">8</span><span class="hljs-comment">#溢出</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">9</span>,$<span class="hljs-number">6</span>,$<span class="hljs-number">7</span><span class="hljs-comment">#溢出</span><br><span class="hljs-keyword">sub </span>$<span class="hljs-number">9</span>,$<span class="hljs-number">0</span>,$<span class="hljs-number">6</span><br><span class="hljs-keyword">addi </span>$<span class="hljs-number">9</span>,$<span class="hljs-number">9</span>,-<span class="hljs-number">100</span><span class="hljs-comment">#溢出</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">end:</span><br><span class="hljs-keyword">beq </span>$<span class="hljs-number">0</span>,$<span class="hljs-number">0</span>,end<span class="hljs-comment">#死循环</span><br><span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><br><span class="hljs-comment">#异常处理程序</span><br>.ktext <span class="hljs-number">0x4180</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">12</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">13</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">14</span><br><span class="hljs-keyword">addi </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-built_in">k0</span>,<span class="hljs-number">4</span><br><span class="hljs-keyword">mtc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">14</span><br><span class="hljs-keyword">eret</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">add </span>$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span>,$<span class="hljs-number">2</span><span class="hljs-comment">#应当没有延迟槽</span><br></code></pre></td></tr></table></figure>
+<p>中断、异常、阻塞、延迟槽交错，限制部分中断</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">ori </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">1</span>,<span class="hljs-number">0x1c01</span><br><span class="hljs-keyword">mtc0 </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">12</span><br><br><span class="hljs-keyword">lui </span>$<span class="hljs-number">2</span>,<span class="hljs-number">0x7fff</span><br><span class="hljs-keyword">lui </span>$<span class="hljs-number">3</span>,<span class="hljs-number">0x7fff</span><br><span class="hljs-keyword">beq </span>$<span class="hljs-number">0</span>,$<span class="hljs-number">3</span>,end<br><span class="hljs-keyword">add </span>$<span class="hljs-number">2</span>,$<span class="hljs-number">3</span>,$<span class="hljs-number">3</span><span class="hljs-comment">#延迟槽指令出错。可在此处加入外部中断，断2次</span><br><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">4</span>,$<span class="hljs-number">4</span>,<span class="hljs-number">4</span><br><span class="hljs-keyword">lw </span>$<span class="hljs-number">4</span>,-<span class="hljs-number">4</span>($<span class="hljs-number">4</span>)<span class="hljs-comment">#阻塞的时候来点外部中断</span><br><span class="hljs-keyword">bne </span>$<span class="hljs-number">0</span>,$<span class="hljs-number">4</span>,end<span class="hljs-comment">#此处需要更改机器码让beq出错</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">4</span>,$<span class="hljs-number">2</span>,<span class="hljs-number">1</span><br><br><span class="hljs-comment">#时钟中断</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">5</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">9</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">8</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">1</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">6</span>,$<span class="hljs-number">0</span>,<span class="hljs-number">0x7f00</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">8</span>,<span class="hljs-number">4</span>($<span class="hljs-number">6</span>)<br><span class="hljs-keyword">sw </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">6</span>)<br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><span class="hljs-comment">#啥时候中断我也搞不清……</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><br><span class="hljs-keyword">and </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">1</span>,$<span class="hljs-number">0</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">1</span>,<span class="hljs-number">0x1001</span><br><span class="hljs-keyword">mtc0 </span>$<span class="hljs-number">1</span>,$<span class="hljs-number">12</span><span class="hljs-comment">#不许时钟中断了</span><br><span class="hljs-keyword">sw </span>$<span class="hljs-number">8</span>,<span class="hljs-number">4</span>($<span class="hljs-number">6</span>)<br><span class="hljs-keyword">sw </span>$<span class="hljs-number">5</span>,<span class="hljs-number">0</span>($<span class="hljs-number">6</span>)<br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><span class="hljs-comment">#啥时候中断我也搞不清……</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><span class="hljs-keyword">add </span>$<span class="hljs-number">7</span>,$<span class="hljs-number">7</span>,$<span class="hljs-number">5</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">end:</span><br><span class="hljs-keyword">beq </span>$<span class="hljs-number">0</span>,$<span class="hljs-number">0</span>,end<span class="hljs-comment">#死循环</span><br><span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><br><br><span class="hljs-comment">#异常处理程序</span><br>.ktext <span class="hljs-number">0x4180</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">12</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">13</span><br><span class="hljs-keyword">ori </span>$<span class="hljs-built_in">k1</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">0x7c</span><br><span class="hljs-keyword">and </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k1</span><br><span class="hljs-keyword">bne </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">0</span>,WTF<br>    <span class="hljs-keyword">sb </span>$<span class="hljs-number">0</span>, <span class="hljs-number">0x7f20</span>($<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">sw </span>$<span class="hljs-number">0</span>, <span class="hljs-number">0x7f00</span>($<span class="hljs-number">0</span>)<br><span class="hljs-symbol">WTF:</span><br><span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">14</span><br><span class="hljs-keyword">addi </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-built_in">k0</span>,<span class="hljs-number">4</span><br><span class="hljs-keyword">mtc0 </span>$<span class="hljs-built_in">k0</span>,$<span class="hljs-number">14</span><br><span class="hljs-keyword">eret</span><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CO/" class="category-chain-item">CO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组P7设计文档</div>
+      <div>https://solor-wind.github.io/2024/01/23/计组P7设计文档/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P6%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P6设计文档">
+                        <span class="hidden-mobile">计组P6设计文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

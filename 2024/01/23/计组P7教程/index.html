@@ -1,0 +1,1659 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机系统 MIPS 微系统 当我们完成 P6 以后，可以说我们已经完成了一个复杂度相当高的 CPU，这个 CPU 可以利用流水线技术并行指令，并按照指令的内容完成计算，修改寄存器中的值。那么是不是完成这个 CPU 就是掌握计算机组成这门课程的全貌了呢？我们说并不是这样。 CPU 的全称是 Central Processing Unit，也就是“中央处理器”。也就是说，CPU 的功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组P7教程">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/23/%E8%AE%A1%E7%BB%84P7%E6%95%99%E7%A8%8B/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="计算机系统 MIPS 微系统 当我们完成 P6 以后，可以说我们已经完成了一个复杂度相当高的 CPU，这个 CPU 可以利用流水线技术并行指令，并按照指令的内容完成计算，修改寄存器中的值。那么是不是完成这个 CPU 就是掌握计算机组成这门课程的全貌了呢？我们说并不是这样。 CPU 的全称是 Central Processing Unit，也就是“中央处理器”。也就是说，CPU 的功">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-23T00:28:00.000Z">
+<meta property="article:modified_time" content="2024-01-23T00:56:19.991Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计组P7教程 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sth.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组P7教程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 08:28" pubdate>
+          2024年1月23日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          80 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组P7教程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机系统">计算机系统</h1>
+<h2 id="mips-微系统">MIPS 微系统</h2>
+<p>当我们完成 P6 以后，可以说我们已经完成了一个复杂度相当高的 CPU，这个
+CPU
+可以利用流水线技术并行指令，并按照指令的内容完成计算，修改寄存器中的值。那么是不是完成这个
+CPU 就是掌握计算机组成这门课程的全貌了呢？我们说并不是这样。</p>
+<p>CPU 的全称是 Central Processing
+Unit，也就是“中央处理器”。也就是说，CPU
+的功能就是数据的“加工与处理”。而计算机系统不仅要完成数据的加工处理，还要完成诸如输入，输出，存储，网络等多种功能，也就是说，<strong>“CPU
+不等价于计算机系统”</strong>。在 P7
+我们要完成的任务，就是实现一个简单的计算机系统，也就是“MIPS
+微系统”。</p>
+<h2 id="外设">外设</h2>
+<p>外设即外部设备，他们可以看做是与 CPU
+地位平等的一组设备。在计算机系统中，CPU
+负责数据的加工处理，而外设则负责输入（鼠标，键盘），输出（显示屏，扬声器），存储（硬盘，U
+盘），网络（网卡）等。我们的 MIPS 微系统中包括的外设主要有 3
+种，即计时器、存储器、中断发生器：</p>
+<ul>
+<li>计时器（Timer）：计算机系统中的计时部件，可以按照配置定时地产生时钟中断。</li>
+<li>存储器（Memory）：计算机系统中的存储部件，用于存储指令和数据。我们在
+P6 的时候已经接触过了。</li>
+<li>中断发生器（InterruptGenerator）：抽象的计算机系统外设，会随机的产生外部中断信号，产生的中断信号在
+CPU 响应前会持续置高。</li>
+</ul>
+<p>正如 CPU 一样，这些外设也可以用 Verilog
+语言对其进行建模。最终我们整个微系统都可以用 Verilog
+语言建模。为了让同学们在 P7
+有一个更好的实现体验，我们在这一章会只进行设计概念上的介绍，而在下一章介绍具体的实现规格和细节。希望同学们在这一章先熟悉一些系统设计的基本理念，然后在下一章具体的实现中去进一步体悟。</p>
+<h1 id="支持异常处理流的-cpu">支持异常处理流的 CPU</h1>
+<h2 id="之前的-cpu">之前的 CPU</h2>
+<p>在 P6 我们完成的 CPU
+已经具有了很好的功能，他可以顺序的执行指令（有时会发生跳转）。那么我们考虑，这样的一个
+CPU 还有哪些缺陷，我们认为主要有两点：</p>
+<ul>
+<li>此时的 CPU 是没有办法处理错误的指令的。例如 <code>add</code>
+指令，当两个源操作数相加发生溢出的时候，按照规范这是<strong>异常</strong>的情况。我们在
+P6 的时候默认“溢出加”，会得到一个错误的答案。我们会在 P7
+对这个问题进行解决。</li>
+<li>此时的 CPU 是没有办法实现与外设复杂的交互的，当计时器向 CPU
+传递一个信号的时候，CPU
+是没有办法立刻响应这个信号并做出相应的处理的。</li>
+</ul>
+<p>直观地说，P6 设计出的 CPU
+运行时的可靠性和完备性都不令人满意。如果运行在其上的程序有一些 bug，CPU
+既不能检测到这些 bug 并向使用者报告，也不能做出保证正确性的处理，CPU
+无法满足现实场景下的多种功能。</p>
+<h2 id="异常处理流">异常处理流</h2>
+<p>异常处理流指的是，CPU
+在执行程序的指令的时候，会发生一些“事件”，改变程序的原有流向，让
+<code>PC</code> 跳转到特定的地址。</p>
+<p>异常处理流可以很好的解决上面的问题。当指令执行错误时，可以产生一个“事件”。那么
+CPU
+就会跳转到一个处理这种执行错误的程序上执行，在处理结束后再跳转回原来的程序（不一定是“事件”来临时的地址）。对于外设的信号，我们可以将其视为一个“事件”，当“事件”来临时，CPU
+会跳转到一个响应这个“事件”的程序处进行响应，在处理结束后再次跳转回原来的程序。</p>
+<p>异常处理流可以用下面的这张图直观地表示，可以将其理解为
+<strong>“发生位置不确定的过程调用”</strong>。</p>
+<figure>
+<img
+src="http://cscore.buaa.edu.cn/tutorial/P7/theory/assets/stream.svg" srcset="/img/loading.gif" lazyload
+alt="image-20220626094859732" />
+<figcaption aria-hidden="true">image-20220626094859732</figcaption>
+</figure>
+<h2 id="概念辨析">概念辨析</h2>
+<p>为了降低同学们实现的困难，我们参照《See MIPS Run
+Linux》制定了以下概念规范。需要强调的是，这些概念的名字仅在 P7
+的实现中有效。不同的参考资料对于相同的事物可能会给出不同的概念名称，所以可能指导书会与教材、参考资料或者授课
+PPT 的概念存在冲突。</p>
+<p><strong>在 P7
+实验中请以指导书为准，在其他场景中请具体分析。</strong></p>
+<p>我们之前提到的“事件”一共有两种：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">概念</th>
+<th style="text-align: left;">定义</th>
+<th style="text-align: left;">举例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">内部异常</td>
+<td style="text-align: left;">由于指令执行错误导致的“事件”</td>
+<td style="text-align: left;">加法溢出，除法除零等</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">外部中断</td>
+<td style="text-align: left;">由于外部设备信号导致的“事件”</td>
+<td style="text-align: left;">计时器信号，键盘输入等</td>
+</tr>
+</tbody>
+</table>
+<p>因为这两类“事件”的处理具有一定的共同性，所以我们统一称他们为“异常”，如下图所示：</p>
+<figure>
+<img
+src="http://cscore.buaa.edu.cn/tutorial/P7/theory/assets/exception.png" srcset="/img/loading.gif" lazyload
+alt="image-20220626105259107" />
+<figcaption aria-hidden="true">image-20220626105259107</figcaption>
+</figure>
+<p>为了响应异常，CPU 会自动跳转到某一特定的地点（将 PC
+修改为特定值），然后进行异常处理。这里进行异常处理的程序叫做“异常处理程序”，是软件（在计组中表现为一段汇编代码），是不属于
+MIPS 微系统内的。在课程平台的自动测试中，评测数据将包含
+handler，但是我们仍要编写它来进行本地测试。</p>
+<p>思考题</p>
+<p>请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？</p>
+<p>思考题</p>
+<p>请思考为什么我们的 CPU 处理中断异常必须是已经指定好的地址？如果你的
+CPU
+支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）</p>
+<h1 id="软硬件接口">软硬件接口</h1>
+<h2 id="接口的理解">接口的理解</h2>
+<p>正如前面所描述的，在 P7 要完成的不再是 CPU 这个单独的功能模块，而是
+CPU
+与多个外设组成的计算机系统，各个模块之间需要进行合作。那么应该如何进行合作呢？</p>
+<p>合作的前提就是“约定”。参与合作的人必须对其他人给出可以让自己完成功能的“约定”。比如说在“老师和学生上课”这个合作关系下，老师需要给出自己的上课时间和下课时间。如果老师并不告诉学生这个信息，这个合作就是进行不下去的。在计算机系统里，我们称这种“约定”为“接口”。</p>
+<h2 id="接口的设计">接口的设计</h2>
+<p>接口设计重要的一个方向就是要<strong>足够简洁</strong>。依然用“老师和学生上课”的例子，“我在
+8:00 上课，你们需要在这个时刻到达” 和 “我在 7:30 到达食堂吃早餐，然后吃
+20 分钟烧麦，10 分钟后到达教室给你们上课，你们需要在这个时刻到达”
+两种“接口”都是可以让学生正常上课，但是学生肯定会更喜欢第一种，因为这种接口的设计简洁，学生并不需要了解老师吃早饭的细节。</p>
+<p>那么是什么带来了这种简洁性呢？并不是因为第一个老师不吃早饭导致的，两个老师都是吃早饭的，但是第一个老师贴心的计算出了自己到达教室的时间，而第二个老师将自己早上的所有细节都暴露了出去。</p>
+<p>同时，这种简洁性并非是功能元件本身的简洁性导致的，而是功能元件在向外界提供接口的时候，隐藏了自己内部的复杂的实现细节，只提供给外界一种简单的接口。这就是著名的<strong>“高内聚，低耦合”</strong>原理。</p>
+<p>这个“隐藏内部实现细节，向外部提供接口”的行为也叫做<strong>“封装”</strong>。需要强调的是，为了实现接口的简洁性，在模块的内部需要进行一些实现。也就是说，为了实现接口的简洁性，需要在模块内部付出额外的努力。</p>
+<h2 id="外设的接口设计-系统桥">外设的接口设计-系统桥</h2>
+<p>外设的种类是无穷无尽的，而 CPU
+的指令集却是有限的。我们并不能总是因为新加入了一个外设，就专门为这个外设增加新的
+CPU 指令。我们希望的是，尽管外设多种多样，但是 CPU
+可以用统一的方法访问它们。为了实现这个目标，我们设计了系统桥。</p>
+<p>系统桥是连接 CPU 和外设的功能设备，它会给 CPU 提供一种接口，使得 CPU
+可以像读写普通存储器一样（即按地址读写）来读写复杂多变的外设。系统桥统一且简化了
+CPU 的对外接口，CPU
+不必为每种外设单独提供接口，符合高内聚，低耦合的设计思想。</p>
+<p>在 P7 中，CPU 对于 DM、Timer 和 InterruptGenerator
+的访问都是需要通过系统桥的。</p>
+<h2 id="cpu-的接口设计-封装成单周期-cpu">CPU 的接口设计-封装成单周期
+CPU</h2>
+<p>P6 的 CPU 是一个五级流水的设计。也就是说，同一时刻，可能会运行 1~5
+条指令，这取决于是否阻塞等条件。这些具体的 CPU
+实现细节，软件是并不关心的。当我们编写汇编语言的时候，是不需要考虑我们的
+CPU
+是否会发生阻塞，是否会有转发等实现细节的。而软件之所以可以这么轻松，是因为
+CPU 实现了一个封装，即<strong>“将复杂的多级流水线 CPU
+封装成了简单的单周期 CPU”</strong>。在计算机系统中，将 CPU
+封装成单周期是理解 P7 任务的关键。</p>
+<h1 id="任务清单">任务清单</h1>
+<p>P7 与之前的 project
+相比，涉及的内容较多，所以在实现的时候很容易手忙脚乱，这里列出完成 P7
+需要的事宜：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">任务</th>
+<th style="text-align: left;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">计时器</td>
+<td
+style="text-align: left;">课程组提供实现代码，只需要结合代码和文档理解应用即可。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">系统桥</td>
+<td style="text-align: left;">为 CPU
+提供统一的访问外设的接口，需要按规格自行实现。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">协处理器 CP0</td>
+<td style="text-align: left;">设置 CPU 的异常处理功能，反馈 CPU
+的异常信息，需要按规格自行实现。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">内部异常检测与流水</td>
+<td style="text-align: left;">CPU
+需要具有可以检测内部指令执行错误的能力。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">外部中断响应</td>
+<td style="text-align: left;">CPU
+需要具有初步响应外部中断信号的能力。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">异常处理指令</td>
+<td
+style="text-align: left;">在异常处理程序中，会有一些特殊的指令需要实现。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">单周期 CPU 的封装</td>
+<td style="text-align: left;">让 CPU 从外部看上去是一个单周期 CPU。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">异常处理程序</td>
+<td style="text-align: left;">利用 MARS
+编写简单的异常处理程序用于测试。</td>
+</tr>
+</tbody>
+</table>
+<p>最后的架构图如图所示：</p>
+<figure>
+<img
+src="http://cscore.buaa.edu.cn/tutorial/P7/implement/assets/structure.svg" srcset="/img/loading.gif" lazyload
+alt="structure" />
+<figcaption aria-hidden="true">structure</figcaption>
+</figure>
+<h1 id="外设的实现">外设的实现</h1>
+<h2 id="计时器">计时器</h2>
+<p>在 P7 这个简单的 MIPS
+微系统中，计时器是一种外部设备，其主要功能就是<strong>根据设定的时间来定时产生中断信号</strong>，是我们系统的中断来源之一。</p>
+<p>在今年的教程中，我们向同学们提供已实现的计时器 <a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/P7_standard_timer_2019.v">Verilog
+源代码</a>。 timer 内部需要定义多个程序员可见寄存器，如
+<strong>CTRL</strong>、<strong>PRESET</strong>
+等，也需要定义若干用于完成功能的内部寄存器（程序员不可见），详情请参考设计文档：<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/COCO定时器设计规范-1.0.0.4.pdf">CO
+定时器设计规范-1.0.0.4.pdf</a>。</p>
+<h2 id="中断发生器">中断发生器</h2>
+<p>这是课程组抽象简化现实中外设后得到的一种外设，会在不确定的时刻产生一个中断信号（就好像电脑并不知道谁会在什么时候敲击键盘一样），并持续置高。直到微系统做出响应，才变回低位。</p>
+<p>对中断发生器的响应是通过系统桥来实现的，通过 <code>store</code>
+类指令访问地址 <code>0x7F20</code>，就可以达到响应中断的目的。</p>
+<p>中断发生器的实现并不需要同学们来完成，不同的中断发生器（中断信号产生的规则不一样）都是在测试的
+tb 上实现的。同学们只需要确保自己的 P7
+微系统，具有以下两个能力，就可以满足这个方面的测试：</p>
+<ul>
+<li>微系统可以通过外部端口接受外部中断信号（在计时器部分已经实现了）。</li>
+<li>微系统可以通过访问地址 <code>0x7F20</code> 的 <code>store</code>
+类指令，改变对应的微系统输出信号（<code>m_int_addr</code>，<code>m_int_byteen</code>），即系统桥实现正确。</li>
+</ul>
+<h2 id="系统桥">系统桥</h2>
+<p>怎样使外设与 CPU 进行沟通呢？采用划分地址空间的办法后，与外设沟通和与
+DM 沟通的方式类似，通过一个 CPU
+视图下的内存地址，读写相应数据即可达到与外设沟通的目的。而这个所谓的内存，在外设中，实际上只是若干寄存器。系统桥传入对地址的访问请求后，我们通过系统桥内部的转换代码，将请求转变为对相应寄存器的读写操作。</p>
+<p>下表是规定的地址空间设计，测试程序也将以此为根据编写。需要注意的是，P7
+与《See MIPS Run Linux》和 PPT 中给出的 MIPS 系统地址范围是不同的，而与
+MARS 相同，这主要是为了能够让你能更好的验证设计。</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">条目</th>
+<th style="text-align: center;">地址或地址范围</th>
+<th style="text-align: center;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">数据存储器</td>
+<td style="text-align: center;">0x0000_0000∼0x0000_2FFF</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">指令存储器</td>
+<td style="text-align: center;">0x0000_3000∼0x0000_6FFF</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PC 初始值</td>
+<td style="text-align: center;">0x0000_3000</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">异常处理程序入口地址</td>
+<td style="text-align: center;">0x0000_4180</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">计时器 0 寄存器地址</td>
+<td style="text-align: center;">0x0000_7F00∼0x0000_7F0B</td>
+<td style="text-align: center;">计时器 0 的 3 个寄存器</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">计时器 1 寄存器地址</td>
+<td style="text-align: center;">0x0000_7F10∼0x0000_7F1B</td>
+<td style="text-align: center;">计时器 1 的 3 个寄存器</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">中断发生器响应地址</td>
+<td style="text-align: center;">0x0000_7F20∼0x0000_7F23</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>注意实现系统桥时，其必须作为独立 module 来实现，不能包含在 CPU
+内部。关于系统桥的具体编写，请大家参考该文件 <a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/L15-支持IO.pdf">L15-支持
+IO.pdf</a>。</p>
+<p>思考题</p>
+<p>为何与外设通信需要 Bridge？</p>
+<p>思考题</p>
+<p>请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。</p>
+<h1 id="异常处理流的实现">异常处理流的实现</h1>
+<h2 id="cp0-的寄存器">CP0 的寄存器</h2>
+<p>CP0 协处理器是 P7
+新引入的功能模块，我们需要用这个模块完成两个主要功能，一个是对异常进行配置，一个是记录异常的信息。CP0
+有很多个寄存器用来配置或者记录，我们只需要实现其中的几个，如下所示：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">寄存器</th>
+<th style="text-align: left;">编号</th>
+<th style="text-align: left;">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SR</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">配置异常的功能。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cause</td>
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">记录异常发生的原因和情况。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EPC</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">记录异常处理结束后需要返回的 PC。</td>
+</tr>
+</tbody>
+</table>
+<p>每个寄存器都是 32 位的，我们只需要其中的几位，列表如下：</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">寄存器</th>
+<th style="text-align: left;">功能域</th>
+<th style="text-align: left;">位域</th>
+<th style="text-align: left;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SR（State Register）</td>
+<td style="text-align: left;">IM（Interrupt Mask）</td>
+<td style="text-align: left;">15:10</td>
+<td style="text-align: left;">分别对应六个外部中断，相应位置 1
+表示允许中断，置 0 表示禁止中断。这是一个被动的功能，只能通过
+<code>mtc0</code>
+这个指令修改，通过修改这个功能域，我们可以屏蔽一些中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SR（State Register）</td>
+<td style="text-align: left;">EXL（Exception Level）</td>
+<td style="text-align: left;">1</td>
+<td
+style="text-align: left;">任何异常发生时置位，这会强制进入核心态（也就是进入异常处理程序）并禁止中断。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SR（State Register）</td>
+<td style="text-align: left;">IE（Interrupt Enable）</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">全局中断使能，该位置 1 表示允许中断，置 0
+表示禁止中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cause</td>
+<td style="text-align: left;">BD（Branch Delay）</td>
+<td style="text-align: left;">31</td>
+<td style="text-align: left;">当该位置 1 的时候，EPC
+指向当前指令的前一条指令（一定为跳转），否则指向当前指令。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cause</td>
+<td style="text-align: left;">IP（Interrupt Pending）</td>
+<td style="text-align: left;">15:10</td>
+<td style="text-align: left;">为 6 位待决的中断位，分别对应 6
+个外部中断，相应位置 1 表示有中断，置 0
+表示无中断，将会每个周期被修改一次，修改的内容来自计时器和外部中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cause</td>
+<td style="text-align: left;">ExcCode</td>
+<td style="text-align: left;">6:2</td>
+<td style="text-align: left;">异常编码，记录当前发生的是什么异常。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EPC</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">记录异常处理结束后需要返回的 PC。</td>
+</tr>
+</tbody>
+</table>
+<p>当发生异常的时候，CPU 会自动将异常信息写入 CP0 的相应寄存器（如
+<code>Cause</code> 和
+<code>EPC</code>）。异常处理程序会访问相应寄存器，来了解异常的信息以进行异常处理。</p>
+<p>同学们可以按规范自行设计 CP0，一个参考的 CP0 的端口声明如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">端口</th>
+<th style="text-align: left;">方向</th>
+<th style="text-align: left;">位数</th>
+<th style="text-align: left;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">clk</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">时钟信号。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">reset</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">复位信号。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">en</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">写使能信号。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CP0Add</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">寄存器地址。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CP0In</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">CP0 写入数据。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CP0Out</td>
+<td style="text-align: left;">OUT</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">CP0 读出数据。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VPC</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">受害 PC。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BDIn</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">是否是延迟槽指令。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ExcCodeIn</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">记录异常类型。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HWInt</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">输入中断信号。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EXLClr</td>
+<td style="text-align: left;">IN</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">用来复位 EXL。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EPCOut</td>
+<td style="text-align: left;">OUT</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">EPC 的值。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Req</td>
+<td style="text-align: left;">OUT</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">进入处理程序请求。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="异常码">异常码</h2>
+<p>在异常处理程序中，我们需要通过访问 <code>Cause</code> 寄存器的
+<code>ExcCode</code> 域来获得异常的原因，在 P7
+中我们需要实现的异常有这样几种（除此之外，比较常见的还有陷入，断点调试等）：</p>
+<p><strong>ExcCode
+的编码必须遵守规范，不然在评测的时候可能会出现问题</strong>。</p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: left;">异常与中断码</th>
+<th style="text-align: left;">助记符与名称</th>
+<th style="text-align: left;">指令与指令类型</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;"><code>Int</code> （外部中断）</td>
+<td style="text-align: left;">所有指令</td>
+<td style="text-align: left;">中断请求，来源于计时器与外部中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>AdEL</code> （取指异常）</td>
+<td style="text-align: left;">所有指令</td>
+<td style="text-align: left;">PC 地址未字对齐。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PC 地址超过
+<code>0x3000 ~ 0x6ffc</code>。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>AdEL</code> （取数异常）</td>
+<td style="text-align: left;"><code>lw</code></td>
+<td style="text-align: left;">取数地址未与 4 字节对齐。</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>lh</code></td>
+<td style="text-align: left;">取数地址未与 2 字节对齐。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>lh</code>, <code>lb</code></td>
+<td style="text-align: left;">取 Timer 寄存器的值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">load 型指令</td>
+<td style="text-align: left;">计算地址时加法溢出。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">load 型指令</td>
+<td style="text-align: left;">取数地址超出
+DM、Timer0、Timer1、中断发生器的范围。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><code>AdES</code> （存数异常）</td>
+<td style="text-align: left;"><code>sw</code></td>
+<td style="text-align: left;">存数地址未 4 字节对齐。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sh</code></td>
+<td style="text-align: left;">存数地址未 2 字节对齐。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sh</code>, <code>sb</code></td>
+<td style="text-align: left;">存 Timer 寄存器的值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">计算地址加法溢出。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">向计时器的 Count 寄存器存值。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">store 型指令</td>
+<td style="text-align: left;">存数地址超出
+DM、Timer0、Timer1、中断发生器的范围。</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;"><code>Syscall</code> （系统调用）</td>
+<td style="text-align: left;"><code>syscall</code></td>
+<td style="text-align: left;">系统调用。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;"><code>RI</code>（未知指令）</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">未知的指令码。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;"><code>Ov</code>（溢出异常）</td>
+<td style="text-align: left;"><code>add</code>, <code>addi</code>,
+<code>sub</code></td>
+<td style="text-align: left;">算术溢出。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考资料">参考资料</h2>
+<p>CP0 设计及其相关指令的实现，以及硬软件在中断处理上的协同是 P7
+中最有挑战性的部分。仅阅读教程中的简要介绍远远不够，因此课程组放出一些推荐阅读的资料，希望同学能加以研究，尝试去理解其中的思路。</p>
+<p>推荐资料列表：</p>
+<ol type="1">
+<li><a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/L13-MIPS系统结构-V1.pdf">L13-MIPS
+系统结构-V1.pdf</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/See_MIPS_Run_Linux.pdf">《See
+MIPS Run Linux》中相关章节</a></li>
+<li>《计算机组成与设计：硬件/软件接口》中相关章节</li>
+<li>Google / Bing 等搜索引擎</li>
+<li>讨论区 P7 答疑帖</li>
+</ol>
+<h1 id="封装成单周期-cpu">封装成单周期 CPU</h1>
+<h2 id="宏观-pc">宏观 PC</h2>
+<p>我们的需求是要让我们的 CPU 从外部看上去是一个单周期的
+CPU（具体的原因在前一章有阐述）。但是实际上，我们的 CPU
+是一个五级流水的并行 CPU。所以本质上我们要实现一套机制，来让我们的 CPU
+满足这个需求。</p>
+<p>为了检验同学们的实现效果，我们引入宏观 PC 这一概念。宏观 PC 表示整个
+CPU
+“宏观”运行指令所对应的PC地址。所谓“宏观”指令，表示该指令之前的所有指令序列对
+CPU 的更新已完成，该指令及其之后的指令序列对 CPU
+的更新未完成。具体实现上，宏观 PC 通常上是以某一个流水级 PC
+作为界限，作为输出端口输出出来。这个流水级一般是你 CP0
+所在的流水级。</p>
+<h2 id="精确异常">精确异常</h2>
+<p>对于异常，我们能明确指出是哪条指令导致了异常，并称这条指令为<strong>异常受害指令</strong>。精确异常的特性是，在异常受害指令<strong>前面的所有指令都执行完毕</strong>，而<strong>受害指令及其后续指令都像从来没有开始</strong>（准确说是当异常处理结束后重新执行这些指令，与未发生异常时执行这些指令的效果一样）。这样的处理思路使得从使用者的角度来看，
+CPU 执行异常处理是顺序执行的，从而隐藏了流水线设计的细节。</p>
+<h3 id="清空流水线">清空流水线</h3>
+<p>为了达到精确异常的效果，我们需要在异常发生的时候清空流水线，以避免宏观
+PC 之后的指令被执行。清空流水线一方面是要清空宏观 PC
+之后的指令所在的流水线寄存器，即插入 <code>nop</code>。</p>
+<p>在了解了这点以后，我们可以总结一下我们对于流水线寄存器的控制。流水线寄存器需要接受多种控制信号，如复位信号，阻塞信号，刷新信号，请求信号。所以有可能同时会有多个信号控制同一个寄存器，那么寄存器该展现怎样的行为呢？这是一个需要考虑的事情。</p>
+<p>例如在 D 级处于被阻塞状态时发生 <code>Req</code>，那么 D
+级流水线寄存器就应该立刻被清空，而不是保持原值；正在 <code>Req</code>
+的时候发生<code>reset</code>，那么 CPU
+应该立刻复位，而不是进行异常处理。此处处理不当可能造成评测时缺少中断的情况。实现上，可按如下优先级：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">信号</th>
+<th style="text-align: left;">优先级</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">reset</td>
+<td style="text-align: left;">最高，复位大于一切。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Req</td>
+<td style="text-align: left;">次高，中断请求比内部阻塞重要。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">flush / stall</td>
+<td style="text-align: left;">最低，流水线信号，外部人员看不到。</td>
+</tr>
+</tbody>
+</table>
+<p>接下来我们考虑，哪些寄存器中的位段需要优先级。只有两个，一个是 PC
+寄存器，原因之前论述过了；另一个是 CP0 <code>Cause</code> 寄存器的
+<code>BD</code> 位。它在 flush
+的时候需要保持原来的信息，因为在外部去看的话，会发现宏观 PC
+是相同的，但是延迟槽标记是不同的，这显然是不正确的。如果在延迟槽指令被阻塞时产生中断，并且
+<code>nop</code> 没有流水延迟槽标记，那么 <code>EPC</code>
+就会被设置错误的值，无法通过评测。</p>
+<p>清空流水线的另一个方面就是避免异常受害指令和其之后的指令产生影响（比如写寄存器，写
+DM），这一点将在下一小节“确定 CP0 的位置”中讨论。</p>
+<h3 id="确定-cp0-的位置">确定 CP0 的位置</h3>
+<p>CP0 需要放置在某个具体的流水级上，我们认为宏观 PC 所在的流水级就是
+CP0 的流水级。为了满足宏观 PC 的性质，CP0
+所处的位置不能够太靠前，比如设置在 F
+级，那么异常会发生在之后的流水级，那么就检测不到这个异常了（如果宏观 PC
+就是异常受害指令的话）。但是也不能太靠后，比如在 W
+级，因为我们需要清除受害指令之后的指令造成的影响，但是此时
+<code>store</code> 类指令已经修改了外设，清除影响较为困难。</p>
+<p>因此，请根据所学挑选你的 CP0
+在流水线上的位置，需要强调，没有标准答案或者最优答案。</p>
+<h3 id="流水异常码">流水异常码</h3>
+<p>异常信号 ExcCode 应该流水到 CP0 所在的流水级，而不能直接提交到
+CP0。</p>
+<p>这是因为 CPU 实际上是并行的，直接提交到 CP0
+可能会导致后面的指令发生异常的时间比前面指令发生异常的时间要早。例如
+<code>sw</code> 后接 <code>j</code> 指令。如果这两个都是异常指令，那么
+<code>j</code> 在 D 级产生异常，<code>sw</code> 在 M
+级产生异常（假设这个异常是超范围了）时不流水，就将先处理 <code>j</code>
+异常，显然不符合我们的要求，因为 <code>sw</code>
+异常被忽略了（<code>sw</code>
+继续往后流，前面的流水级开始流异常处理程序，等异常返回之后，就会直接到跳转目标指令了，<code>sw</code>
+的异常没有得到处理）。我们将异常信号流水以后，就可以先处理
+<code>sw</code> 异常，然后运行到 <code>j</code>，再处理 <code>j</code>
+异常。</p>
+<h3 id="写入-epc">写入 EPC</h3>
+<p>发生异常的一个重要行为是将中断指令的 PC 写入
+EPC，就像函数跳转之前，要将返回地址写入
+<code>$ra</code>。更严谨的说，对于异常情况只要考虑异常指令是不是延迟槽指令，如果是延迟槽指令，那么存的是异常指令的
+PC - 4，如果不是，那么就存异常指令的 PC。</p>
+<p>这样造成的结果就是，返回的时候将重新执行异常指令（如果异常处理程序不对
+EPC 进行修改的话）。这里的 PC 指的都是宏观 PC。</p>
+<p>思考题</p>
+<p>倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的 CPU
+该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在 P7
+中，清空流水线产生的空泡指令应该保留原指令的哪些信息？</p>
+<p>思考题</p>
+<p>为什么 <code>jalr</code> 指令的两个寄存器不能相同，例如
+<code>jalr $31, $31</code>？</p>
+<h1 id="异常处理程序">异常处理程序</h1>
+<h2 id="eret-没有延迟槽">eret 没有延迟槽</h2>
+<p><code>eret</code> 承担了跳转功能，但是 <code>eret</code>
+是没有延迟槽的。也就是说测试数据中可能出现 <code>eret</code>
+指令后紧跟另一条非 <code>nop</code> 指令的情况。你的设计应该保证
+<code>eret</code> 的后续指令不被执行。</p>
+<h2 id="异常处理程序的结构">异常处理程序的结构</h2>
+<p>异常处理程序是由软件实现的，我们只需要提供接口而无需自己实现。同时，了解异常处理程序是十分有必要的。</p>
+<p>异常和中断处理流程可以概括成如下步骤（需要强调的是，这些步骤只是为了让同学们更好的理解处理程序的结构，我们在实际测评中并不保证下述的步骤都执行，也不保证不包含在下述步骤里的结构不出现）：</p>
+<ul>
+<li>Step 1：构造异常处理环境，保存现场。</li>
+<li>Step 2：读取 <code>Cause</code> 和 <code>EPC</code>
+寄存器，判断错误类型。</li>
+<li>Step 3：根据异常类型和其他属性执行对应处理。</li>
+<li>Step 4：恢复现场。</li>
+<li>Step 5：使用 <code>eret</code> 指令从异常处理返回。</li>
+</ul>
+<p>下面列出了一个简要的发生算数溢出时的程序，同学们可以结合源码进行参考和理解。</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-comment"># 程序首先从这里运行</span><br><span class="hljs-meta">.text</span><br>    <span class="hljs-comment"># 只允许外部中断</span><br>    <span class="hljs-keyword">ori </span>$<span class="hljs-built_in">t0</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">0x1001</span><br>    <span class="hljs-keyword">mtc0 </span>$<span class="hljs-built_in">t0</span>, $<span class="hljs-number">12</span><br><br>    <span class="hljs-comment"># 算术溢出</span><br>    <span class="hljs-keyword">lui </span>$<span class="hljs-built_in">t0</span>, <span class="hljs-number">0x7fff</span><br>    <span class="hljs-keyword">lui </span>$<span class="hljs-built_in">t1</span>, <span class="hljs-number">0x7fff</span><br>    <span class="hljs-keyword">add </span>$<span class="hljs-built_in">t2</span>, $<span class="hljs-built_in">t0</span>, $<span class="hljs-built_in">t1</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">end:</span><br>    <span class="hljs-keyword">beq </span>$<span class="hljs-number">0</span>, $<span class="hljs-number">0</span>, end<br>    <span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><br>.ktext <span class="hljs-number">0x4180</span><br><span class="hljs-symbol">_entry:</span><br>    <span class="hljs-comment"># 保存上下文</span><br>    <span class="hljs-keyword">j </span>_save_context<br>    <span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><span class="hljs-symbol"></span><br><span class="hljs-symbol">_main_handler:</span><br>    <span class="hljs-comment"># 取出 ExcCode</span><br>    <span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-number">13</span><br>    <span class="hljs-keyword">ori </span>$<span class="hljs-built_in">k1</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">0x7c</span><br>    <span class="hljs-keyword">and </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k1</span><br><br>    <span class="hljs-comment"># 如果是中断，直接恢复上下文</span><br>    <span class="hljs-keyword">beq </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-number">0</span>, _restore_context<br>    <span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><br>    <span class="hljs-comment"># 将 EPC + 4，即处理异常的方法就是跳过当前指令</span><br>    <span class="hljs-keyword">mfc0 </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-number">14</span><br>    <span class="hljs-keyword">addu </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k0</span>, <span class="hljs-number">4</span><br>    <span class="hljs-keyword">mtc0 </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-number">14</span><br>    <span class="hljs-keyword">j </span>_restore_context<br>    <span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><span class="hljs-symbol"></span><br><span class="hljs-symbol">_exception_return:</span><br>    <span class="hljs-keyword">eret</span><br><span class="hljs-keyword"></span><span class="hljs-symbol"></span><br><span class="hljs-symbol">_save_context:</span><br>    <span class="hljs-keyword">ori </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-number">0</span>, <span class="hljs-number">0x1000</span>     <span class="hljs-comment"># 在栈上找一块空间保存现场</span><br>    <span class="hljs-keyword">addiu </span>$<span class="hljs-built_in">k0</span>, $<span class="hljs-built_in">k0</span>, -<span class="hljs-number">256</span><br>    <span class="hljs-keyword">sw </span>$<span class="hljs-built_in">sp</span>, <span class="hljs-number">116</span>($<span class="hljs-built_in">k0</span>)        <span class="hljs-comment"># 最先保存栈指针</span><br>    <span class="hljs-keyword">move </span>$<span class="hljs-built_in">sp</span>, $<span class="hljs-built_in">k0</span><br><br>    <span class="hljs-comment"># 依次保存通用寄存器（注意要跳过 $sp）、HI 和 LO</span><br>    <span class="hljs-keyword">sw </span>$<span class="hljs-number">1</span>, <span class="hljs-number">4</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">sw </span>$<span class="hljs-number">2</span>, <span class="hljs-number">8</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-comment"># ......</span><br>    <span class="hljs-keyword">sw </span>$<span class="hljs-number">31</span>, <span class="hljs-number">124</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">mfhi </span>$<span class="hljs-built_in">k0</span><br>    <span class="hljs-keyword">mflo </span>$<span class="hljs-built_in">k1</span><br>    <span class="hljs-keyword">sw </span>$<span class="hljs-built_in">k0</span>, <span class="hljs-number">128</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">sw </span>$<span class="hljs-built_in">k1</span>, <span class="hljs-number">132</span>($<span class="hljs-built_in">sp</span>)<br><br>    <span class="hljs-keyword">j </span>_main_handler<br>    <span class="hljs-keyword">nop</span><br><span class="hljs-keyword"></span><span class="hljs-symbol"></span><br><span class="hljs-symbol">_restore_context:</span><br>    <span class="hljs-comment"># 依次恢复通用寄存器（注意要跳过 $sp）、 HI 和 LO</span><br>    <span class="hljs-keyword">lw </span>$<span class="hljs-number">1</span>, <span class="hljs-number">4</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">lw </span>$<span class="hljs-number">2</span>, <span class="hljs-number">8</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-comment"># ......</span><br>    <span class="hljs-keyword">lw </span>$<span class="hljs-number">31</span>, <span class="hljs-number">124</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">lw </span>$<span class="hljs-built_in">k0</span>, <span class="hljs-number">128</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">lw </span>$<span class="hljs-built_in">k1</span>, <span class="hljs-number">132</span>($<span class="hljs-built_in">sp</span>)<br>    <span class="hljs-keyword">mthi </span>$<span class="hljs-built_in">k0</span><br>    <span class="hljs-keyword">mtlo </span>$<span class="hljs-built_in">k1</span><br><br>    <span class="hljs-comment"># 最后恢复栈指针</span><br>    <span class="hljs-keyword">lw </span>$<span class="hljs-built_in">sp</span>, <span class="hljs-number">116</span>($<span class="hljs-built_in">sp</span>)<br><br>    <span class="hljs-keyword">j </span>_exception_return<br>    <span class="hljs-keyword">nop</span><br></code></pre></td></tr></table></figure>
+<h2 id="利用-mars-验证异常处理框架">利用 MARS 验证异常处理框架</h2>
+<p>尽管在 MARS
+中，我们只能针对内部异常进行模拟，无法模拟外部中断。但由我们对内部异常与外部中断的了解可以知道，两者的处理是类似的。因此我们可以在
+MARS
+中先验证中断/异常处理的框架是否正确（我们可以构造一条产生异常的指令，如溢出，再观察
+MARS 能否进入 Exception
+Handler），至于我们如何处理这个错误，则是次要问题。</p>
+<h1 id="p7-提交要求">P7 提交要求</h1>
+<h2 id="整体要求">整体要求</h2>
+<ul>
+<li>MIPS 处理器须为流水线设计，MIPS 微系统须支持中断和异常。</li>
+<li>除本文明确的规范和补充声明外，MIPS 微系统设计以《See MIPS Run
+Linux》（下文简称《SMRL》）作为标准。《SMRL》的标准与 MARS
+的行为存在一定差异，在测试时不以 MARS 为准。</li>
+<li>P7 较前几个 Project 为同学预留了更多需自主设计的内容，最终 P7
+的实现因人而异。只要满足所给出的设计约束、行为规范和 MIPS
+基本设计规范，任何设计都被认为是正确的。</li>
+<li><strong>此章节主要包含实现细节与评测要求，一些基本概念或定义请结合前面的教程理解。</strong></li>
+</ul>
+<h2 id="顶层模块接口">顶层模块接口</h2>
+<ul>
+<li><p>MIPS 微系统接口（请顶层模块严格满足该要求）：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> mips(<br>    <span class="hljs-keyword">input</span> clk,                    <span class="hljs-comment">// 时钟信号</span><br>    <span class="hljs-keyword">input</span> reset,                  <span class="hljs-comment">// 同步复位信号</span><br>    <span class="hljs-keyword">input</span> interrupt,              <span class="hljs-comment">// 外部中断信号</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] macroscopic_pc, <span class="hljs-comment">// 宏观 PC</span><br><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] i_inst_addr,    <span class="hljs-comment">// IM 读取地址（取指 PC）</span><br>    <span class="hljs-keyword">input</span>  [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] i_inst_rdata,   <span class="hljs-comment">// IM 读取数据</span><br><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] m_data_addr,    <span class="hljs-comment">// DM 读写地址</span><br>    <span class="hljs-keyword">input</span>  [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] m_data_rdata,   <span class="hljs-comment">// DM 读取数据</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] m_data_wdata,   <span class="hljs-comment">// DM 待写入数据</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">3</span> :<span class="hljs-number">0</span>] m_data_byteen,  <span class="hljs-comment">// DM 字节使能信号</span><br><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] m_int_addr,     <span class="hljs-comment">// 中断发生器待写入地址</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">3</span> :<span class="hljs-number">0</span>] m_int_byteen,   <span class="hljs-comment">// 中断发生器字节使能信号</span><br><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] m_inst_addr,    <span class="hljs-comment">// M 级 PC</span><br><br>    <span class="hljs-keyword">output</span> w_grf_we,              <span class="hljs-comment">// GRF 写使能信号</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">4</span> :<span class="hljs-number">0</span>] w_grf_addr,     <span class="hljs-comment">// GRF 待写入寄存器编号</span><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] w_grf_wdata,    <span class="hljs-comment">// GRF 待写入数据</span><br><br>    <span class="hljs-keyword">output</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] w_inst_addr     <span class="hljs-comment">// W 级 PC</span><br>);<br></code></pre></td></tr></table></figure></li>
+<li><p>相较于 P6 的顶层模块新增了以下 4 个接口：</p>
+<ul>
+<li><code>interrupt</code>：外部中断信号。由中断发生器产生，每次中断信号会持续到处理器响应该信号。请注意，处理该中断信号的方式应和处理
+Timer 产生的中断不完全相同，具体见前面的教程。</li>
+<li><code>macroscopic_pc[31:0]</code>：详细概念见<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/P7-2-4/#pc">宏观
+PC</a>。我们保证评测过程中宏观 PC
+仅用于定位指令，作为产生外部中断信号的条件。</li>
+<li><code>m_int_addr[31:0]</code>：中断发生器待写入地址。当该信号命中中断发生器响应地址，且字节使能信号有效时，视为响应外部中断。</li>
+<li><code>m_int_byteen[3:0]</code>：中断发生器字节使能信号，当该信号任意一位置位时视为有效。</li>
+</ul></li>
+</ul>
+<h2 id="硬件约束">硬件约束</h2>
+<ul>
+<li>顶层模块中应该至少包含 CPU、Bridge、Timer0、Timer1
+四个功能部件。</li>
+<li>地址空间：见<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/P7-2-2/#_4">系统桥</a>。</li>
+<li>主要部件：
+<ul>
+<li>CPU：在 P6 基础上进行增量开发，增加 CP0
+协处理器，支持异常和中断等。</li>
+<li>CP0：见<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/P7-2-6/#cp0">CP0约束</a>。</li>
+<li>Bridge：须作为独立的 module，不包括在 CPU
+中；访问外设均须通过系统桥。</li>
+<li>IM：容量为 <strong>16KiB</strong>（<strong>4096</strong> ×
+32bit）。</li>
+<li>DM：容量为 <strong>12KiB</strong>（<strong>3072</strong> ×
+32bit）。</li>
+<li>Timer：定时器官方源代码已经给出，无需自行设计实现。</li>
+<li>中断发生器：
+<ul>
+<li>中断信号依据宏观 PC
+产生，依据相应的待写入地址和字节使能信号关闭，具体实现参考下发的
+tb。</li>
+<li>由于其内部并没有真正的存储单元，我们规定读出的数据始终保持
+0，且写入时除了响应中断外不会产生其他影响。</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="cp0-约束">CP0 约束</h2>
+<ul>
+<li>协处理器位置：不作明确要求，自行设计。</li>
+<li>输出要求：写入时无需 display。</li>
+<li>为了支持异常和中断，必须实现的寄存器包括：<strong>SR、CAUSE、EPC</strong>。</li>
+<li>寄存器规范：
+<ul>
+<li>CP0 寄存器的初始值均为 0，未实现位始终保持 0。</li>
+<li>当进入中断或异常状态时，均需要将 EXL 置为
+1，用以屏蔽中断信号（注意《SMRL》中并没有指定进入中断时 EXL
+的值）；当退出中断或异常状态时，也均需要将 EXL 置为
+0，取消屏蔽中断信号。</li>
+<li>Cause 寄存器的 IP 域每周期写入 HWint 对应位的值。</li>
+<li>当进入中断或异常状态时，需要将受害指令的 PC 写入 EPC。</li>
+</ul></li>
+</ul>
+<h2 id="指令约束">指令约束</h2>
+<ul>
+<li><p>处理器应支持如下指令集：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">nop, </span><span class="hljs-keyword">add, </span><span class="hljs-keyword">sub, </span><span class="hljs-keyword">and, </span><span class="hljs-keyword">or, </span><span class="hljs-keyword">slt, </span><span class="hljs-keyword">sltu, </span><span class="hljs-keyword">lui</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">addi, </span><span class="hljs-keyword">andi, </span><span class="hljs-keyword">ori</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">lb, </span><span class="hljs-keyword">lh, </span><span class="hljs-keyword">lw, </span><span class="hljs-keyword">sb, </span><span class="hljs-keyword">sh, </span><span class="hljs-keyword">sw</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">mult, </span><span class="hljs-keyword">multu, </span><span class="hljs-keyword">div, </span><span class="hljs-keyword">divu, </span><span class="hljs-keyword">mfhi, </span><span class="hljs-keyword">mflo, </span><span class="hljs-keyword">mthi, </span><span class="hljs-keyword">mtlo</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">beq, </span><span class="hljs-keyword">bne, </span><span class="hljs-keyword">jal, </span><span class="hljs-keyword">jr,</span><br><span class="hljs-keyword"></span><span class="hljs-keyword">mfc0, </span><span class="hljs-keyword">mtc0, </span><span class="hljs-keyword">eret, </span><span class="hljs-keyword">syscall</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在 P6 基础上新增了 <code>mfc0, mtc0, eret, syscall</code>
+四条新指令。</p></li>
+<li><p><code>eret</code> 具有跳转的功能但是没有延迟槽，你的设计应该保证
+<code>eret</code> 的后续指令不被执行。</p></li>
+<li><p><code>syscall</code> 指令行为与 MARS
+不同，无需实现特定的输入输出功能，只需直接产生异常并进入内核态。</p></li>
+</ul>
+<h2 id="中断异常约束">中断异常约束</h2>
+<ul>
+<li><p>异常入口：《SMRL》的表 5.1 中定义了 MIPS
+的异常入口，但考虑到简化设计以及与 MARS 保持一致，我们只支持 0x4180
+一个入口地址，所有异常与中断都将从这里进入。</p></li>
+<li><p>嵌套中断异常：本实验不要求支持中断异常嵌套的情况。</p></li>
+<li><p>优先级：中断优先级高于异常优先级，即当有异常提交至 CP0
+寄存器时，若有中断发生，则硬件应先响应中断，并重新执行受害指令及其后续指令；若没有中断发生，则处理异常。</p></li>
+<li><p>精确异常：</p>
+<ul>
+<li><p>除下面的情况外，对所有中断异常的处理都应遵循<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/P7-2-4/#_1">精确异常</a>的处理规则。</p></li>
+<li><p>在进入中断或异常状态时，如果受害指令及其后续指令</p>
+<p>已经改变</p>
+<p>了 MDU 的状态，则无需恢复。假设 CP0 在 M 级，MDU 在 E
+级，考虑以下情况：</p>
+<ul>
+<li><code>mult</code> 在 E 级启动了乘法运算，流水到 M
+级时产生了中断，此时无需停止乘法计算，其它乘除法指令同理。</li>
+<li><code>mthi</code> 在 E 级修改了 HI 寄存器，流水到 M
+级时产生了中断，此时无需恢复 HI 寄存器的值，<code>mtlo</code>
+同理。</li>
+<li><code>mult</code> 在 E 级，受害指令在 M 级，此时还未改变 MDU
+状态，不应开始乘法计算，其它乘除法指令同理。</li>
+<li><code>mthi</code> 在 E 级，受害指令在 M 级，此时还未改变 MDU
+状态，不应修改 HI 寄存器的值，<code>mtlo</code> 同理。</li>
+</ul></li>
+</ul></li>
+<li><p>中断规范：</p>
+<ul>
+<li>Timer0 输出的中断信号接入 HWInt[0] (最低中断位)，Timer1
+输出的中断信号接入 HWInt[1]，来自中断发生器的中断信号接入
+HWInt[2]。</li>
+<li>规定中断产生时的受害指令为宏观 PC 对应的指令，此时应将宏观 PC 写入
+EPC。</li>
+</ul></li>
+<li><p>MIPS 微系统需要支持的异常：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">ExcCode</th>
+<th style="text-align: left;">助记符</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Int</td>
+<td style="text-align: left;">中断。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">AdEL</td>
+<td style="text-align: left;">取数或取指时地址错误。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">AdES</td>
+<td style="text-align: left;">存数时地址错误。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Syscall</td>
+<td style="text-align: left;">系统调用。</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">RI</td>
+<td style="text-align: left;">不认识的（或者非法的）指令码。</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Ov</td>
+<td style="text-align: left;">自陷形式的整数算术指令（例如
+<code>add</code>）导致的溢出。</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>补充说明：</p>
+<ul>
+<li>分支跳转指令无论跳转与否，延迟槽指令为受害指令时 <code>BD</code>
+均需要置位。</li>
+<li>发生取指异常或 <code>RI</code> 异常后视为 <code>nop</code>
+直至提交到 CP0。</li>
+<li>跳转到不对齐的地址时，受害指令是 PC 值不正确的指令（即需要向 EPC
+写入不对齐的地址）。</li>
+<li>对于未知指令的判断仅需考虑 opcode（和 R 型指令的
+funct），且仅需判断是否出现在 P7
+要求的指令集中，同时保证未知指令的测试用例中 opcode 和 funct
+码的组合一定没有在 MARS 的基本指令集中出现。</li>
+</ul></li>
+</ul>
+<h2 id="官方测试说明">官方测试说明</h2>
+<ul>
+<li>为便于进行测试，我们允许从 0x417C 直接前进到 0x4180，此种情况下 CPU
+行为与 P6 一致，不应有中断响应等其他行为。</li>
+<li>测试数据规范：
+<ul>
+<li>测试时不会出现跳转到未加载指令的位置的情况。</li>
+<li><code>eret</code> 只会出现在中断处理程序中，后可能紧跟另一条非
+<code>nop</code> 的指令。</li>
+<li>测试程序保证不会写入 Cause，但可能写入 SR 和 EPC。</li>
+<li>测试程序只会通过指令 <code>sb $0, 0x7f20($0)</code>
+访问中断发生器（响应中断），且只会在中断处理程序中访问。</li>
+<li>中断处理程序会对寄存器和内存进行读写来验证 CPU 的正确性。</li>
+<li>中断处理程序执行过程中保证不出现异常，且不会产生中断。</li>
+</ul></li>
+<li>官方 tb 示例：
+<ul>
+<li>外设不给予中断时，使用的 tb 为：<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/assets/tb_norm_demo.v">下载链接</a>。</li>
+<li>评测机通过检测同学们的宏观 PC 给予中断信号并对中断进行测试，例如此<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/tutorial/P7/implement/assets/tb_interrupt_demo.v">下载链接</a>中的
+tb 会在处理器的宏观 PC 第一次到达 0x3010 时给予 CPU 一个中断信号。</li>
+</ul></li>
+</ul>
+<h2 id="官方-mars">官方 Mars</h2>
+<ul>
+<li>课程组修改了 Mars，增加了输出运行信息等功能，支持课程 P7
+要求的异常和定时器中断，供同学们本地测试，<a
+target="_blank" rel="noopener" href="http://cscore.buaa.edu.cn/assets/cscore-assets/Mars_p7.zip">下载链接</a>。</li>
+</ul>
+<h1 id="思考题汇总">思考题汇总</h1>
+<p>思考题</p>
+<p>1、请查阅相关资料，说明鼠标和键盘的输入信号是如何被 CPU 知晓的？</p>
+<p>2、请思考为什么我们的 CPU
+处理中断异常必须是已经指定好的地址？如果你的 CPU
+支持用户自定义入口地址，即处理中断异常的程序由用户提供，其还能提供我们所希望的功能吗？如果可以，请说明这样可能会出现什么问题？否则举例说明。（假设用户提供的中断处理程序合法）</p>
+<p>3、为何与外设通信需要 Bridge？</p>
+<p>4、请阅读官方提供的定时器源代码，阐述两种中断模式的异同，并分别针对每一种模式绘制状态移图。</p>
+<p>5、倘若中断信号流入的时候，在检测宏观 PC 的一级如果是一条空泡（你的
+CPU 该级所有信息均为空）指令，此时会发生什么问题？在此例基础上请思考：在
+P7 中，清空流水线产生的空泡指令应该保留原指令的哪些信息？</p>
+<p>6、为什么 <code>jalr</code> 指令为什么不能写成
+<code>jalr $31, $31</code>？</p>
+<p>思考题</p>
+<p>1、[P7 选做] 请详细描述你的测试方案及测试数据构造策略。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CO/" class="category-chain-item">CO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组P7教程</div>
+      <div>https://solor-wind.github.io/2024/01/23/计组P7教程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P3%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P3设计文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计组P3设计文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/14/%E8%AE%A1%E7%BB%84%E7%90%86%E8%AE%BA/" title="计组理论">
+                        <span class="hidden-mobile">计组理论</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

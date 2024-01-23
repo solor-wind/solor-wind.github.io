@@ -1,0 +1,1236 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计组P4的设计文档，采用verilog搭建单周期CPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计组P4设计文档">
+<meta property="og:url" content="https://solor-wind.github.io/2024/01/23/%E8%AE%A1%E7%BB%84P4%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="计组P4的设计文档，采用verilog搭建单周期CPU">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-01-23T00:28:01.000Z">
+<meta property="article:modified_time" content="2024-01-23T01:10:20.556Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计组P4设计文档 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/sth.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计组P4设计文档"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-23 08:28" pubdate>
+          2024年1月23日 早上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计组P4设计文档</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p>P4建议：翻译P3设计即可，注意新加指令</p>
+<p>源代码：<a
+target="_blank" rel="noopener" href="https://github.com/solor-wind/BUAA_CO">solor-wind/BUAA_CO
+(github.com)</a></p>
+</blockquote>
+<h4 id="设计要求">设计要求</h4>
+<ul>
+<li><p>处理器为 32 位单周期处理器，不考虑延迟槽，应支持的指令集为：
+<code>add, sub, ori, lw, sw, beq, lui, jal, jr, nop</code> ，其中：</p>
+<ul>
+<li><p><code>nop</code> 为空指令，机器码
+<code>0x00000000</code>，不进行任何有效行为（修改寄存器等）。</p></li>
+<li><p><code>add, sub</code> 按无符号加减法处理（不考虑溢出）。</p></li>
+</ul></li>
+<li><p>需要采用<strong>模块化</strong>和<strong>层次化</strong>设计。顶层文件为
+<strong>mips.v</strong>，有效的驱动信号要求包括且仅包括<strong>同步复位信号
+reset</strong> 和<strong>时钟信号 clk</strong>，接口定义如下：</p></li>
+</ul>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> mips(<br>    <span class="hljs-keyword">input</span> clk,<br>    <span class="hljs-keyword">input</span> reset<br>);<br></code></pre></td></tr></table></figure>
+<h4 id="模块规格">模块规格</h4>
+<h5 id="顶层设计">顶层设计</h5>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">module</span> mips(<br>    <span class="hljs-keyword">input</span> clk,<br>    <span class="hljs-keyword">input</span> reset<br>    );<br><br><span class="hljs-comment">//CON</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] Instr;<br><span class="hljs-keyword">wire</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] j_ctrl;<span class="hljs-comment">//跳转指令，0为正常+4  1为beq  2为jal  3为jr</span><br><span class="hljs-keyword">wire</span> grf_write;<span class="hljs-comment">//grf写入信号</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] grf_reg;<span class="hljs-comment">//选择grf写入的寄存器</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] grf_data;<span class="hljs-comment">//选择grf写入数据来源</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] ALU_op;<span class="hljs-comment">//运算选择</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">1</span>:<span class="hljs-number">0</span>] ALU_data_op;<span class="hljs-comment">//运算数选择</span><br><span class="hljs-keyword">wire</span> MemWrite;<span class="hljs-comment">//数据写入信号</span><br><span class="hljs-comment">//PC</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] j_addr;<span class="hljs-comment">//PC跳转地址</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] pc;<span class="hljs-comment">//PC</span><br><span class="hljs-comment">//ALU</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] ALU_out;<span class="hljs-comment">//ALU运算结果</span><br><span class="hljs-comment">//reg</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] RegAddr;<span class="hljs-comment">//写入的寄存器</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] WD;<span class="hljs-comment">//写入的数据</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] RD1;<span class="hljs-comment">//读出的寄存器数据1</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] RD2;<span class="hljs-comment">//读出的寄存器数据2</span><br><span class="hljs-comment">//ALU</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] b;<span class="hljs-comment">//运算数2</span><br><span class="hljs-comment">//DM</span><br><span class="hljs-keyword">wire</span> [<span class="hljs-number">31</span>:<span class="hljs-number">0</span>] DM_out;<span class="hljs-comment">//DM读出的数据</span><br><span class="hljs-comment">//decode</span><br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">15</span>:<span class="hljs-number">0</span>] im_of;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] Func;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] rd;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] rt;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] rs_base;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">5</span>:<span class="hljs-number">0</span>] Op_code;<br>     <span class="hljs-keyword">wire</span> [<span class="hljs-number">25</span>:<span class="hljs-number">0</span>] index;<br><span class="hljs-keyword">assign</span> im_of=Instr[<span class="hljs-number">15</span>:<span class="hljs-number">0</span>];<br><span class="hljs-keyword">assign</span> Func=Instr[<span class="hljs-number">5</span>:<span class="hljs-number">0</span>];<br><span class="hljs-keyword">assign</span> rd=Instr[<span class="hljs-number">15</span>:<span class="hljs-number">11</span>];<br><span class="hljs-keyword">assign</span> rt=Instr[<span class="hljs-number">20</span>:<span class="hljs-number">16</span>];<br><span class="hljs-keyword">assign</span> rs_base=Instr[<span class="hljs-number">25</span>:<span class="hljs-number">21</span>];<br><span class="hljs-keyword">assign</span> Op_code=Instr[<span class="hljs-number">31</span>:<span class="hljs-number">26</span>];<br><span class="hljs-keyword">assign</span> index=Instr[<span class="hljs-number">25</span>:<span class="hljs-number">0</span>];<br><br><br><span class="hljs-keyword">assign</span> j_addr=(j_ctrl==<span class="hljs-number">2&#x27;b00</span>)?(pc+<span class="hljs-number">4</span>):<br>    (j_ctrl==<span class="hljs-number">2&#x27;b01</span>)?(pc+<span class="hljs-number">4</span>+&#123;&#123;<span class="hljs-number">14</span>&#123;im_of[<span class="hljs-number">15</span>]&#125;&#125;,im_of,<span class="hljs-number">2&#x27;b0</span>&#125;):<span class="hljs-comment">//beq</span><br>                    (j_ctrl==<span class="hljs-number">2&#x27;b10</span>)?(&#123;pc[<span class="hljs-number">31</span>:<span class="hljs-number">28</span>],index,<span class="hljs-number">2&#x27;b0</span>&#125;):<span class="hljs-comment">//jal</span><br>                    RD1;<span class="hljs-comment">//jr</span><br><span class="hljs-keyword">assign</span> RegAddr=(grf_reg==<span class="hljs-number">2&#x27;b00</span>)?rd:<br>                    (grf_reg==<span class="hljs-number">2&#x27;b01</span>)?rt:<br>                    <span class="hljs-number">5&#x27;b11111</span>;<span class="hljs-comment">//写入$ra</span><br><span class="hljs-keyword">assign</span> WD=(grf_data==<span class="hljs-number">2&#x27;b00</span>)?ALU_out:<br>                (grf_data==<span class="hljs-number">2&#x27;b01</span>)?DM_out:<span class="hljs-comment">//lw</span><br>                (grf_data==<span class="hljs-number">2&#x27;b10</span>)?&#123;im_of,&#123;<span class="hljs-number">16</span>&#123;<span class="hljs-number">1&#x27;b0</span>&#125;&#125;&#125;:<span class="hljs-comment">//lui</span><br>                pc+<span class="hljs-number">4</span>;<span class="hljs-comment">//写入$ra</span><br><span class="hljs-keyword">assign</span> b=(ALU_data_op==<span class="hljs-number">0</span>)?RD2:<br>            (ALU_data_op==<span class="hljs-number">1</span>)?&#123;&#123;<span class="hljs-number">16</span>&#123;<span class="hljs-number">1&#x27;b0</span>&#125;&#125;,im_of&#125;:<span class="hljs-comment">//ori</span><br>            &#123;&#123;<span class="hljs-number">16</span>&#123;im_of[<span class="hljs-number">15</span>]&#125;&#125;,im_of&#125;;<span class="hljs-comment">//lw,sw</span><br><br>controller con(Instr,j_ctrl,grf_write,grf_reg,grf_data,ALU_op,ALU_data_op,MemWrite,ALU_out);<br>PC Pc(clk,reset,j_addr,pc);<br>IM im(pc,Instr);<br>GRF grf(clk,reset,grf_write,RegAddr,WD,rs_base,rt,RD1,RD2);<br>ALU alu(ALU_op,RD1,b,ALU_out);<br>DM dm(clk,reset,MemWrite,ALU_out,RD2,DM_out);<br><br><span class="hljs-keyword">always</span>@(<span class="hljs-keyword">posedge</span> clk)<span class="hljs-keyword">begin</span><br>    <span class="hljs-keyword">if</span>(grf_write==<span class="hljs-number">1</span>&amp;&amp;reset!=<span class="hljs-number">1</span>)<span class="hljs-keyword">begin</span><br>        <span class="hljs-built_in">$display</span>(<span class="hljs-string">&quot;@%h: $%d &lt;= %h&quot;</span>, pc, RegAddr, WD);<br>        <span class="hljs-keyword">end</span><br>    <span class="hljs-keyword">if</span>(MemWrite==<span class="hljs-number">1</span>&amp;&amp;reset!=<span class="hljs-number">1</span>)<span class="hljs-keyword">begin</span><br>        <span class="hljs-built_in">$display</span>(<span class="hljs-string">&quot;@%h: *%h &lt;= %h&quot;</span>, pc, ALU_out, RD2);<br>        <span class="hljs-keyword">end</span><br><span class="hljs-keyword">end</span><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">integer fp;</span><br><span class="hljs-comment">initial begin</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">fp = $fopen(&quot;info.txt&quot;,&quot;w&quot;);</span><br><span class="hljs-comment">end</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-keyword">endmodule</span><br></code></pre></td></tr></table></figure>
+<h5 id="ifu取指令单元">IFU（取指令单元)</h5>
+<ul>
+<li><p>内部包括 PC（程序计数器）、IM（指令存储器）及相关逻辑。</p></li>
+<li><p>PC
+用寄存器实现，应具有<strong>异步复位</strong>功能，复位值为起始地址。</p></li>
+<li><p><strong>起始地址：0x00003000</strong>。</p></li>
+<li><p>地址范围：0x00003000 ~ 0x00006FFF。</p></li>
+<li><p>IM 用 ROM 实现，容量为 4096 × 32bit。</p></li>
+<li><p>IM 实际地址宽度仅为 12 位，需要使用恰当的方法将 PC 中储存的地址同
+IM 联系起来。</p></li>
+</ul>
+<h6 id="pcmoore型状态机">PC（Moore型状态机）</h6>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">同步复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">j_addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">跳转指令地址</td>
+<td style="text-align: center;">pc、Instr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">addr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">下一条指令地址</td>
+<td style="text-align: center;">IM</td>
+</tr>
+</tbody>
+</table>
+<h6 id="im">IM</h6>
+<p><code>reg [31:0] IM [0:4095]</code></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">addr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">指令地址</td>
+<td style="text-align: center;">j_addr</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Instr</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">指令机器码</td>
+<td style="text-align: center;">很多</td>
+</tr>
+</tbody>
+</table>
+<h5
+id="grf通用寄存器组也称为寄存器文件寄存器堆">GRF（通用寄存器组，也称为寄存器文件、寄存器堆）</h5>
+<ul>
+<li><p>用具有写使能的寄存器实现，寄存器总数为 32
+个，应具有<strong>异步复位</strong>功能。</p></li>
+<li><p><strong>0 号寄存器</strong>的值始终保持为
+0。其他寄存器<strong>初始值（复位后）均为
+0</strong>，无需专门设置。</p></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">同步复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WE</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">写使能信号</td>
+<td style="text-align: center;">Control</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">RegAddr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">GRF 5 位写入地址</td>
+<td style="text-align: center;">rd/rt/$ra</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">WD</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">GRF 32 位写入数据</td>
+<td style="text-align: center;">ALU/DM/im_of/pc</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">A1</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">读出数据的寄存器编号</td>
+<td style="text-align: center;">rs_base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">A2</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">读出数据的寄存器编号</td>
+<td style="text-align: center;">rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">RD</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">GRF 32 位读出数据</td>
+<td style="text-align: center;">ALU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">RD2</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">GRF 32 位读出数据</td>
+<td style="text-align: center;">ALU</td>
+</tr>
+</tbody>
+</table>
+<h5 id="alu算术逻辑单元">ALU（算术逻辑单元）</h5>
+<p>？比较按无符号还是有符号？</p>
+<ul>
+<li><p>提供 32 位加、减、或运算及大小比较功能。</p></li>
+<li><p>加减法按无符号处理（不考虑溢出）。</p></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">op</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">功能选择</td>
+<td style="text-align: center;">Control</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">a</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">操作数1</td>
+<td style="text-align: center;">RD1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">b</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">操作数2</td>
+<td style="text-align: center;">RD2/im_of</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">结果</td>
+<td style="text-align: center;">WD/MemAddr/con</td>
+</tr>
+</tbody>
+</table>
+<h5 id="dm数据存储器">DM（数据存储器）</h5>
+<ul>
+<li><p>使用 RAM 实现，容量为 3072 ×
+32bit，应具有<strong>异步复位</strong>功能，复位值为
+0x00000000。</p></li>
+<li><p><strong>起始地址：0x00000000</strong>。</p></li>
+<li><p>地址范围：0x00000000 ~ 0x00002FFF。</p></li>
+<li><p>RAM 应使用双端口模式，即设置 RAM 的 <strong>Data
+Interface</strong> 属性为 <strong>Separate load and store
+ports</strong>。</p></li>
+</ul>
+<p><code>reg [31:0] DM [0:3071]</code></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+<th style="text-align: center;">来源/去向</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">clk</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">时钟信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">rst</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">同步复位信号</td>
+<td style="text-align: center;">顶层输入</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MemWrite</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">DM 写入控制信号</td>
+<td style="text-align: center;">Control</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MemAddr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">DM 32 位写入地址</td>
+<td style="text-align: center;">ALU</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MemData</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">DM 32 位写入数据</td>
+<td style="text-align: center;">RD2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">MemData</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">DM 32 位输出数据</td>
+<td style="text-align: center;">WD</td>
+</tr>
+</tbody>
+</table>
+<h5 id="ext扩展单元">EXT（扩展单元）</h5>
+<ul>
+<li>可以使用 Logisim 内置的 Bit Extender。</li>
+</ul>
+<h5 id="controller控制器">Controller（控制器）</h5>
+<ul>
+<li><p>使用与或门阵列构造控制信号的具体方法见后文叙述。</p></li>
+<li><p>也可以通过其它方式构造控制信号，同学们可以自行探索。</p></li>
+</ul>
+<h6 id="指令解读">指令解读</h6>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">指令</th>
+<th style="text-align: center;">31-26</th>
+<th style="text-align: center;">25-21</th>
+<th style="text-align: center;">20-16</th>
+<th style="text-align: center;">15-11</th>
+<th style="text-align: center;">10-6</th>
+<th style="text-align: center;">5-0</th>
+<th style="text-align: center;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">add</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">rd</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">100000</td>
+<td style="text-align: center;">rd=rs+rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">sub</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">rd</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">100010</td>
+<td style="text-align: center;">rd=rs-rt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ori</td>
+<td style="text-align: center;">001101</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">rt=rs|im</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">lw</td>
+<td style="text-align: center;">100011</td>
+<td style="text-align: center;">base</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">rt=mem(base+of)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">sw</td>
+<td style="text-align: center;">101011</td>
+<td style="text-align: center;">base</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">mem(base+of)=rt</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">beq</td>
+<td style="text-align: center;">000100</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">offset</td>
+<td style="text-align: center;">PC+=4+of00?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">lui</td>
+<td style="text-align: center;">001111</td>
+<td style="text-align: center;">00000</td>
+<td style="text-align: center;">rt</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">im</td>
+<td style="text-align: center;">rt=im(0*16)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">jal</td>
+<td style="text-align: center;">000011</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">index</td>
+<td style="text-align: center;">较为复杂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">jr</td>
+<td style="text-align: center;">000000</td>
+<td style="text-align: center;">rs</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">001000</td>
+<td style="text-align: center;">PC=rs</td>
+</tr>
+</tbody>
+</table>
+<p>jal：$31=PC+4，PC=PC[31:28]+index00</p>
+<h6 id="控制器">控制器</h6>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">变量</th>
+<th style="text-align: center;">方向</th>
+<th style="text-align: center;">位宽</th>
+<th style="text-align: center;">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Instr</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">指令机器码</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ALU_out</td>
+<td style="text-align: center;">in</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">比较结果</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">ctrl</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">PC，0(beq),1(jal),2(jr)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">WE</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">GRF，写使能信号</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">GRF_op1</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">2</td>
+<td
+style="text-align: center;">GRF，控制写入地址来源,0(rd),1(rt),2($ra)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">GRF_op2</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">2</td>
+<td
+style="text-align: center;">GRF，控制写入数据来源,0(ALU),1(DM),2(im_of),3(index)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">op</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">ALU，运算选择0(+),1(-),2(|),3(==)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">ALU_op</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">2</td>
+<td
+style="text-align: center;">ALU，控制运算数来源（0,rt,1,0-im,2,sign-of）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">MemWrite</td>
+<td style="text-align: center;">out</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">DM，写入控制信号</td>
+</tr>
+</tbody>
+</table>
+<h4 id="思考题">思考题</h4>
+<ol type="1">
+<li><p>阅读下面给出的 DM 的输入示例中（示例 DM 容量为 4KB，即 32bit ×
+1024字），根据你的理解回答，这个 addr 信号又是从哪里来的？地址信号 addr
+位数为什么是 [11:2] 而不是 [9:0] ？</p>
+<figure>
+<img
+src="http://cscore.buaa.edu.cn/assets/cscore-image/refkxh/86953c72-c519-48b2-8cb8-7b2c90850e53/66.png" srcset="/img/loading.gif" lazyload
+alt="66.png" />
+<figcaption aria-hidden="true">66.png</figcaption>
+</figure>
+<p>ALU的运算结果；截取高位实现右移2位的效果（lw、sw均为字操作，地址是4的倍数）</p></li>
+<li><p>思考上述两种控制器设计的译码方式，给出代码示例，并尝试对比各方式的优劣。</p>
+<p>地方</p>
+<p>指令</p></li>
+</ol>
+<p>指令对应的控制信号：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">assign</span> ctrl=(beq&amp;&amp;ALU_out==<span class="hljs-number">0</span>)?<span class="hljs-number">1</span>:<br>                (jal)?<span class="hljs-number">2</span>:<br>                (jr)?<span class="hljs-number">3</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> WE=(add||sub||ori||lw||lui||jal);<br><span class="hljs-keyword">assign</span> GRF_op1=(ori||lw||lui)?<span class="hljs-number">1</span>:<span class="hljs-comment">//rt</span><br>                    (jal)?<span class="hljs-number">2</span>:<span class="hljs-number">0</span>;<span class="hljs-comment">//$ra</span><br><span class="hljs-keyword">assign</span> GRF_op2=(jal)?<span class="hljs-number">3</span>:<br>                    (lui)?<span class="hljs-number">2</span>:<br>                    (lw)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> op=(beq)?<span class="hljs-number">3</span>:<br>                (ori)?<span class="hljs-number">2</span>:<br>                (sub)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> ALU_op=(lw||sw)?<span class="hljs-number">2</span>:<br>                    (ori||lui)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> MemWrite=(sw);<br></code></pre></td></tr></table></figure>
+<p>控制信号每种取值对应的指令：</p>
+<figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-keyword">wire</span> add,sub,ori,lw,sw,beq,lui,jal,jr;<br><span class="hljs-keyword">assign</span> add=(Op_code==<span class="hljs-number">6&#x27;b000000</span>&amp;&amp;Func==<span class="hljs-number">6&#x27;b100000</span>);<br><span class="hljs-keyword">assign</span> sub=(Op_code==<span class="hljs-number">6&#x27;b000000</span>&amp;&amp;Func==<span class="hljs-number">6&#x27;b100010</span>);<br><span class="hljs-keyword">assign</span> ori=(Op_code==<span class="hljs-number">6&#x27;b001101</span>);<br><span class="hljs-keyword">assign</span> lw=(Op_code==<span class="hljs-number">6&#x27;b100011</span>);<br><span class="hljs-keyword">assign</span> sw=(Op_code==<span class="hljs-number">6&#x27;b101011</span>);<br><span class="hljs-keyword">assign</span> beq=(Op_code==<span class="hljs-number">6&#x27;b000100</span>);<br><span class="hljs-keyword">assign</span> lui=(Op_code==<span class="hljs-number">6&#x27;b001111</span>);<br><span class="hljs-keyword">assign</span> jal=(Op_code==<span class="hljs-number">6&#x27;b000011</span>);<br><span class="hljs-keyword">assign</span> jr=(Op_code==<span class="hljs-number">6&#x27;b000000</span>&amp;&amp;Func==<span class="hljs-number">6&#x27;b001000</span>);<br><br><br><span class="hljs-keyword">assign</span> ctrl=(beq&amp;&amp;ALU_out==<span class="hljs-number">0</span>)?<span class="hljs-number">1</span>:<br>                (jal)?<span class="hljs-number">2</span>:<br>                (jr)?<span class="hljs-number">3</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> WE=(add||sub||ori||lw||lui||jal);<br><span class="hljs-keyword">assign</span> GRF_op1=(ori||lw||lui)?<span class="hljs-number">1</span>:<span class="hljs-comment">//rt</span><br>                    (jal)?<span class="hljs-number">2</span>:<span class="hljs-number">0</span>;<span class="hljs-comment">//$ra</span><br><span class="hljs-keyword">assign</span> GRF_op2=(jal)?<span class="hljs-number">3</span>:<br>                    (lui)?<span class="hljs-number">2</span>:<br>                    (lw)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> op=(beq)?<span class="hljs-number">3</span>:<br>                (ori)?<span class="hljs-number">2</span>:<br>                (sub)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> ALU_op=(lw||sw)?<span class="hljs-number">2</span>:<br>                    (ori||lui)?<span class="hljs-number">1</span>:<span class="hljs-number">0</span>;<br><span class="hljs-keyword">assign</span> MemWrite=(sw);<br></code></pre></td></tr></table></figure>
+<p>优劣：第一种比较直接，控制信号直接由指令决定，但可读性差</p>
+<p>第二种可读性好，但指令条数增多后代码冗余</p>
+<ol start="3" type="1">
+<li><p>在相应的部件中，复位信号的设计都是<strong>同步复位</strong>，这与
+P3
+中的设计要求不同。请对比<strong>同步复位</strong>与<strong>异步复位</strong>这两种方式的
+reset 信号与 clk 信号优先级的关系。</p>
+<p>同步复位：clk&gt;reset</p>
+<p>异步复位：reset&gt;clk</p></li>
+<li><p>C 语言是一种弱类型程序设计语言。C
+语言中不对计算结果溢出进行处理，这意味着 C
+语言要求程序员必须很清楚计算结果是否会导致溢出。因此，如果仅仅支持 C
+语言，MIPS 指令的所有计算指令均可以忽略溢出。
+请说明为什么在忽略溢出的前提下，addi 与 addiu 是等价的，add 与 addu
+是等价的。提示：阅读《MIPS32® Architecture For Programmers Volume II:
+The MIPS32® Instruction Set》中相关指令的 Operation 部分。</p>
+<p>与addiu相比，addi将32位扩展为33位并判断是否溢出，但忽略溢出后只关注前32位，因此相当于没拓展，和addiu相同</p>
+<p>add与addu同理</p></li>
+</ol>
+<h4 id="测试方案">测试方案</h4>
+<h5 id="机器码转指令的">机器码转指令的</h5>
+<p>运行C语言代码（code_instruction.c），1为从文件输入，输出到文件；2为单个指令翻译</p>
+<h5 id="自动生成数据点的代码">自动生成数据点的代码</h5>
+<p>待开发，目前只有手敲代码（</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><code class="hljs routeros">.data<br>.space 0x3000<br>.text<br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,2<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,3<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,4<br>ori <span class="hljs-variable">$5</span>,<span class="hljs-variable">$0</span>,5<br>ori <span class="hljs-variable">$6</span>,<span class="hljs-variable">$0</span>,6<br>ori <span class="hljs-variable">$7</span>,<span class="hljs-variable">$0</span>,7<br>ori <span class="hljs-variable">$8</span>,<span class="hljs-variable">$0</span>,8<br>ori <span class="hljs-variable">$9</span>,<span class="hljs-variable">$0</span>,9<br>ori <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,10<br>ori <span class="hljs-variable">$11</span>,<span class="hljs-variable">$0</span>,11<br>ori <span class="hljs-variable">$12</span>,<span class="hljs-variable">$0</span>,12<br>ori <span class="hljs-variable">$13</span>,<span class="hljs-variable">$0</span>,13<br>ori <span class="hljs-variable">$14</span>,<span class="hljs-variable">$0</span>,14<br>ori <span class="hljs-variable">$15</span>,<span class="hljs-variable">$0</span>,15<br>ori <span class="hljs-variable">$16</span>,<span class="hljs-variable">$0</span>,16<br>ori <span class="hljs-variable">$17</span>,<span class="hljs-variable">$0</span>,17<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$0</span>,18<br>ori <span class="hljs-variable">$19</span>,<span class="hljs-variable">$0</span>,19<br>ori <span class="hljs-variable">$20</span>,<span class="hljs-variable">$0</span>,20<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$0</span>,21<br>ori <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,22<br>ori <span class="hljs-variable">$23</span>,<span class="hljs-variable">$0</span>,23<br>ori <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,24<br>ori <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,25<br>ori <span class="hljs-variable">$26</span>,<span class="hljs-variable">$0</span>,26<br>ori <span class="hljs-variable">$27</span>,<span class="hljs-variable">$0</span>,27<br>ori <span class="hljs-variable">$28</span>,<span class="hljs-variable">$0</span>,28<br>ori <span class="hljs-variable">$29</span>,<span class="hljs-variable">$0</span>,29<br>ori <span class="hljs-variable">$30</span>,<span class="hljs-variable">$0</span>,30<br>ori <span class="hljs-variable">$31</span>,<span class="hljs-variable">$0</span>,0x310c<br><br><br>ori <span class="hljs-variable">$0</span>,<span class="hljs-variable">$0</span>,1#<span class="hljs-variable">$0</span>应始终为0<br>ori <span class="hljs-variable">$2</span>,<span class="hljs-variable">$0</span>,65535<br>ori <span class="hljs-variable">$3</span>,<span class="hljs-variable">$0</span>,0<br>ori <span class="hljs-variable">$4</span>,<span class="hljs-variable">$0</span>,12<br>lui <span class="hljs-variable">$5</span>,65535<br>lui <span class="hljs-variable">$6</span>,0<br>lui <span class="hljs-variable">$7</span>,8<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$8</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$2</span>#-1<br>lui <span class="hljs-variable">$9</span>,32767<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$9</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$2</span>#intmax<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$9</span>,<span class="hljs-variable">$8</span><br>sub <span class="hljs-variable">$10</span>,<span class="hljs-variable">$8</span>,<span class="hljs-variable">$9</span>#-intmax-1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$10</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$10</span><br>sub <span class="hljs-variable">$11</span>,<span class="hljs-variable">$2</span>,<span class="hljs-variable">$4</span>#65523<br>sub <span class="hljs-variable">$12</span>,<span class="hljs-variable">$4</span>,<span class="hljs-variable">$2</span>#-65523<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$13</span>,<span class="hljs-variable">$11</span>,<span class="hljs-variable">$12</span>#0<br>sub <span class="hljs-variable">$14</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$5</span>#0<br><br>lui <span class="hljs-variable">$18</span>,0<br>ori <span class="hljs-variable">$18</span>,<span class="hljs-variable">$18</span>,0x2ffc<br>sw <span class="hljs-variable">$10</span>,(<span class="hljs-variable">$18</span>)<br>sw <span class="hljs-variable">$11</span>,12280(<span class="hljs-variable">$0</span>)<br>sw <span class="hljs-variable">$12</span>,-4(<span class="hljs-variable">$4</span>)#8<br>lw <span class="hljs-variable">$15</span>,8(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$12</span>,-65533<br>lw <span class="hljs-variable">$16</span>,12284(<span class="hljs-variable">$0</span>)#<span class="hljs-variable">$10</span>,-intmax-1<br>lw <span class="hljs-variable">$17</span>,12280(<span class="hljs-variable">$0</span>)#11,65523<br><br>loop:<br>lui <span class="hljs-variable">$21</span>,0<br>ori <span class="hljs-variable">$21</span>,<span class="hljs-variable">$21</span>,1<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$19</span>,<span class="hljs-variable">$19</span>,<span class="hljs-variable">$21</span><br>beq <span class="hljs-variable">$19</span>,<span class="hljs-variable">$20</span>,loop#<span class="hljs-variable">$19</span>=21跳出<br><br>sub <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span>#<span class="hljs-variable">$22</span>=-20<br>loop2:<br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,loop2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$22</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$20</span><br>beq <span class="hljs-variable">$22</span>,<span class="hljs-variable">$20</span>,end<br>nop<br>end:<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$23</span>,<span class="hljs-variable">$23</span>,<span class="hljs-variable">$21</span><br><br>loop3:<br>jr <span class="hljs-variable">$ra</span><br>jal loop3#往前跳<br>jal loop4#往后跳<br>loop4:<br>beq <span class="hljs-variable">$24</span>,<span class="hljs-variable">$21</span>,end2<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$24</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$21</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$25</span>,<span class="hljs-variable">$0</span>,<span class="hljs-variable">$ra</span><br>jr <span class="hljs-variable">$25</span><br>end2:<br>jal end2#原地蹦跶<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CO/" class="category-chain-item">CO</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计组P4设计文档</div>
+      <div>https://solor-wind.github.io/2024/01/23/计组P4设计文档/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P5%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P5设计文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计组P5设计文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/23/%E8%AE%A1%E7%BB%84P3%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="计组P3设计文档">
+                        <span class="hidden-mobile">计组P3设计文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
