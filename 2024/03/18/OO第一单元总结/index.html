@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://solor-wind.github.io/img/OO/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%9E%B6%E6%9E%84.png">
 <meta property="og:image" content="https://solor-wind.github.io/img/OO/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%98%E5%82%A8.png">
 <meta property="article:published_time" content="2024-03-18T09:03:59.000Z">
-<meta property="article:modified_time" content="2024-03-19T00:27:47.735Z">
+<meta property="article:modified_time" content="2024-03-19T07:20:35.237Z">
 <meta property="article:author" content="gpf">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://solor-wind.github.io/img/OO/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E4%BB%A3%E7%A0%81%E9%87%8F.png">
@@ -459,7 +459,7 @@ class="math inline">\(\exp(a*x+b*y)=\exp(x)^a+\exp(y)^b\)</span>​
 <h3 id="正确性判定">正确性判定</h3>
 <p>主要方法有两种——对拍与syms库</p>
 <p>对拍采用讨论区JZY大佬的方法即可，两人分别跑一次数据，再用其中一个人跑一下刚才二人的结果的相减，若最终结果为0，则可以认为大概率没有问题</p>
-<p>syms库即python中的库，这部分的实现主要由好友张鑫完成，大致包括表达式结果的预处理（如dx替换为diff）、调用数据生成器和java并运行、结果比较与输出、超时跳过（Linux可选）。</p>
+<p>syms库即python中的库，这部分的实现主要由好友ZX完成，大致包括表达式结果的预处理（如dx替换为diff）、调用数据生成器和java并运行、结果比较与输出、超时跳过（Linux可选）。</p>
 <h3 id="bugs">bugs</h3>
 <p>很幸运第一单元的作业没有在强测、互测中发现bug，以下测试点均为互测中有效hack数据，主要通过评测机发现。</p>
 <h4 id="section">1.0</h4>
