@@ -1,0 +1,1210 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/solor-wind.jpg">
+  <link rel="icon" href="/img/solor-wind.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#006cbf">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="《C语言系统编程》课程笔记，最贴近C语言标准的一集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言系统编程笔记">
+<meta property="og:url" content="https://solor-wind.github.io/2025/01/01/C%E8%AF%AD%E8%A8%80%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="《C语言系统编程》课程笔记，最贴近C语言标准的一集">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T09:12:59.031Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>C语言系统编程笔记 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E9%AD%88-%E6%B5%B7%E7%81%AF%E8%8A%82.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="C语言系统编程笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 00:00" pubdate>
+          2025年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          28 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">C语言系统编程笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h2 id="一些宏定义">一些宏定义</h2>
+<p>1个byte等于 <code>CHAR_BIT</code> 个bit，C语言规定至少为8</p>
+<p>Fundamental
+Alignment：基础对齐要求，alignof(max_align_t)。课程假设为16</p>
+<h2 id="对象概念">对象概念</h2>
+<ul>
+<li>Address：这一段内存lowest字节的编号</li>
+<li>Object_Type：对象类型T（可以没有）</li>
+<li>Name：对象名称（可以没有）</li>
+<li>Size：内存大小sizeof(T)（字节数量），不完全类型没有大小</li>
+<li>Object
+Value：对象的值通过对象类型映射对象表示（各个bit组成的二进制串，包括paddingbits），值一样，表示不一定一样</li>
+<li>Alignment：对齐要求alignof(T)（地址被对齐要求整除），一定是2^n</li>
+<li>Value：对象的表示值</li>
+<li>Value Type：表示值类型</li>
+</ul>
+<p>表示值与表示值类型获取规则：</p>
+<ol type="1">
+<li>非数组对象类型：表示值就是对象值，表示值类型是对象类型的非限定类型</li>
+<li>数组对象类型：表示值是第一个元组对象的地址，表示值类型是元素类型对应的指针类型</li>
+</ol>
+<p>对象七元组去掉了Object Value</p>
+<p>不完全对象类型如void，int[]没有size和alignment</p>
+<p>signed char/unsigned char对齐要求是weakest，不一定是1</p>
+<h2 id="各种类型">各种类型</h2>
+<p>类型：</p>
+<ul>
+<li>算术类型
+<ul>
+<li>整数类型
+<ul>
+<li>char</li>
+<li>usigned integer type</li>
+<li>signed integer type</li>
+<li>enumerated type（枚举）</li>
+</ul></li>
+<li>浮点类型
+<ul>
+<li>real floating type</li>
+<li>complex type（复数）</li>
+</ul></li>
+</ul></li>
+<li>派生类型
+<ul>
+<li>Array Type</li>
+<li>Pointer Type</li>
+<li>Struct Type</li>
+<li>Union Type</li>
+<li>Atomic Type</li>
+<li>Function Type</li>
+</ul></li>
+<li>限定类型
+<ul>
+<li>_Atomic</li>
+<li>const</li>
+<li>volatile</li>
+<li>restrict</li>
+</ul></li>
+</ul>
+<p>标量类型：算术类型、指针类型、nullptr_t</p>
+<p>非标量类型：数组类型、结构体类型、联合体类型、限定类型</p>
+<h3 id="基本类型">基本类型</h3>
+<p>Basic Type:</p>
+<ul>
+<li>char（编译器指定与signed char或unsigned char之一行为一致）</li>
+<li>unsigned integer type</li>
+<li>signed integer type</li>
+<li>floating type</li>
+</ul>
+<h3 id="整数与枚举">整数与枚举</h3>
+<p>有符号整数的宽度要求：</p>
+<p>sign bit(1)+value bit+padding bit，宽度为sign+value=N，精度为N-1</p>
+<p>其中，signed char不允许有padding</p>
+<p>无符号整数的宽度要求：</p>
+<p>value bit+padding bit，宽度为value=N，精度为N</p>
+<p>bool类型就一定有padding了</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;">宽度</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">signed char</td>
+<td style="text-align: center;">CHAR_BIT</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">short int</td>
+<td style="text-align: center;">&gt;=8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">&gt;=16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">long int</td>
+<td style="text-align: center;">&gt;=32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">long long int</td>
+<td style="text-align: center;">&gt;=64</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">unsigned char</td>
+<td style="text-align: center;">CHAR_BIT</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">unsigned short int</td>
+<td style="text-align: center;">&gt;=8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">unsigned int</td>
+<td style="text-align: center;">&gt;=16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">unsigned long int</td>
+<td style="text-align: center;">&gt;=32</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">unsigned long long int</td>
+<td style="text-align: center;">&gt;=64</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">bool</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>课程中假设char=1,short=2,int=4,float=4,double=8.pointer
+type=4，对齐要求同数值</p>
+<p>枚举类型需要指定实现类型，如果不指定则由编译器设置为以下5中类型之一：char、标准有符号整数类型、标准无符号整数类型、扩展有符号整数类型、以及扩展无符号整数类型</p>
+<h3 id="数组指针类型">数组、指针类型</h3>
+<p>T[N]，T必须是完全对象类型，N缺失则是不完全对象类型，N是整数常量或整数常量表达式则为普通数组类型，其他N是变长数组类型</p>
+<p>T*，T是对象类型，指针类型本身是完全对象类型</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;">派生数组类型</th>
+<th style="text-align: center;">派生指针类型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">T[N]</td>
+<td style="text-align: center;">T*</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T[M]</td>
+<td style="text-align: center;">T[N][M]</td>
+<td style="text-align: center;">T(*)[M]</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">T*</td>
+<td style="text-align: center;">T*[N]</td>
+<td style="text-align: center;">T**</td>
+</tr>
+</tbody>
+</table>
+<p>变长数组variable length array（VLA）</p>
+<p>变长数组类型T[M]，元素类型为T，元素个数是M。T[M]是一个变长数组类型，如果满足：</p>
+<ul>
+<li>M不是一个整数常量或整数常量表达式</li>
+<li>T是一个变长数组</li>
+</ul>
+<h3 id="限定类型">限定类型</h3>
+<p>类型T，限定词Q</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;">Q在T左边</th>
+<th style="text-align: center;">Q在T右边</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">T</td>
+<td style="text-align: center;">Q T与右边等价</td>
+<td style="text-align: center;">T Q</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">T[N]</td>
+<td style="text-align: center;">Q T[N]，修饰元素类型</td>
+<td style="text-align: center;">T[N] Q，不合法</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">T*</td>
+<td style="text-align: center;">Q T*，修饰reference的类型</td>
+<td style="text-align: center;">T* Q，修饰T*类型</td>
+</tr>
+</tbody>
+</table>
+<p>限定词无法直接限定数组对象类型</p>
+<p>Q typeof(T)[N]=Q typeof(T(N))</p>
+<p>多个同样限定符等价于一个限定符</p>
+<h3 id="函数类型和函数指针类型">函数类型和函数指针类型</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">func</span><span class="hljs-params">(<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>声明了一个函数func，类型为 <code>int(int,int)</code>
+。对应的函数指针为 <code>int(*)(int,int)</code></p>
+<p>function designator：能定位函数对象的表达式，共以下两种：</p>
+<ol type="1">
+<li>函数标识符</li>
+<li>若一个表达式的rvalue是函数指针类型，则*exp是一个合法的function
+designator</li>
+</ol>
+<p>func的rvalue和&amp;func的结果相同，func和*func定位的对象一样</p>
+<p>函数传参时，实参需要evaluate</p>
+<p>若fun()返回结构体类型，fun().a是表达式，但不是左值</p>
+<h2 id="对象分配">对象分配</h2>
+<h3 id="type-name-braced-initializer">(type-name)
+braced-initializer</h3>
+<p>如 <code>(int)&#123;1&#125;</code> 、 <code>(int[2])&#123;1,2&#125;</code>
+等等，分配了一个匿名对象</p>
+<h3 id="malloc">malloc</h3>
+<p><code>void* malloc(size_t size);</code></p>
+<p>分配一个匿名对象，该对象无类型；对象大小是size；对象表示不确定；返回值为空指针或对象的首地址；存储周期是allocated；对齐要求是基础对齐要求（保证可以强制转换成任何合法的对象指针类型）</p>
+<h3 id="aligned_alloc">aligned_alloc</h3>
+<p>aligned_alloc(align,size)</p>
+<p>可以指定对齐要求，但超过FUN……可能返回NULL，小于FUN……可能引起指针强制转换问题</p>
+<h2 id="表达式">表达式</h2>
+<p><strong>左值</strong>：能定位对象的表达式</p>
+<ol type="1">
+<li>对象表示符</li>
+<li>数组下标运算表达式</li>
+<li>*exp</li>
+<li>String Literal</li>
+<li>Compound literal</li>
+<li>指向结构体、联合体的lvalue.member</li>
+<li>指向结构体、联合体指针表达式-&gt;member</li>
+</ol>
+<p>若左值定位的一个对象类型T满足：T是数组类型/const限定类型/不完全对象类型/结构体或联合体类型，其成员对象有const限制，则被称为<strong>不可修改左值</strong></p>
+<p><strong>表达式</strong>：由一系列operator和operand组成的序列</p>
+<p><strong>右值</strong>：表达式经evaluate得到的值</p>
+<p><strong>evaluate</strong>：计算值+确定副作用</p>
+<p>lvalue
+conversion：<strong>左值转换</strong>，即非数组类型对象evaluate的过程（得到表示值和表示值类型）</p>
+<p><strong>decay</strong>：退化，即数组类型对象evaluate的过程（得到表示值和表示值类型）</p>
+<h3 id="表达式类别">表达式类别</h3>
+<p>注意typeof(T)不是表达式</p>
+<figure>
+<img
+src="D:\study\大三上\C语言系统编程\assets\image-20241123151010486.png" srcset="/img/loading.gif" lazyload
+alt="image-20241123151010486" />
+<figcaption aria-hidden="true">image-20241123151010486</figcaption>
+</figure>
+<h4 id="基础表达式">基础表达式：</h4>
+<ul>
+<li>标识符：包括对象标识符和函数标识符</li>
+<li>常量</li>
+<li>字符串</li>
+<li>括号表达式</li>
+<li>泛型选择</li>
+</ul>
+<h4 id="后缀表达式">后缀表达式</h4>
+<p><code>a[]</code> 、 <code>node.name</code>
+、<code>node-&gt;name</code>、<code>a++/a--</code>、(type-name){Initializer-list}、函数调用的小括号</p>
+<h4 id="一元表达式">一元表达式</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//一元表达式</span><br>a++;a--;<br>&amp;a;<br>*p;<br>+a;-a;<br>~a;!a;<br><span class="hljs-keyword">sizeof</span>(a);<span class="hljs-keyword">_Alignof</span>(a);<br></code></pre></td></tr></table></figure>
+<h4 id="常量">常量</h4>
+<ul>
+<li>整数常量10</li>
+<li>浮点数常量10.1</li>
+<li>枚举常量enum DAYS{a,b,c}</li>
+<li>字符常量'a'</li>
+<li>预定义常量false,true,nullptr</li>
+</ul>
+<h5 id="整数常量">整数常量</h5>
+<p>组成：进制前缀+数字序列+类型后缀</p>
+<p>数字序列可以加分隔符 <code>'</code>
+，但只能在中间加，不能在首尾加</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">进制前缀</th>
+<th style="text-align: center;">进制</th>
+<th style="text-align: center;">类型后缀</th>
+<th style="text-align: center;">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0x/0X</td>
+<td style="text-align: center;">16进制</td>
+<td style="text-align: center;">u、U</td>
+<td style="text-align: center;">usigned int等</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">无</td>
+<td style="text-align: center;">十进制</td>
+<td style="text-align: center;">l、L</td>
+<td style="text-align: center;">long int等</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">八进制</td>
+<td style="text-align: center;">ll、LL</td>
+<td style="text-align: center;">long long int</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0b/0B</td>
+<td style="text-align: center;">二进制</td>
+<td style="text-align: center;">wb、WB</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h5 id="浮点数常量">浮点数常量</h5>
+<p>进制前缀+符号序列+后缀</p>
+<p>有十进制（无前缀）和十六进制（0x前缀）两种，也可使用分隔符</p>
+<p>十进制的符号序列：由整数部分、小数点和小数部分构成的一个十进制实数+一个字符e+一个由+或-引导的表示幂的指数部分，没有+号默认为正数</p>
+<p>十六进制：前缀为0x，实数部分是以十六进制来表示，字符e替换成p，幂的值还是十进制表示，表示是2的幂次方，十六进制浮点数常量，p和指数部分不能省略</p>
+<h5 id="字符常量">字符常量</h5>
+<p>'a'</p>
+<h5 id="预定义常量">预定义常量</h5>
+<p>false,true,nullptr</p>
+<h4 id="常量表达式">常量表达式</h4>
+<p>不包含赋值、自增自减、函数调用、逗号运算符，除非他们被包含在不被evaluate的子表达式中</p>
+<p>常量表达式evaluate之后的rvalue的取值范围，应该在表达式rvalue类型的表征范围之内</p>
+<p>整数常量表达式：表达式rvalue类型为整数类型</p>
+<p>constexpr关键字修饰的也是常量</p>
+<p><strong>整数常量表达式</strong>需要满足的条件：</p>
+<ol type="1">
+<li>表达式rvalue是整数类型</li>
+<li>operand是整数常量</li>
+<li>字符常量</li>
+<li>类型为整数的named constant（用constexpr修饰）</li>
+<li>类型为整数的compound literal constant（(constexpr int){1}）</li>
+<li>alignof表达式</li>
+<li>cast表达式，其中cast的子表达式是浮点常量、类型为算术类型的named
+constant和compound literal
+constant，除非该cast表达式时typeof、sizeof、alignof操作符的operand</li>
+</ol>
+<p><strong>sizeof返回值</strong>：</p>
+<p>sizeof后跟type-name或exp</p>
+<ol type="1">
+<li>type-name
+<ul>
+<li>若type-name不是变长数组类型，则整体不做evaluate，而且返回值是整数常量</li>
+<li>若是VLA，则子表达式需要evaluate，返回值不是整数常量</li>
+</ul></li>
+<li>exp是lvalue，则与type-name规则近似</li>
+<li>exp不是lvalue，则返回exp做evaluate之后rvalue类型的大小，但并不会真的做evaluate</li>
+</ol>
+<p>typeof对变长数组的处理和sizeof一样</p>
+<h3 id="evaluate规则">evaluate规则</h3>
+<h4 id="定位非数组对象的lvalue">定位非数组对象的lvalue</h4>
+<p>若该表达式</p>
+<ol type="1">
+<li>与sizeof结合</li>
+<li>与typeof结合</li>
+<li>与&amp;结合</li>
+<li>与一元运算符++--和后缀运算符++--结合</li>
+<li>定位对象类型是结构体/联合体，且跟.结合</li>
+<li>出现在赋值运算符左侧</li>
+</ol>
+<p>除以上6种情况，表达式都要做evaluate</p>
+<h4 id="定位数组对象的lvalue">定位数组对象的lvalue</h4>
+<p>除非该表达式</p>
+<ol type="1">
+<li>与sizeof结合</li>
+<li>与typeof结合</li>
+<li>与&amp;结合</li>
+<li>定位的是一个string literal，且用于初始化一个字符数粗</li>
+</ol>
+<p>否则都要做evaluate</p>
+<h4 id="字符串">字符串</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-string">&quot;hello&quot;</span>;	<span class="hljs-comment">//evaluate，以下四种都不做</span><br><span class="hljs-keyword">sizeof</span>(<span class="hljs-string">&quot;hello&quot;</span>);<br>typeof(<span class="hljs-string">&quot;hello&quot;</span>);<br>&amp;<span class="hljs-string">&quot;hello&quot;</span>;<br><span class="hljs-type">char</span> str[]=<span class="hljs-string">&quot;hello&quot;</span>;<br></code></pre></td></tr></table></figure>
+<h4 id="compound-literal">Compound Literal</h4>
+<p>分配一个指定类型的对象，定位刚刚分配的那个对象</p>
+<p>与非数组对象的evaluate规则相同</p>
+<h3 id="side-effect">side effect</h3>
+<p>状态的改变。A sequence point B保证A sequenced before B</p>
+<ol type="1">
+<li><p>Function
+Designator和实参的evaluation，和实际函数调用执行之间</p></li>
+<li><p>在&amp;&amp;、||、逗号运算符分隔的前后两个表达式之间</p></li>
+<li><p>?:三目运算表达式中，?之前表达式以及之后执行的表达式之间</p></li>
+<li><p>两个full expression之间，full expression包括例如：</p>
+<p>表达式语句（分号）、if、while、do、for，return等控制条件表达式等</p></li>
+<li><p>库函数调用之前</p></li>
+<li><p>printf/scanf、fpritnf/fscanf、sprint/sscanf等一系列输入输出中按转换说明符执行完转换动作之后</p></li>
+<li><p>bsearch，qsort等比较函数调用之前和之后以及调用比较函数和对象移动之间</p></li>
+</ol>
+<h3 id="exp">*exp</h3>
+<p>设对表达式进行evaluate，rvalue为&lt;Value,Value_Type&gt;，如果Value_Type是一个对象指针类型，则可以用*exp的方式来定位一个对象M</p>
+<ol type="1">
+<li>该对象的address为Value</li>
+<li>该对象的Object Type为Value_Type对应的referenceType</li>
+</ol>
+<p>仅定位对象，不是获得表达式的值</p>
+<p>int *p;p+n的value是p的value+sizeof(*p)*n</p>
+<h2 id="存储周期作用域">存储周期、作用域、？</h2>
+<h3 id="scope与space">scope与space</h3>
+<p>scope：function、function prototype、file、block</p>
+<p>space：<strong>label
+name</strong>、<strong>tag</strong>、<strong>member of structures or
+unions</strong>、standard attributes and attribute prefixes、trailing
+identifier in an attribute prefixed token、<strong>ordinary
+identifiers</strong></p>
+<p>分别对应goto的标签、类型名、结构体等的属性、普通变量名</p>
+<h3 id="linkage">Linkage</h3>
+<p>如果一个对象标识符拥有file
+scope，且被static或constexpr修饰，则是internal linkage</p>
+<p>internal linkage的标识符无法被其他编译单元使用</p>
+<p>如果没有static声明，则被external修饰的标识符的linkage是external
+linkage</p>
+<h3 id="static">static</h3>
+<h3 id="thread">thread</h3>
+<h3 id="automatic">automatic</h3>
+<h3 id="allocated">allocated</h3>
+<h2 id="杂七杂八">杂七杂八</h2>
+<h3 id="初始化">初始化</h3>
+<h4 id="标量类型初始化">标量类型初始化</h4>
+<p>{}，exp（除逗号表达式外），{exp}</p>
+<p>整数对象缺省值是+0或无符号0，十进制浮点对象缺省值是+0，其他浮点数缺省值是+0或无符号0，指针类型缺省值是空指针</p>
+<h4 id="数组类型对象初始化">数组类型对象初始化</h4>
+<p>{}，{sub-initializer1,...,sub-initializern}，每个sub-initializer1用于初始化数组中的一个元素对象，若元素对象依然是一个数组对象，则可以再次使用数组对象初始化的形式</p>
+<p>当数组类型T[N]的N不存在时：</p>
+<ul>
+<li>不能使用{}进行初始化</li>
+<li>使用{exp1,...,expn}时，n即数组对象的元素个数</li>
+</ul>
+<p>当数组类型为变长数组时：</p>
+<ul>
+<li>只能使用{}进行初始化</li>
+</ul>
+<h3 id="string-literal">String Literal</h3>
+<p>构成字符串的字符：</p>
+<ul>
+<li>所有源字符集中的字符，除了双引号、反斜杠、实际的回车</li>
+<li>反斜杠引导的转义字符如 <code>\",\\,\n</code></li>
+</ul>
+<p>编码前缀：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">编码前缀</th>
+<th style="text-align: center;">元素字符对象类型</th>
+<th style="text-align: center;">编码规则</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">u8</td>
+<td style="text-align: center;">char8_t</td>
+<td style="text-align: center;">UTF-8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">u</td>
+<td style="text-align: center;">char16_t</td>
+<td style="text-align: center;">UTF-16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">U</td>
+<td style="text-align: center;">char32_t</td>
+<td style="text-align: center;">UTF-32</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">L</td>
+<td style="text-align: center;">wchar_t</td>
+<td style="text-align: center;">实现定义</td>
+</tr>
+</tbody>
+</table>
+<p>匿名对象，具有静态存储周期</p>
+<p>多个"hello"字符串可能分配一个对象，也可能分配多个对象</p>
+<p>双引号中不显示包含\0字符的String Literal被称为String</p>
+<p>相邻的多个字符串可合并成一个，如 <code>"aa""bb"</code> 等价于
+<code>"aabb"</code></p>
+<h3 id="地址常量">地址常量</h3>
+<p>包括：</p>
+<ol type="1">
+<li><p>空指针</p></li>
+<li><p>指向一个static storage
+duration的对象的指针（编译期间可知）</p></li>
+<li><p>指向Function Designator的指针</p></li>
+</ol>
+<p>获得方法：</p>
+<ol type="1">
+<li>&amp;得到的rvalue</li>
+<li>显示将整数常量强制转换成指针类型获得的rvalue</li>
+<li>隐式使用数组类型表达式获得的rvalue</li>
+<li>隐式使用函数类型表达式获得的rvalue</li>
+</ol>
+<p>不属于常量！</p>
+<h3 id="限定词">限定词</h3>
+<h4 id="volatile">volatile</h4>
+<p><code>int volatile a = 10;</code></p>
+<p>volatile修饰的内存的值可能会以某种未知方式发生变化，如</p>
+<ol type="1">
+<li>MMIO端口，通过内存地址映射IO</li>
+<li>异步中断函数访问的对象</li>
+</ol>
+<p>volatile对象如果要evaluate，必须访问对应的内存，不可通过缓存等其他方式</p>
+<p>如果推断出表达式无效，也可以不evaluate</p>
+<p>赋值表达式的值是表达式执行完成后等号左边对象的值，但不强制要求通过访问对象来获得值</p>
+<h4 id="restrict">restrict</h4>
+<p>使用：<code>T* restrict O;</code></p>
+<p>给定指针表达式E，如果Obj值修改，用于定位一个新的数组（即便这个新的数组对象各元素对象是Obj原始值可以定位的数组各元素对象的拷贝），表达式E的值也会被修改，则E
+<strong>Based on</strong> Obj</p>
+<p>如果有一个左值表达式L，其地址&amp;L是Based
+on一个对象P。该左值表达式L其定位的对象假设为X，如果X对象的值被修改。有另一个左值表达式M能访问X，则M的地址也必须based
+on对象P</p>
+<h3 id="alignof和_alignas">_Alignof和_Alignas</h3>
+<p>_Alignas可用于修改对齐要求，对齐超过fundamental
+slignment时，由编译器决定支不支持</p>
+<p><code>_Alignas(64) int a</code></p>
+<p>结构体类型T，成员对象分别是Ei，则
+<code>_Alignof(T)=max&#123;_Alignof(Ei)&#125;</code></p>
+<p>#pragma
+pack(n)可用于调整结构体对象的对齐，使用后，<code>_Alignof(Ei)=main&#123;_Alignof(Ei),n&#125;</code></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE/" class="category-chain-item">专业课</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>C语言系统编程笔记</div>
+      <div>https://solor-wind.github.io/2025/01/01/C语言系统编程笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/" title="数据库理论笔记">
+                        <span class="hidden-mobile">数据库理论笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

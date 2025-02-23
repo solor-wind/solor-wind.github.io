@@ -1,0 +1,1721 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/solor-wind.jpg">
+  <link rel="icon" href="/img/solor-wind.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#006cbf">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="《数据库系统原理》课程理论笔记，包括数据库概述、关系数据模型、SQL语言等等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库理论笔记">
+<meta property="og:url" content="https://solor-wind.github.io/2025/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="《数据库系统原理》课程理论笔记，包括数据库概述、关系数据模型、SQL语言等等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%95%B0%E6%8D%AE%E5%BA%93\assets\image-20241226201722750.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%95%B0%E6%8D%AE%E5%BA%93\assets\image-20241228201901328.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%95%B0%E6%8D%AE%E5%BA%93\assets\image-20241229145542301.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%95%B0%E6%8D%AE%E5%BA%93\assets\image-20241229152239944.png">
+<meta property="article:published_time" content="2024-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T09:20:21.927Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%95%B0%E6%8D%AE%E5%BA%93\assets\image-20241226201722750.png">
+  
+  
+  
+  <title>数据库理论笔记 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E9%AD%88-%E6%B5%B7%E7%81%AF%E8%8A%82.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="数据库理论笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 00:00" pubdate>
+          2025年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          96 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">数据库理论笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h2 id="数据库概述">数据库概述</h2>
+<p><strong>信息</strong>：现实世界事物的存在方式或运动状态的反映。具体地说，是一种已经被加工为特定形式的数据</p>
+<p><strong>数据</strong>：将现实世界中的各种信息记录下的、可以识别的符号，是信息的载体和具体表现形式</p>
+<ul>
+<li>数据是信息的符号表示、载体</li>
+<li>信息是数据的内涵、语义解释</li>
+<li><strong>数据是符号化的信息，信息是语义化的数据</strong></li>
+</ul>
+<p>数据处理：利用计算机进行数据处理的过程，包括数据的采集、整理、编码、输入。由计算机进行加工、传输、计算、检索、输出等操作。目的是计算、推导出有价值的信息作为行动依据</p>
+<p><strong>数据库</strong>：长期存储在计算机内的、有组织的、可共享的数据集合</p>
+<p><strong>数据库管理系统</strong>：通用的软件系统，由一组计算机程序构成。对数据库进行有效的管理并提供软件环境，方便用户使用数据库中的信息</p>
+<p><strong>数据库系统</strong>：一个计算机存储记录的系统。目标是存储信息并支持用户检索和更新所需要的信息。通常由数据库、硬件、软件、用户组成</p>
+<h3 id="发展历史">发展历史</h3>
+<h4 id="人工管理阶段">人工管理阶段</h4>
+<blockquote>
+<p>50年代中期以前</p>
+</blockquote>
+<ul>
+<li>数据不在计算机上保存</li>
+<li>数据与程序不具有独立性</li>
+<li>基本没有文件概念</li>
+<li>一组数据对应一个程序，程序间不共享数据</li>
+</ul>
+<h4 id="文件系统阶段">文件系统阶段</h4>
+<blockquote>
+<p>50年代后期-60年代中期</p>
+</blockquote>
+<ul>
+<li>数据以文件形式保留在外存上</li>
+<li>文件多样化</li>
+<li>由文件系统管理数据，数据的存取基本上以记录为单位</li>
+<li>程序和数据有一定的独立性，但仍然缺乏独立性</li>
+<li>数据冗余度大</li>
+<li>由一定共享性</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>数据冗余、不一致</li>
+<li>访问困难</li>
+<li>数据孤立</li>
+<li>数据独立性差</li>
+<li>完整性、原子性、并发访问、安全性问题</li>
+</ul>
+<h4 id="数据库系统阶段">数据库系统阶段</h4>
+<blockquote>
+<p>60年代后期</p>
+</blockquote>
+<ul>
+<li>面向全组织的复杂数据结构（<strong>数据结构化</strong>是数据库与文件系统的根本区别）</li>
+<li>数据冗余度小可控，易扩充。集成共享（不再面向应用而是整个系统）</li>
+<li>具有较高的数据和程序的独立性（<strong>物理独立性</strong>：数据的存储结构改变时，其逻辑结构不必改变。通过数据的存储结构互为逻辑结构之间的映像实现。<strong>逻辑独立性</strong>：数据的逻辑结构改变时，应用程序可以不变。通过数据的全局逻辑结构与某类应用所涉及的局部逻辑结构之间的映像实现。）</li>
+<li>统一的数据控制功能
+<ul>
+<li>安全性控制（不合法使用导致泄露、破坏）</li>
+<li>完整性控制（正确性、相容性）</li>
+<li>并发控制</li>
+<li>数据库恢复</li>
+</ul></li>
+<li>数据的最小存取单元是数据项</li>
+</ul>
+<h3 id="数据库系统的组成">数据库系统的组成</h3>
+<p>基本问题：集成数据的表示。核心技术：数据模型</p>
+<p>主要部分：数据库、用户、软件、硬件</p>
+<h4 id="数据库">数据库</h4>
+<p>各种数据。包括目标数据以及描述数据</p>
+<p>数据库中的数据是<strong>集成的</strong>和<strong>共享的</strong>。集成指特定应用环境中各种应用相关的数据以及数据之间的联系全部地、集中地并按一定结构进行存储。共享指数据被多个用户共享</p>
+<h4 id="用户">用户</h4>
+<p>终端用户</p>
+<p>应用程序员：</p>
+<p>数据库管理员</p>
+<p>系统分析员和数据库设计者</p>
+<h4 id="软件">软件</h4>
+<p>负责数据库存取、维护和管理地软件系统。包括</p>
+<ul>
+<li>数据库管理系统DBMS</li>
+<li>支持DBMS运行的操作系统</li>
+<li>数据库接口的高级语言及其编译系统</li>
+<li>应用开发工具</li>
+<li>各种应用系统</li>
+</ul>
+<h4 id="硬件">硬件</h4>
+<p>包括内存、外存</p>
+<h3 id="数据模型">数据模型</h3>
+<p>定义：数据模型用来抽象和表示现实世界中的数据和信息</p>
+<p>要求比较真实的模拟现实世界/容易被人理解/便于在计算机上实现</p>
+<p>组成要素：</p>
+<ul>
+<li>数据结构。包括数据本身和数据之间的联系</li>
+<li>数据操作。是对系统动态特性的描述，包括操作以及操作规则等</li>
+<li>数据约束条件。完整性规则的集合</li>
+</ul>
+<h4 id="概念模型信息模型">概念模型（信息模型）</h4>
+<p>按用户的观点来对数据和信息建模</p>
+<p><strong>实体</strong>：客观存在并且可相互区分的事物</p>
+<p><strong>属性</strong>：实体所具有的某一特性</p>
+<p><strong>域</strong>：属性的取值范围</p>
+<p><strong>实体集</strong>：同型实体的集合</p>
+<p><strong>实体型</strong>：实体名与其属性名集合来刻画同类实体</p>
+<p><strong>码</strong>：能唯一标识实体的属性集</p>
+<p><strong>联系</strong>：</p>
+<p>ER图</p>
+<h4 id="逻辑数据模型">逻辑数据模型</h4>
+<p>从计算机实现的观点来对数据建模</p>
+<p><strong>层次模型</strong>：树结构。节点表示实体型，连线表示两实体型间的一对多联系</p>
+<ul>
+<li>优点：结构简单、易于实现。性能良好。良好的完整性支持</li>
+<li>缺点：难以描述非层次性的联系。存取只能通过双亲结点来进行。层次命令趋向程序化</li>
+</ul>
+<p><strong>网状模型</strong>：有向图</p>
+<ul>
+<li>优点：能更为直接的描述现实世界。性能良好</li>
+<li>缺点：结构复杂。语言复杂。不利于用户掌握</li>
+</ul>
+<p><strong>关系模型</strong>：二维表</p>
+<ul>
+<li>优点：建立在严格的数学概念基础上。简单易理解。概念单一。存取路径透明，独立性和安全性更好。</li>
+<li>缺点：性能往往不如非关系数据库</li>
+</ul>
+<p>要求关系中每个分量是不可分的数据项</p>
+<p>面向对象模型：</p>
+<h3 id="数据库系统结构">数据库系统结构</h3>
+<h4 id="三级模式两级映像">三级模式、两级映像</h4>
+<p><strong>型</strong>是指对某一类数据的结构和属性的说明，<strong>值</strong>是型的一个具体赋值</p>
+<p><strong>模式</strong>：全体数据的逻辑结构和特性的描述，三级模式的核心。不涉及数据物理存储细节，与具体的应用程序与编程语言无关</p>
+<p><strong>外模式</strong>（用户模式）：与某一应用有关的数据的逻辑表示。用户的数据视图</p>
+<p>模式：所有用户的公共数据视图。全体数据的全局逻辑结构和特性的描述</p>
+<p><strong>内模式</strong>（存储模式）：对数据的物理结构和存储方式的描述</p>
+<p>外模式/模式映像：定义某个外模式与模式之间的对应关系，数据的逻辑独立性</p>
+<p>模式/内模式映像：定义数据逻辑结构与存储结构之间的对应关系，数据的物理独立性</p>
+<ul>
+<li>保证了数据的独立性</li>
+<li>简化用户接口</li>
+<li>有利于数据共享</li>
+<li>有利于数据安全保密</li>
+</ul>
+<h4 id="dba">DBA</h4>
+<blockquote>
+<p>数据库管理员</p>
+</blockquote>
+<p>决定数据库中的信息内容和结构</p>
+<p>决定数据库的存储结构和存取策略</p>
+<p>定义数据的安全性要求和完整性约束条件</p>
+<p>监控数据库的使用和运行</p>
+<p>数据库的改进和重组重构</p>
+<h4 id="dbms">DBMS</h4>
+<blockquote>
+<p>数据库管理系统</p>
+</blockquote>
+<p>主要功能：</p>
+<ul>
+<li>数据库定义功能，提供DDL描述三种模式</li>
+<li>数据存取功能，DML</li>
+<li>数据库运行管理</li>
+<li>数据组织、存储和管理</li>
+<li>数据库的建立和维护功能</li>
+</ul>
+<p>组成：</p>
+<ul>
+<li>语言编译处理程序</li>
+<li>系统运行控制程序</li>
+<li>系统建立和维护程序</li>
+<li>数据字典</li>
+</ul>
+<h3 id="数据库技术的发展">数据库技术的发展</h3>
+<h2 id="关系数据模型">关系数据模型</h2>
+<p>组成：</p>
+<ul>
+<li>数据结构：关系，即二维表</li>
+<li>完整性约束：实体完整性约束、参照完整性约束、用户定义完整性约束</li>
+<li>关系操作：包括选择、投影、连接、除、并、交、差，增删改。操作对象及结果都是集合</li>
+<li>关系数据语言：包括关系代数、关系演算、SQL语言</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>面向集合的存取方式</li>
+<li>非过程化</li>
+</ul>
+<h3 id="数据结构">数据结构</h3>
+<p><strong>域</strong>：一组具有相同数据类型的值的集合，如整数、实数</p>
+<p>笛卡尔积：给定一组域 <span
+class="math inline">\(D_1,D_2,...,D_n\)</span> ，其笛卡尔积为 <span
+class="math inline">\(D_1\times D_2\times...\times
+D_n=\{(d_1,d_2,...,d_n)|d_i\in D_i,i=1,2,...,n\}\)</span> 。若 <span
+class="math inline">\(D_i\)</span> 有限，则笛卡尔积的基数为 <span
+class="math inline">\(\prod\limits_{i=1}^nm_i(m_i为D_i的基数)\)</span></p>
+<p>元组与分量：笛卡尔积中的每个元素称为一个n<strong>元组</strong>，元组的每个值叫做<strong>分量</strong></p>
+<p>关系：笛卡尔积的子集叫做在域 <span
+class="math inline">\(D_1,D_2,...,D_n\)</span> 上的关系，用 <span
+class="math inline">\(R(D_1,D_2,...,D_n)\)</span> 表示</p>
+<p>关系模型中要求关系是有限的</p>
+<ul>
+<li>列是同质的（每一列中的分量来自于同一域）</li>
+<li>行、列的顺序无所谓</li>
+<li>任意两个元组不能完全相同</li>
+<li>若每一分量是不可再分的数据，则称此关系是满足第一范式（1NF）的</li>
+</ul>
+<p><strong>关系模式</strong>：关系的描述。形式化表示为 <span
+class="math inline">\(R(U,D,dom,F,I)\)</span>
+，R为关系名，U为属性名集合，D为属性集U来自的域，dom是由属性到域的映像集合，F是属性间的数据依赖关系，I是完整性约束集合。也可简记为
+<span class="math inline">\(R(A_1,A_2,...,A_n)\)</span></p>
+<p>关系数据库：在给定的应用领域中，所有实体以及实体之间联系的关系的集合构成一个关系数据库</p>
+<h3 id="一些描述">一些描述</h3>
+<p><strong>候选码</strong>：关系模式R(U)的属性集合 <span
+class="math inline">\(k\in U\)</span> 是候选码，如果</p>
+<ol type="1">
+<li>R（U）的任何一个关系实例的任意两个元组在属性集合k上的值都不同。即<strong>唯一性</strong>，候选码的属性值必须能够唯一地标识关系中的所有元组。</li>
+<li>k的任何真子集都不满足条件（1）。即<strong>最小性</strong>，候选码不能包含多余属性。</li>
+</ol>
+<p><strong>主码</strong>：多个候选码中，选定的码</p>
+<p><strong>外部码</strong>：关系R的一个或一组属性是另一关系K的主码。R为参照关系，K为被参照关系。注意R和K未必不同，如班长学号参照学号</p>
+<p>候选码中的诸属性称为<strong>主属性</strong>，不包含在任何候选码中的属性称为<strong>非主属性</strong>。</p>
+<p>在最极端的情况下，关系模式的所有属性是这个关系模式的候选码，称为<strong>全码</strong>。</p>
+<p>语义约束：实体完整性、参照完整性、用户定义完整性</p>
+<ul>
+<li>实体完整性：主码不能取空值</li>
+<li>参照完整性：关系R2的外部码Fk与关系R1的主码Pk对应，则Fk要么取R1中某个元组的主码的值，要么为空</li>
+<li>用户定义完整性：用户针对具体应用环境的约束</li>
+</ul>
+<h3 id="关系代数">关系代数</h3>
+<h4 id="传统集合运算">传统集合运算</h4>
+<blockquote>
+<p>就是把关系看成元组集合的运算</p>
+</blockquote>
+<p>并：<span class="math inline">\(R\cup S=\{t|t\in R\lor t\in
+S\}\)</span></p>
+<p>差：<span class="math inline">\(R-S=\{t|t\in R\land t\not\in
+S\}\)</span></p>
+<p>交：<span class="math inline">\(R\cup S=\{t|t\in R\land t\in
+S\}\)</span></p>
+<p>广义笛卡尔积：<span class="math inline">\(R\times
+S=\{t|t=&lt;r,s&gt;\land r\in R\land s\in S\}\)</span>
+，结果的度是R与S的度之和，元组个数是R和S元组个数之积</p>
+<h4 id="专门关系运算">专门关系运算</h4>
+<p>选择：在关系中选择满足给定条件的元组，<span
+class="math inline">\(\sigma_F(R)=\{t|t\in R,F(t)=真\}\)</span></p>
+<p>投影：从关系中选取若干属性列，然后合并重复行，<span
+class="math inline">\(\Pi_A(R)=\{t[A]|t\in R,A\subseteq U\}\)</span></p>
+<p>连接：关系R和S在属性X和Y上的连接，即从两个关系的广义笛卡尔积中选取给定属性X、Y间满足比较条件
+<span class="math inline">\(\theta\)</span> 的元组，<span
+class="math inline">\(\underset{X\theta Y}{R⋈S}=\{t|t=&lt;r,s&gt;\land
+r\in R\land s\in S\land r[X]\theta s[Y]\}\)</span></p>
+<p>自然连接：在相同属性列上做等值连接，并去掉重复的属性列</p>
+<p>复合连接：自然连接去掉相同属性列（都去掉）</p>
+<p>半连接：在R与S的连接运算结果中只保留R的属性列所得到的元组集合</p>
+<p>外连接：自然连接 + 失配的元组（补空行）</p>
+<p>象集：关系R(X , Y), X, Y是属性组，x是X上的取值，定义x在R中的象集为Yx
+= { r[Y] | rR  r[X]= x }
+从R中选出在X上取值为x的元组，去掉X上的分量，只留Y上的分量。</p>
+<p>除运算：给定关系R(X,Y)和S (Y,Z),其中
+X,Y,Z是属性组，R中的Y与S中的Y可以有不同的属性名，但必须出自相同的域集。R与S的除法运算得到一个新的关系P（X），P是R中满足下列条件的元组在X属性列上的投影：元组在X上分量值x的象集Yx包含S在Y上投影的集合。</p>
+<p>实现方法：</p>
+<ol type="1">
+<li>求 <span
+class="math inline">\(Z=\Pi_X(R)\times\Pi_Y(S)\)</span></li>
+<li>求 <span class="math inline">\(P=\Pi_X(Z-R)\)</span>
+。相当于求出了R中不完全包含关系Y的S属性取值范围的元组</li>
+<li><span class="math inline">\(R\div S=\Pi_X(R)-P\)</span></li>
+</ol>
+<blockquote>
+<p>笛卡尔积的逆运算，R/Z相当于给定R,Z，求出最大的能使Z*S（笛卡尔积）包含于R的S</p>
+</blockquote>
+<h3 id="元组关系演算">元组关系演算</h3>
+<p>元组演算表达式：<span class="math inline">\(\{t|\Phi(t)\}\)</span>
+，表示所有使谓词 <span class="math inline">\(\Phi\)</span>
+为真的元组集合</p>
+<p>t为元组变量，<span class="math inline">\(\Phi(t)\)</span>
+是元组关系演算公式，由原子公式和运算符组成，简称公式</p>
+<p>原子公式：</p>
+<ul>
+<li>R(t)，t是关系R中的一个元组</li>
+<li>t[ i ] θ u[ j ]。t[ i ]与u[ j
+]分别为t的第i个分量和u的第j个分量，它们之间满足比较关系θ 。</li>
+<li>t[ i ] θ c或c θ t[ i ] 。分量t[ i ]与常量c之间满足比较关系</li>
+</ul>
+<p>比如查询学生姓名和所在的系：<span
+class="math inline">\(\{t^{(2)}|(\exists u)(STUDENT(u)\land
+t[1]=u[2]\land t[2]=u[5])\}\)</span></p>
+<p>元组关系演算与关系代数的等价性：</p>
+<p><img src="D:\study\大三上\数据库\assets\image-20241226201722750.png" srcset="/img/loading.gif" lazyload alt="image-20241226201722750" style="zoom:67%;" /></p>
+<p>域关系演算的安全性</p>
+<h2 id="sql语言">SQL语言</h2>
+<h3 id="概述">概述</h3>
+<p>特点：</p>
+<ul>
+<li>综合统一</li>
+<li>高度非过程化</li>
+<li>面向集合的操作方式</li>
+<li>以同一种语法结构提供两种使用方式（既是自含式，又是嵌入式）</li>
+<li>语言简洁</li>
+</ul>
+<p>基本表：本身独立存在的表，一个/多个基本表对应一个存储文件</p>
+<p>存储文件：由数据块构成的存储空间，其逻辑结构组成了关系数据库的内模式</p>
+<p>视图：从一个或几个基本表中导出的表，其本身不独立存储于数据库中</p>
+<p>嵌入式SQL：预编译/函数方式实现。</p>
+<p>TODO考吗？</p>
+<h3 id="查询语句">查询语句</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span>[<span class="hljs-keyword">ALL</span><span class="hljs-operator">|</span><span class="hljs-keyword">DISTINCT</span>]<span class="hljs-operator">&lt;</span>目标表达式<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>目标表达式<span class="hljs-operator">&gt;</span>&#125;<br><span class="hljs-keyword">from</span> <span class="hljs-operator">&lt;</span>表名或视图名<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>表名或视图名<span class="hljs-operator">&gt;</span>&#125;<br>[<span class="hljs-keyword">where</span> <span class="hljs-operator">&lt;</span>条件表达式<span class="hljs-operator">&gt;</span>]<br>[<span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> <span class="hljs-operator">&lt;</span>分组列<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>分组列<span class="hljs-operator">&gt;</span>&#125; [<span class="hljs-keyword">having</span> <span class="hljs-operator">&lt;</span>条件表达式<span class="hljs-operator">&gt;</span>]]<br>[<span class="hljs-keyword">order</span> <span class="hljs-keyword">by</span> <span class="hljs-operator">&lt;</span>排序列<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>排序方式<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>排序列<span class="hljs-operator">&gt;</span> <span class="hljs-operator">&lt;</span>排序方式<span class="hljs-operator">&gt;</span>&#125;]<br></code></pre></td></tr></table></figure>
+<p>分类：单表查询、连接查询、嵌套查询、集合查询</p>
+<h4 id="查询条件">查询条件</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">查询条件</th>
+<th style="text-align: center;">谓词</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">比较</td>
+<td
+style="text-align: center;">&gt;,&gt;=,&lt;,&lt;=,=,!=,&lt;&gt;,!&gt;,!&lt;,not</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">确定范围</td>
+<td style="text-align: center;">between and,not between and</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">确定集合</td>
+<td style="text-align: center;">in,not in</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">字符匹配</td>
+<td style="text-align: center;">like,not like</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">空值</td>
+<td style="text-align: center;">is NULL,is not NULL</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">多重条件</td>
+<td style="text-align: center;">and,or</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">升序/降序</td>
+<td style="text-align: center;">asc,desc</td>
+</tr>
+</tbody>
+</table>
+<p>举例：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql">#查询年龄在[<span class="hljs-number">20</span>,<span class="hljs-number">23</span>]的数学系和计算机系的学生的姓名、年龄<br><span class="hljs-keyword">select</span> name,age <span class="hljs-keyword">from</span> Student <span class="hljs-keyword">where</span> age <span class="hljs-keyword">between</span> <span class="hljs-number">20</span> <span class="hljs-keyword">and</span> <span class="hljs-number">23</span> <span class="hljs-keyword">and</span> dept <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;MA&#x27;</span>,<span class="hljs-string">&#x27;CS&#x27;</span>);<br>#查询所有姓刘的学生<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> Student <span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;刘%&#x27;</span>;<br>#查询所有姓刘、名字两个字的学生（名长度是<span class="hljs-number">2</span>，下划线跟<span class="hljs-number">2</span>个）<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> Student <span class="hljs-keyword">where</span> name <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;刘__&#x27;</span>;<br>#查询全体学生的情况，并按所在系的升序和年龄的降序排列<br><span class="hljs-keyword">Select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">From</span> Student <span class="hljs-keyword">Order</span> <span class="hljs-keyword">By</span> Sdept <span class="hljs-keyword">Asc</span>, Sage <span class="hljs-keyword">Desc</span><br></code></pre></td></tr></table></figure>
+<h4 id="聚集函数">聚集函数</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">功能</th>
+<th style="text-align: center;">实现</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">count()</td>
+<td style="text-align: center;">求元组个数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">sum()</td>
+<td style="text-align: center;">对数值列求总和</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">avg()</td>
+<td style="text-align: center;">求数值列的平均值</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">max()</td>
+<td style="text-align: center;">求最大值</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">min()</td>
+<td style="text-align: center;">求最小值</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">group by</td>
+<td style="text-align: center;">按某一或多个属性进行分组</td>
+</tr>
+</tbody>
+</table>
+<p>举例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql">#查询学生总数<br><span class="hljs-keyword">select</span> <span class="hljs-built_in">count</span>(<span class="hljs-operator">*</span>) <span class="hljs-keyword">from</span> Student;<br>#计算一号课程的平均成绩<br><span class="hljs-keyword">select</span> <span class="hljs-built_in">avg</span>(grade) <span class="hljs-keyword">from</span> SC <span class="hljs-keyword">where</span> Cno<span class="hljs-operator">=</span><span class="hljs-string">&#x27;1&#x27;</span>;<br>#查询选课至少为<span class="hljs-number">3</span>门的学生的学号及其选课门数<br><span class="hljs-keyword">select</span> Sno,<span class="hljs-built_in">count</span>(Sno) <span class="hljs-keyword">from</span> SC <span class="hljs-keyword">group</span> <span class="hljs-keyword">by</span> Sno <span class="hljs-keyword">having</span> <span class="hljs-built_in">count</span>(sno)<span class="hljs-operator">&gt;=</span><span class="hljs-number">3</span>;<br></code></pre></td></tr></table></figure>
+<h4 id="连接查询">连接查询</h4>
+<p>举例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">#查询每个学生及其所选课程的情况<br><span class="hljs-keyword">Select</span> Student.<span class="hljs-operator">*</span>, SC.<span class="hljs-operator">*</span> <span class="hljs-keyword">From</span> Student, SC <span class="hljs-keyword">Where</span> Student.Sno <span class="hljs-operator">=</span> SC.Sno;<br></code></pre></td></tr></table></figure>
+<h4 id="嵌套查询">嵌套查询</h4>
+<p>一个select-from-where称为一个<strong>查询块</strong>，将一个查询块嵌套在另一个查询块的where子句或having短语的条件中的查询称为嵌套查询。上层为外层查询/父查询，下层为内层查询、子查询</p>
+<p>子查询的select语句中不能使用order by语句</p>
+<p><strong>相关子查询</strong>：子查询的查询条件引用了外部查询的某个属性值。先从外部查询选取一行记录（候选行），然后子查询利用候选行相关列的数据进行查询，结果返回外部查询，外部查询在进行判断，结果放入结果集合</p>
+<p><strong>不相关子查询</strong>：执行顺序为由内向外求解</p>
+<p>举例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">#查询其他系中比信息系中某一学生年龄小的学生姓名和年龄。<br><span class="hljs-keyword">Select</span> Sname, Sage <span class="hljs-keyword">From</span> Student<br><span class="hljs-keyword">Where</span> Sdept <span class="hljs-operator">&lt;&gt;</span> ‘<span class="hljs-keyword">IS</span>’ <span class="hljs-keyword">And</span> Sage <span class="hljs-operator">&lt;</span> <span class="hljs-keyword">Any</span>(<br>    <span class="hljs-keyword">Select</span> Sage <span class="hljs-keyword">From</span> Student <span class="hljs-keyword">Where</span> Sdept <span class="hljs-operator">=</span> ‘<span class="hljs-keyword">IS</span>’);<br>#查询选修了全部课程的学生姓名<br><span class="hljs-keyword">Select</span> Sname <span class="hljs-keyword">From</span> Student <br>	<span class="hljs-keyword">Where</span> <span class="hljs-keyword">Not</span> <span class="hljs-keyword">Exists</span> <br>		(<span class="hljs-keyword">Select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> Course <br>         	<span class="hljs-keyword">Where</span> <span class="hljs-keyword">Not</span> <span class="hljs-keyword">Exists</span><br>         		(<span class="hljs-keyword">Select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> SC <br>                 	<span class="hljs-keyword">Where</span> Sno<span class="hljs-operator">=</span>Student.Sno<br>                 		<span class="hljs-keyword">And</span> Cno<span class="hljs-operator">=</span>Course.Cno));<br></code></pre></td></tr></table></figure>
+<h4 id="集合查询">集合查询</h4>
+<p>举例</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">#查询选修了<span class="hljs-number">1</span>号课程和选修了<span class="hljs-number">2</span>号课程的学生的并集<br><span class="hljs-keyword">select</span> sno <span class="hljs-keyword">from</span> SC <span class="hljs-keyword">where</span> cno<span class="hljs-operator">=</span><span class="hljs-string">&#x27;1&#x27;</span> <span class="hljs-keyword">union</span> <span class="hljs-keyword">select</span> sno <span class="hljs-keyword">from</span> SC <span class="hljs-keyword">where</span> cno<span class="hljs-operator">=</span><span class="hljs-string">&#x27;2&#x27;</span><br></code></pre></td></tr></table></figure>
+<h3 id="更新语句">更新语句</h3>
+<p>包括insert、update、delete语句</p>
+<h4 id="insert">insert</h4>
+<p>插入一条或多条记录，没填的列是空或null</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span>[(<span class="hljs-operator">&lt;</span>属性列<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>属性列<span class="hljs-operator">&gt;</span>&#125;)] <span class="hljs-keyword">values</span>(<span class="hljs-operator">&lt;</span>值<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>值<span class="hljs-operator">&gt;</span>&#125;)	#插入数据<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span>[(<span class="hljs-operator">&lt;</span>属性列<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>属性列<span class="hljs-operator">&gt;</span>&#125;)] <span class="hljs-operator">&lt;</span>子查询<span class="hljs-operator">&gt;</span>		#插入子查询结果<br><br>#举例<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> student <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;114514&#x27;</span>,<span class="hljs-string">&#x27;我超，盒！&#x27;</span>,<span class="hljs-string">&#x27;IS&#x27;</span>,<span class="hljs-number">18</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC(sno,cno) <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;114514&#x27;</span>,<span class="hljs-string">&#x27;1919180&#x27;</span>);<br><span class="hljs-keyword">Insert</span> <span class="hljs-keyword">Into</span> Dept_Age (Sdept, Avgage)<span class="hljs-keyword">Select</span> Sdept, <span class="hljs-built_in">AVG</span>(Sage) <span class="hljs-keyword">From</span> Student <span class="hljs-keyword">Group</span> <span class="hljs-keyword">By</span> Sdept;<br></code></pre></td></tr></table></figure>
+<h4 id="update">update</h4>
+<p>更新某一列的值，根据where确定是哪几行的值</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">update</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">set</span> <span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;=</span><span class="hljs-operator">&lt;</span>表达式<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;=</span><span class="hljs-operator">&lt;</span>表达式<span class="hljs-operator">&gt;</span>&#125; [<span class="hljs-keyword">where</span> <span class="hljs-operator">&lt;</span>条件<span class="hljs-operator">&gt;</span>]<br><br>#举例<br><span class="hljs-keyword">update</span> Student <span class="hljs-keyword">set</span> age<span class="hljs-operator">=</span><span class="hljs-number">22</span> <span class="hljs-keyword">where</span> sno<span class="hljs-operator">=</span><span class="hljs-string">&#x27;114514&#x27;</span>;	#去掉<span class="hljs-keyword">where</span>就是修改全体学生的年龄<br></code></pre></td></tr></table></figure>
+<h4 id="delete">delete</h4>
+<p>删除一行或多行记录（元组）</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> [<span class="hljs-keyword">where</span><span class="hljs-operator">&lt;</span>条件<span class="hljs-operator">&gt;</span>]<br><br>#举例<br><span class="hljs-keyword">delete</span> <span class="hljs-keyword">from</span> student <span class="hljs-keyword">where</span> sno<span class="hljs-operator">=</span><span class="hljs-string">&#x27;114514&#x27;</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="定义语句">定义语句</h3>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">对象</th>
+<th style="text-align: center;">创建</th>
+<th style="text-align: center;">删除</th>
+<th style="text-align: center;">修改</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">表</td>
+<td style="text-align: center;">create table</td>
+<td style="text-align: center;">drop table</td>
+<td style="text-align: center;">alert table</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">视图</td>
+<td style="text-align: center;">create view</td>
+<td style="text-align: center;">drop view</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">索引</td>
+<td style="text-align: center;">create index</td>
+<td style="text-align: center;">drop index</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="表">表</h4>
+<p>数据类型有：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">数据类型</th>
+<th style="text-align: center;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">char(n)</td>
+<td style="text-align: center;">固定长度字符串</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">varchar(n)</td>
+<td style="text-align: center;">可变长字符串</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">smallint</td>
+<td style="text-align: center;">小整数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">int</td>
+<td style="text-align: center;">整数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">numeric(p,d)</td>
+<td style="text-align: center;">定点数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">real,double precision</td>
+<td style="text-align: center;">浮点数，双精度浮点数</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">float(n)</td>
+<td style="text-align: center;">n位浮点数</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">date</td>
+<td style="text-align: center;">日期（年月日）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">time</td>
+<td style="text-align: center;">时间（时分秒）</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">interval</td>
+<td style="text-align: center;">两个date或time之间的差</td>
+</tr>
+</tbody>
+</table>
+<p>完整性约束</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">完整性约束</th>
+<th style="text-align: center;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">NULL/not NULL</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">UNIQUE</td>
+<td style="text-align: center;">候选码，可以为空</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">PRIMARY KEY</td>
+<td
+style="text-align: center;">主码，不为空，只能设定一个或一组属性</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">FOREIGN KEY</td>
+<td style="text-align: center;">外码</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">CHECK</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> (<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span><span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span>[<span class="hljs-operator">&lt;</span>列级完整性约束<span class="hljs-operator">&gt;</span>]&#123;,<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span><span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span>[<span class="hljs-operator">&lt;</span>列级完整性约束<span class="hljs-operator">&gt;</span>]&#125;	&#123;,<span class="hljs-operator">&lt;</span>表级完整性约束<span class="hljs-operator">&gt;</span>&#125;)<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">add</span>(<span class="hljs-operator">&lt;</span>新列名<span class="hljs-operator">&gt;</span><span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span>[<span class="hljs-operator">&lt;</span>完整性约束<span class="hljs-operator">&gt;</span>]) <span class="hljs-keyword">drop</span> <span class="hljs-operator">&lt;</span>完整性约束名<span class="hljs-operator">&gt;</span> modify(<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span><span class="hljs-operator">&lt;</span>数据类型<span class="hljs-operator">&gt;</span>)<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> student;<br><br>#举例<br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> student(<br>	sno <span class="hljs-type">char</span>(<span class="hljs-number">12</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span>,<br>    sname <span class="hljs-type">char</span>(<span class="hljs-number">20</span>) <span class="hljs-keyword">not</span> <span class="hljs-keyword">null</span> <span class="hljs-keyword">unique</span>,<br>    ssex <span class="hljs-type">char</span>(<span class="hljs-number">2</span>),<br>    sage <span class="hljs-type">int</span>,<br>    sdept <span class="hljs-type">char</span>(<span class="hljs-number">15</span>),<br>    <br>    <span class="hljs-keyword">primary</span> key(sno),<br>    <span class="hljs-keyword">foreign</span> key(sdept) <span class="hljs-keyword">references</span> CDEPT(cdept),<br>    <span class="hljs-keyword">check</span>(sage<span class="hljs-operator">&gt;=</span><span class="hljs-number">18</span> <span class="hljs-keyword">and</span> sage <span class="hljs-operator">&lt;=</span><span class="hljs-number">45</span>)<br>);<br><span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> student <span class="hljs-keyword">add</span>(comedate <span class="hljs-type">Date</span>) <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">table</span> student;<br></code></pre></td></tr></table></figure>
+<p>13</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> S(<br>	S <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    SN <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    SA <span class="hljs-type">int</span>,<br>    SD <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    <span class="hljs-keyword">primary</span> key(S)<br>);<br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> C(<br>	C <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    CN <span class="hljs-type">char</span>(<span class="hljs-number">128</span>),<br>    PC <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    <span class="hljs-keyword">primary</span> key(C),<br>    <span class="hljs-keyword">foreign</span> key(PC) <span class="hljs-keyword">references</span> C(C)<br>);<br><br><span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> SC(<br>	S <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    C <span class="hljs-type">char</span>(<span class="hljs-number">20</span>),<br>    G <span class="hljs-type">int</span>,<br>    <span class="hljs-keyword">primary</span> key(S,C),<br>    <span class="hljs-keyword">foreign</span> key(S) <span class="hljs-keyword">references</span> S(S),<br>    <span class="hljs-keyword">foreign</span> key(C) <span class="hljs-keyword">references</span> C(C),<br>    <span class="hljs-keyword">check</span>(G<span class="hljs-operator">&lt;</span><span class="hljs-number">100</span>)<br>);<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> S <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s1&#x27;</span>,<span class="hljs-string">&#x27;李勇&#x27;</span>,<span class="hljs-number">20</span>,<span class="hljs-string">&#x27;CS&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> S <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s2&#x27;</span>,<span class="hljs-string">&#x27;刘晨&#x27;</span>,<span class="hljs-number">19</span>,<span class="hljs-string">&#x27;IS&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> S <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s3&#x27;</span>,<span class="hljs-string">&#x27;王敏&#x27;</span>,<span class="hljs-number">18</span>,<span class="hljs-string">&#x27;MA&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> S <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s4&#x27;</span>,<span class="hljs-string">&#x27;张立&#x27;</span>,<span class="hljs-number">19</span>,<span class="hljs-string">&#x27;IS&#x27;</span>);<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C(C,CN) <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C2&#x27;</span>,<span class="hljs-string">&#x27;数学&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C(C,CN) <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C6&#x27;</span>,<span class="hljs-string">&#x27;数据处理&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C7&#x27;</span>,<span class="hljs-string">&#x27;Pascal语言&#x27;</span>,<span class="hljs-string">&#x27;C6&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C4&#x27;</span>,<span class="hljs-string">&#x27;操作系统&#x27;</span>,<span class="hljs-string">&#x27;C6&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C5&#x27;</span>,<span class="hljs-string">&#x27;数据结构&#x27;</span>,<span class="hljs-string">&#x27;C7&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C1&#x27;</span>,<span class="hljs-string">&#x27;数据库&#x27;</span>,<span class="hljs-string">&#x27;C5&#x27;</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> C <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;C3&#x27;</span>,<span class="hljs-string">&#x27;信息系统&#x27;</span>,<span class="hljs-string">&#x27;C1&#x27;</span>);<br><br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s1&#x27;</span>,<span class="hljs-string">&#x27;C1&#x27;</span>,<span class="hljs-number">92</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s1&#x27;</span>,<span class="hljs-string">&#x27;C2&#x27;</span>,<span class="hljs-number">85</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s1&#x27;</span>,<span class="hljs-string">&#x27;C3&#x27;</span>,<span class="hljs-number">88</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s2&#x27;</span>,<span class="hljs-string">&#x27;C2&#x27;</span>,<span class="hljs-number">90</span>);<br><span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> SC <span class="hljs-keyword">values</span>(<span class="hljs-string">&#x27;s2&#x27;</span>,<span class="hljs-string">&#x27;C3&#x27;</span>,<span class="hljs-number">80</span>);<br><br><span class="hljs-keyword">SELECT</span> S <span class="hljs-keyword">FROM</span> S <span class="hljs-keyword">WHERE</span> <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">EXISTS</span>(<br>    <span class="hljs-keyword">SELECT</span> C <span class="hljs-keyword">FROM</span> C <span class="hljs-keyword">WHERE</span> <br>    C <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> C <span class="hljs-keyword">FROM</span> SC <span class="hljs-keyword">WHERE</span> SC.S<span class="hljs-operator">=</span><span class="hljs-string">&#x27;s2&#x27;</span>) <br>    <span class="hljs-keyword">AND</span> C <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">IN</span> (<span class="hljs-keyword">SELECT</span> C <span class="hljs-keyword">FROM</span> SC <span class="hljs-keyword">WHERE</span> SC.S<span class="hljs-operator">=</span>S.S));<br><br><span class="hljs-keyword">create</span> ASSERTION AAA <span class="hljs-keyword">check</span>(<span class="hljs-number">100</span><span class="hljs-operator">&gt;=</span><span class="hljs-keyword">all</span>(<span class="hljs-keyword">select</span> G <span class="hljs-keyword">from</span> S));<br></code></pre></td></tr></table></figure>
+<h4 id="索引">索引</h4>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> [<span class="hljs-keyword">unique</span>][cluster] index <span class="hljs-operator">&lt;</span>索引名<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">on</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span> (<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span>[次序]&#123;,<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span>[次序]&#125;);<br><span class="hljs-keyword">drop</span> index <span class="hljs-operator">&lt;</span>索引名<span class="hljs-operator">&gt;</span><br><br>#举例<br><span class="hljs-keyword">Create</span> <span class="hljs-keyword">Unique</span> Index Scno <span class="hljs-keyword">On</span> Sc (Sno <span class="hljs-keyword">ASC</span>, Cno <span class="hljs-keyword">DESC</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="视图">视图</h4>
+<p>视图：由一个或几个基本表/视图导出的表，数据库不存储视图的数据而存储其定义，因此也称虚表</p>
+<ul>
+<li>简化用户操作</li>
+<li>使用户能以多种角度看待同一数据</li>
+<li>对重构数据提供了一定程度的逻辑独立性</li>
+<li>对机密数据提供安全保护</li>
+</ul>
+<p>视图消解：执行对视图的查询时，取出对视图的定义，把定义中的子查询和用户的查询结合起来，转换成等价的对基本表的查询</p>
+<p>视图更新约束：</p>
+<ul>
+<li>select子句的目标列不能包含聚集函数</li>
+<li>select子句中不能使用distinct关键字</li>
+<li>不能包括group by语句</li>
+<li>不能包括经算术表达式计算出来的列</li>
+<li>对于行列子集视图可以更新（视图是从单个基本表使用选择、投影操作导出的，并且包含了基本表的主码）</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span> <span class="hljs-keyword">view</span> <span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span> [(<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>列名<span class="hljs-operator">&gt;</span>&#125;)] <span class="hljs-keyword">as</span> <span class="hljs-operator">&lt;</span>子查询<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">check</span> option;<br><span class="hljs-keyword">drop</span> <span class="hljs-keyword">view</span> <span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span><br><br><span class="hljs-keyword">Create</span> <span class="hljs-keyword">View</span> IS_Student<br>  <span class="hljs-keyword">As</span><br>  <span class="hljs-keyword">Select</span> Sno, Sname, Sage, Sdept <span class="hljs-keyword">From</span> Student<br>  <span class="hljs-keyword">Where</span> Sdept <span class="hljs-operator">=</span> ‘<span class="hljs-keyword">IS</span>’<br>  <span class="hljs-keyword">With</span> <span class="hljs-keyword">Check</span> Option;<br></code></pre></td></tr></table></figure>
+<h2 id="数据库的安全性与完整性">数据库的安全性与完整性</h2>
+<h3 id="数据库安全性">数据库安全性</h3>
+<p>含义：保护数据库以防止不合法的使用所造成的数据泄漏、更改和破坏</p>
+<ul>
+<li>向授权用户提供可靠的信息服务</li>
+<li>拒绝非授权的对数据的存取访问请求</li>
+</ul>
+<p>数据库的安全性控制：内部安全控制（由计算机系统的软硬件实现）、外部安全控制</p>
+<p>外部安全控制包括实体安全控制、人员组织安全控制、过程安全控制</p>
+<h4 id="用户标识与鉴别">用户标识与鉴别</h4>
+<p>系统提供的<strong>最外层</strong>的保护</p>
+<p>通常做法位用户名+口令</p>
+<p>标识：采用一定的方式标识用户或引用程序的名字或身份</p>
+<p>鉴别：用户或程序登录时判断是否位合法的授权用户</p>
+<h4 id="存取控制">存取控制</h4>
+<p>确保合法用户按指定权限使用DBMS和访问数据，非法用户或不具有相关权限的用户则不能</p>
+<p>存取控制机制的两部分：定义用户权限、合法的权限检查</p>
+<h5 id="自主存取控制dac">自主存取控制（DAC）</h5>
+<p>不同用户对不同数据对象有不同权限，用户可将其拥有的权限转授给其他用户</p>
+<blockquote>
+<p>只有用户有权限，并且用户可以转授权限</p>
+</blockquote>
+<p>用户权限的<strong>组成要素</strong>：数据对象+操作类型。数据对象如模式、基本表、视图、索引，操作类型如建立、修改、检索、插入、删除等</p>
+<p><strong>角色</strong>：一组权限的集合，可授予用户或其他角色</p>
+<p><strong>用户组</strong>：一组具有相同特性用户的集合</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">grant</span> <span class="hljs-operator">&lt;</span>用户级权限<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span> &#123;,<span class="hljs-operator">&lt;</span>用户级权限<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span>&#125; <br><span class="hljs-keyword">to</span> <span class="hljs-operator">&lt;</span>用户名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>public<span class="hljs-operator">&gt;</span> &#123;,<span class="hljs-operator">&lt;</span>用户名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span>&#125;	#public表示全体用户<br>[<span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> option];	#表示可以转授给其他人<br><br><span class="hljs-keyword">revoke</span> <span class="hljs-operator">&lt;</span>用户级权限<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span> &#123;,<span class="hljs-operator">&lt;</span>用户级权限<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span>&#125; <br><span class="hljs-keyword">from</span> <span class="hljs-operator">&lt;</span>用户名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>public<span class="hljs-operator">&gt;</span> &#123;,<span class="hljs-operator">&lt;</span>用户名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>角色<span class="hljs-operator">&gt;</span>&#125;	#public表示全体用户<br><br>#关系级权限<br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>权限<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>权限<span class="hljs-operator">&gt;</span>&#125;<br><span class="hljs-keyword">on</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span>&#125;<br><span class="hljs-keyword">to</span> &#123;<span class="hljs-operator">&lt;</span>用户<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>用户<span class="hljs-operator">&gt;</span>&#125;<span class="hljs-operator">|</span>public&#125;<br>[<span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> option]<br><br><span class="hljs-keyword">revoke</span> <span class="hljs-keyword">all</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>权限<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>权限<span class="hljs-operator">&gt;</span>&#125;	#若该用户已经将权限授予其他用户，则将一并收回<br><span class="hljs-keyword">on</span> <span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>表名<span class="hljs-operator">&gt;</span><span class="hljs-operator">|</span><span class="hljs-operator">&lt;</span>视图名<span class="hljs-operator">&gt;</span>&#125;<br><span class="hljs-keyword">from</span> &#123;<span class="hljs-operator">&lt;</span>用户<span class="hljs-operator">&gt;</span>&#123;,<span class="hljs-operator">&lt;</span>用户<span class="hljs-operator">&gt;</span>&#125;<span class="hljs-operator">|</span>public&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="强制存取控制mac">强制存取控制（MAC）</h5>
+<p>每个数据对象有一定密级，用户被授予某一级别的许可。合法许可才能访问</p>
+<blockquote>
+<p>数据和用户都有标签</p>
+</blockquote>
+<p><strong>主体</strong>：系统中的活动实体，包括管理的实际用户、用户的进程。敏感度标记成为许可证级别</p>
+<p><strong>客体</strong>：系统中的被动实体，受主体操纵，包括文件、基本表、索引、视图等等。敏感度标记称为密级</p>
+<p>主体许可证级别大于等于客体密级才能读，等于才能写？</p>
+<h4 id="审计和数据加密">审计和数据加密</h4>
+<p>审计功能：把用户对数据库的所有操作都自动记录下来放入审计日志中</p>
+<p>数据加密：是防止数据库中数据在存储和传输中失密的有效手段</p>
+<h4 id="统计数据库安全性">统计数据库安全性</h4>
+<p>含义：统计数据库只为用户提供统计数据，不允许用户访问微数据（个例）</p>
+<p>对统计结果的大小加以控制</p>
+<p>禁止在相同元组集合上重复执行一系列统计查询</p>
+<p>在统计查询结果中加入噪声，为推导微数据制造困难</p>
+<h3 id="数据库完整性">数据库完整性</h3>
+<p>数据库的完整性是指数据的正确性（合法的类型、取值范围）和相容性（同一事实的两个数据应该相同）。</p>
+<h4 id="完整性约束条件">完整性约束条件</h4>
+<p>施加在数据库数据之上的语义约束条件称为数据库完整性约束条件</p>
+<p>约束对象：关系、元组、关系</p>
+<h4 id="静态约束">静态约束</h4>
+<p>静态约束：数据库每一确定状态时，数据对象所应满足的约束</p>
+<ul>
+<li>固有约束：指数据模型固有的约束，如关系的属性应当是原子的</li>
+<li>隐含约束：指隐含于数据模式的约束，一般用DDL语句说明，并存于数据字典中。如实体完整性约束。</li>
+<li>显式约束：指固有约束，隐含约束之外，依赖于数据的语义和应用，需要显式定义的完整性约束。</li>
+</ul>
+<p>按对象划分：</p>
+<ul>
+<li><p>静态列级约束：数据类型、格式、取值范围等</p></li>
+<li><p>静态元组约束：元组中各列之间的关系</p></li>
+<li><p>静态关系约束：实体完整性约束、参照完整性约束、函数依赖、统计约束</p></li>
+</ul>
+<h4 id="动态约束">动态约束</h4>
+<p>动态约束：数据库从一种状态转变为另一种状态时，新、旧值之间所应满足的约束条件</p>
+<ul>
+<li><p>动态列级约束：修改列定义或列值时应满足的约束条件</p></li>
+<li><p>动态元组约束：修改元组值时元组中各个字段间需要满足的约束</p></li>
+<li><p>动态关系约束：加在关系变化前后状态上的限制条件</p></li>
+</ul>
+<h4 id="数据库的完整性控制机制">数据库的完整性控制机制</h4>
+<p>三个功能：定义、检查、违约响应</p>
+<p>立即执行约束：每条执行完后立即检查，若违背则拒绝操作</p>
+<p>延迟执行约束：整个用户事务执行完毕后再检查，正确方允许提交</p>
+<p>一条完整性规则可用一个五元组DOACP来描述</p>
+<ul>
+<li><p>D（data）：约束所作用的数据对象（如工资表的sal属性）</p></li>
+<li><p>O（Operation）：触发完整性检查的数据库操作（插入或修改职工元组时）</p></li>
+<li><p>A（Assertion）：数据对象必须满足的断言或语义约束（sal&gt;10000）</p></li>
+<li><p>C（Condition）选择A作用的数据对象值的谓词。（职称='教授'）</p></li>
+<li><p>P（procedure）：违反完整性规则时触发的过程（拒绝执行该操作）</p></li>
+</ul>
+<p>实现显式完整性约束：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">#断言<br>assert 余额约束 <span class="hljs-keyword">on</span> 储蓄表: 余额<span class="hljs-operator">&gt;=</span><span class="hljs-number">0</span>;<br>#触发器<br><span class="hljs-keyword">Create</span> <span class="hljs-keyword">Trigger</span> Update_Sal<br>        Before <span class="hljs-keyword">Insert</span> <span class="hljs-keyword">Or</span> <span class="hljs-keyword">Update</span> <span class="hljs-keyword">Of</span> Sal, Pos <span class="hljs-keyword">On</span> Teacher<br>        <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> <span class="hljs-type">Row</span><br>        <span class="hljs-keyword">When</span> (:new.pos <span class="hljs-operator">=</span> ‘Professor’)<br>        <span class="hljs-keyword">Begin</span><br>               If :new.sal <span class="hljs-operator">&lt;</span><span class="hljs-number">1000</span> <span class="hljs-keyword">Then</span><br>                   :new.sal <span class="hljs-operator">=</span> <span class="hljs-number">1000</span>;<br>               <span class="hljs-keyword">End</span> If<br>        <span class="hljs-keyword">End</span>;<br></code></pre></td></tr></table></figure>
+<h2 id="关系数据理论">关系数据理论</h2>
+<p>数据依赖：通过关系中属性间值的相等与否体现出来的数据间的相互关系</p>
+<p>函数依赖：数据依赖的一种，当x确定后，y也唯一确定，则称x函数决定(y)，(y)函数依赖于x</p>
+<h3 id="函数依赖">函数依赖</h3>
+<p>设R(U)是属性集U上的关系模式，X , Y
+是U的子集。若对于R(U)的任意一个可能的关系r，r中不可能存在两个元组在X上的属性值相等，而在Y上的属性值不等，则称X函数决定Y，或Y函数依赖于X，记作
+<span class="math inline">\(X\rightarrow Y\)</span>。</p>
+<p><strong>平凡函数依赖</strong>：<span
+class="math inline">\(X\rightarrow Y\)</span> ，但 <span
+class="math inline">\(Y\subseteq X\)</span>
+，则称为平凡函数依赖，否则非平凡</p>
+<p><strong>完全函数依赖</strong>：若 <span
+class="math inline">\(X\rightarrow Y\)</span> ，且对于任意 <span
+class="math inline">\(X\subset X&#39;\)</span> ，<span
+class="math inline">\(X&#39;\not\rightarrow Y\)</span>
+，则称Y对X完全函数依赖，记作 <span
+class="math inline">\(X\overset{f}\rightarrow Y\)</span>
+，否则为为不完全函数依赖 <span
+class="math inline">\(X\overset{p}\rightarrow Y\)</span></p>
+<blockquote>
+<p>完全函数依赖类似于候选码</p>
+</blockquote>
+<p><strong>传递函数依赖</strong>：<span
+class="math inline">\(X\rightarrow Y,Y\rightarrow Z,Y\not\subseteq
+X,Z\not\subseteq Y,Y\not\rightarrow X\)</span> ，称Z对X传递函数依赖</p>
+<p><strong>多值依赖</strong>：<span
+class="math inline">\(Z=U-X-Y\)</span>
+，任意一个关系r，(x,z)都能决定y，但仅决定于x，则多值依赖 <span
+class="math inline">\(X\rightarrow\rightarrow Y\)</span> 成立</p>
+<p>TODO：不懂</p>
+<blockquote>
+<p>函数依赖是多值依赖的特例</p>
+</blockquote>
+<p><strong>超码</strong>：设K为R&lt;U,F&gt;的属性或属性组，<span
+class="math inline">\(K\rightarrow U\)</span> ，则称K为R的超码</p>
+<blockquote>
+<p>码属于超码</p>
+</blockquote>
+<p>主属性：包含在任何一个候选码中的属性</p>
+<p>非主属性：不包含在任何一个候选码中的属性</p>
+<p>全码：关系模式的码由整个属性组构成</p>
+<h3 id="范式">范式</h3>
+<p>范式定义：对关系的不同数据依赖程度的要求</p>
+<p>规范化：一个低级范式的关系模式，通过模式分解可以转换为若干个高级范式的关系模式的集合</p>
+<h4 id="nf">1NF</h4>
+<p>关系中每一分量必须是原子的，不可再分（不能用序列、集合作为属性值）</p>
+<h4 id="nf-1">2NF</h4>
+<p><span class="math inline">\(R\in1NF\)</span>
+，且每个非主属性完全依赖于码，则称 <span
+class="math inline">\(R\in2NF\)</span></p>
+<blockquote>
+<p>要求没有部分函数依赖。没有非主属性也是2NF</p>
+</blockquote>
+<h4 id="nf-2">3NF</h4>
+<p>关系模式R&lt;U,F&gt;中，若不存在这样的码X，属性组Y，以及非主属性Z（<span
+class="math inline">\(Z\not\subseteq Y\)</span>），使得下式成立 <span
+class="math inline">\(X\rightarrow Y,Y\rightarrow Z,Y\not\rightarrow
+X\)</span> ，则称 <span class="math inline">\(R\in3NF\)</span></p>
+<blockquote>
+<p>要求没有传递函数依赖</p>
+<p>不规定 <span class="math inline">\(Y\not\subseteq X\)</span>
+是为了同样去除部分函数依赖</p>
+</blockquote>
+<h4 id="bcnf">BCNF</h4>
+<p>若关系模式<span class="math inline">\(R&lt;U,F&gt;\in1NF\)</span>
+，若 <span class="math inline">\(X\rightarrow Y,Y\not\subseteq
+X\)</span> 时，X必含有码，则 <span class="math inline">\(R&lt;U,F&gt;\in
+BCNF\)</span></p>
+<ul>
+<li>所有非主属性都完全函数依赖于每个候选码</li>
+<li>所有主属性都完全函数依赖于每个不包含它的候选码</li>
+<li>没有任何属性完全函数依赖于非码的任何一组属性</li>
+</ul>
+<h3 id="数据依赖的公理系统">数据依赖的公理系统</h3>
+<p>对于满足一组函数依赖F的关系模式R&lt;U,F&gt;，其任何一个关系r，若函数依赖
+<span class="math inline">\(X\rightarrow Y\)</span>
+都成立，则F逻辑蕴含<span class="math inline">\(X\rightarrow
+Y\)</span></p>
+<p>Armstrong公理：</p>
+<ul>
+<li>自反：<span class="math inline">\(Y\subseteq X\subseteq
+U\)</span>，则 <span class="math inline">\(X\rightarrow Y\)</span>
+为F所蕴含</li>
+<li>增广律：<span class="math inline">\(X\rightarrow Y,Z\subseteq
+U\)</span>，则 <span class="math inline">\(XZ\rightarrow YZ\)</span>
+（指并集）</li>
+<li>传递律：<span class="math inline">\(X\rightarrow Y,Y\rightarrow
+Z\)</span>，则 <span class="math inline">\(X\rightarrow Y\)</span></li>
+</ul>
+<p><strong>闭包</strong>：<span
+class="math inline">\(X_F^+=\{A|X\rightarrow
+A能由F根据Armstrong公理导出\}\)</span></p>
+<p>数据依赖集的<strong>等价</strong>：F于G等价，当且仅当 <span
+class="math inline">\(F^+=G^+\)</span></p>
+<p><strong>最小依赖集</strong>F：</p>
+<ul>
+<li>F中任一函数依赖右端仅含一个属性</li>
+<li>F中不存在这样的函数依赖 <span class="math inline">\(X\rightarrow
+A\)</span> ，使得F与 <span class="math inline">\(F-\{X\rightarrow
+A\}\)</span> 等价</li>
+<li>F中不存在这样的函数依赖 <span class="math inline">\(X\rightarrow
+A\)</span> ，在X中有真子集Z，使得F与 <span
+class="math inline">\(F-\{X\rightarrow A\}\cup\{Z\rightarrow
+A\}\)</span> 等价（不存在部分函数依赖）</li>
+</ul>
+<p><strong>模式分解</strong>：</p>
+<p>函数依赖集合 <span class="math inline">\(F_i=\{X\rightarrow
+Y|X\rightarrow Y\in F^+\land XY\subseteq U_i\}\)</span> 称为F在 <span
+class="math inline">\(U_i\)</span> 上的投影</p>
+<blockquote>
+<p>就是把F中不在U上的函数依赖关系去掉了</p>
+</blockquote>
+<p>关系模式R&lt;U,F&gt;的一个<strong>分解</strong>是指 <span
+class="math inline">\(\rho=\{R_1&lt;U_1,F_1&gt;,R_2&lt;U_2,F_2&gt;,...,R_n&lt;U_n,F_n&gt;\}\)</span>
+，其中 <span class="math inline">\(U=\cup_{i=1}^nU_i\)</span> ，且没有
+<span class="math inline">\(U_i\subseteq U_j,1\leq i,j\leq n\)</span>
+，<span class="math inline">\(F_i\)</span> 是F在 <span
+class="math inline">\(U_i\)</span> 上的投影</p>
+<p>无损连接、3NF、函数依赖不变</p>
+<p>设 <span class="math inline">\(\rho\)</span> 是 <span
+class="math inline">\(R(U,F)\)</span> 的一个分解，r是R的一个关系，定义
+<span
+class="math inline">\(m_\rho(r)=\overset{k}{\underset{i=1}{R⋈S}}\prod_{R_i}(r)\)</span>
+，即r在 <span class="math inline">\(\rho\)</span>
+中各关系模式投影上的连接。若任意一个r，都有 <span
+class="math inline">\(r=m_\rho(r)\)</span> ，则称无损连接分解</p>
+<p>担任连接的字段为候选码，则为无损连接</p>
+<p>判断是否为无损分解：</p>
+<ol type="1">
+<li>建表，表头的一行为各个属性，左边一列是分解后的属性组，(i,j)若属性j在属性组i里填aj，否则填bij。</li>
+<li>遍历每个依赖X-&gt;Y，查看X和Y列，对于X列取值相同的那些行，若对应的Y列有a，则都改成a，否则改成最小的bij</li>
+<li>若有一行都是a，则是无损分解</li>
+</ol>
+<p><img src="D:\study\大三上\数据库\assets\image-20241228201901328.png" srcset="/img/loading.gif" lazyload alt="image-20241228201901328" style="zoom:67%;" /></p>
+<p>TODO：3NF、BCNF、无损连接、函数依赖的分解</p>
+<p>例：</p>
+<p>设有关系R（U, F）U={A, B, C, D, E, F, G}F={E→D, C→B, CE→AF, B→A,
+C→AB}</p>
+<p>求：R的候选码判断R所属的范式如果R不属于第三范式，将R规范化到第三范式，并保持函数依赖和无损连接的分解</p>
+<ol type="1">
+<li>将属性按L（只出现在函数依赖的左边）R LR
+N（都不出现）分类，求出可能的候选码，然后求最小依赖集。结果为CEG<br />
+</li>
+<li>最小依赖集：1将函数依赖的右部分解为单属性2去掉多余的函数依赖3检查是否存在部分函数依赖</li>
+<li>按相同左部分组。若无候选码则再加入包含候选码的一个分解</li>
+</ol>
+<h2 id="数据库设计">数据库设计</h2>
+<p>设计方法：手工试凑、规范化设计、自动数据库设计工具</p>
+<p>手工试凑缺点：</p>
+<ul>
+<li>数据间关系复杂，要求多样，很难仅凭经验设计</li>
+<li>需求变，数据结构很难随之发生变化</li>
+<li>与DBMS结合紧密，移植困难</li>
+<li>缺乏文档资料，难以评审</li>
+<li>难以由多人合作进行设计</li>
+</ul>
+<p>规范化设计方法：将设计过程划分为若干阶段，每个阶段只解决整个设计中的部分问题</p>
+<p>共六个阶段：需求分析、概念结构设计、逻辑结构设计、物理结构设计、数据库实施、数据库运行与维护</p>
+<p>需求分析：用数据流图表达关系、数据字典描述数据</p>
+<p>概念结构设计：E-R法。最常用的是自底向上方法</p>
+<p>规范化设计的特点：</p>
+<ul>
+<li>分步进行</li>
+<li>反复性</li>
+<li>试探性</li>
+</ul>
+<p>数据字典：系统中各类数据描述的集合。包括数据项、数据结构、数据流、数据存储、处理过程</p>
+<p>关系的存取方法：索引方法、聚集方法、HASH方法</p>
+<h2 id="存储管理和索引">存储管理和索引</h2>
+<p>磁盘访问时间=寻道时间+旋转时间+传输时间</p>
+<p>数据库存储结构：数据库-文件-块/页。文件在逻辑上被组织为记录的序列</p>
+<p>文件的磁盘块分配：</p>
+<ul>
+<li>连续分配</li>
+<li>链接分配</li>
+<li>按簇分配</li>
+<li>索引分配</li>
+</ul>
+<p>页/块最常用的是分槽页结构，有header和data</p>
+<p>文件中记录的组织方式为堆（随便放在文件中的任意位置）、顺序、索引、散列、聚集（相同或相似的记录存储于连续的磁盘块中）</p>
+<p>缓冲区被组织为一个固定大小的页面数组，每个元素称为帧，存放在磁盘上的一个页/块</p>
+<p>缓冲区允许有共享锁、排他锁，对页进行封锁。替换策略如LRU（最近最少使用）</p>
+<p>索引：排序/哈希，聚集/非聚集。稠密/稀疏</p>
+<p>多级索引如二叉树、B树（所有叶节点在同一层，关键字散布在各层）、B+树（关键字按递增顺序从左到右安排在叶节点上）</p>
+<h2 id="查询优化">查询优化</h2>
+<p>查询处理的基本步骤：语法分析与翻译、优化、执行查询语句</p>
+<p>查询优化的步骤：转为内部表示如语法树、优化语法树、选择底层的操作算法、生成查询执行计划</p>
+<p>连接操作</p>
+<ul>
+<li>嵌套循环</li>
+<li>排序-合并</li>
+<li>索引连接</li>
+<li>Hash join</li>
+</ul>
+<p>查询代价=IO代价+CPU代价+通信开销</p>
+<p>关系代数的等价变换规则：</p>
+<ul>
+<li>连接、笛卡尔积各自都具有交换律、结合律</li>
+<li>投影的串接定律 <span
+class="math inline">\(\Pi_A(\Pi_B(E))=\Pi_A(E)\)</span></li>
+<li>选择的串接定律 <span
+class="math inline">\(\sigma_{F_1}(\sigma_{F_2}(E))=\sigma_{F_1\land
+F_2}(E)\)</span><br />
+</li>
+<li>……TODO</li>
+</ul>
+<p>查询优化的一般准则：</p>
+<ul>
+<li>选择运算尽可能先做。（为了减小中间结果）</li>
+<li>执行连接操作前对文件适当预处理，如排序、在连接属性上建立索引等等</li>
+<li>投影运算和选择运算同时做。（避免重复扫描关系）</li>
+<li>投影运算与前面或后面的双目运算结合起来。（减少扫描关系的遍数）</li>
+<li>查询树：使用连接操作代替笛卡尔积</li>
+<li>查询树：没用的属性利用投影操作去掉</li>
+</ul>
+<p>TODO考吗？</p>
+<h2 id="数据恢复">数据恢复</h2>
+<p><strong>事务</strong>：用户定义的一个数据库操作序列构成，操作要么全做，要么不做</p>
+<p>事务的特性：</p>
+<ul>
+<li>原子性：事务定义</li>
+<li>一致性：执行结果应当使数据库从一个一致性状态转变为另一个一致性状态</li>
+<li>隔离性：一个事务的隔离不能被其他事务干扰</li>
+<li>持久性：提交之后，对数据库的影响是永久的</li>
+</ul>
+<p>数据库恢复子系统的目的：保证事务的原子性、发生故障后能恢复到正确的状态</p>
+<p>故障的种类：</p>
+<ul>
+<li>事务内部的故障。分为可预期如？，不可预期如死锁、违反完整性规则</li>
+<li>系统故障。如蓝屏、停电。需要清除所有未完成的事务对数据库的修改，同时重做所有已完成的事务</li>
+<li>介质故障。如磁盘损坏</li>
+<li>计算机病毒</li>
+</ul>
+<h3 id="数据库恢复的技术">数据库恢复的技术</h3>
+<p>数据库恢复的原理：冗余。</p>
+<p>建立冗余的常用方法有数据转储、登录日志文件</p>
+<p>数据冗余+操作冗余</p>
+<h4 id="数据转储">数据转储</h4>
+<p>从转储状态上分为两种</p>
+<ul>
+<li>静态转储（转储期间数据不会变化，不允许对数据库的任何存取、更新）</li>
+<li>动态转储</li>
+</ul>
+<p>从转储方式上分为两种</p>
+<ul>
+<li>海量转储：每次转储全部数据库</li>
+<li>增量转储：每次只转储上次转储后更新过的数据</li>
+</ul>
+<h4 id="登录日志文件">登录日志文件</h4>
+<p>日志文件是用来记录事务对数据库的更新操作的文件</p>
+<p>以记录为单位的日志文件记录事务的开始标记、结束标记、更新操作</p>
+<p>以数据块为单位的日志文件记录事务标识、更新前后的数据块</p>
+<p>登记日志文件的原则：</p>
+<ul>
+<li>登记次序严格按并发事务执行的时间顺序</li>
+<li>先写日志文件后写数据库</li>
+</ul>
+<h3 id="恢复策略">恢复策略</h3>
+<h4 id="事务故障的恢复">事务故障的恢复</h4>
+<ol type="1">
+<li>反向扫描文件日志找到该事务的更新操作</li>
+<li>将更新前的值写入数据库</li>
+<li>直到读到该事务的开始标志</li>
+</ol>
+<h4 id="系统故障">系统故障</h4>
+<ol type="1">
+<li>正向扫描日志文件，找出故障前已经提交的事务，计入重做REDO队列，未完成的计入撤销UNDO队列</li>
+<li>撤销队列进行UNDO操作，反向扫描日志文件，写入更新前的值</li>
+<li>重做队列进行REDO处理，正向扫描日志文件执行</li>
+</ol>
+<h4 id="介质故障">介质故障</h4>
+<ol type="1">
+<li>装入最新的数据库后备副本</li>
+<li>装入转储以后的日志文件副本</li>
+</ol>
+<h3 id="其他技术">其他技术</h3>
+<p>推迟更新技术：每个事务到达提交点前不能更新数据库。更新操作的日志写入前不能到达提交点</p>
+<p>具有检查点的恢复技术：记录检查点时刻所有正在执行的事务清单、以上事务最近一个日志记录的地址</p>
+<p><img src="D:\study\大三上\数据库\assets\image-20241229145542301.png" srcset="/img/loading.gif" lazyload alt="image-20241229145542301" style="zoom:67%;" /></p>
+<h4 id="数据库镜像">数据库镜像</h4>
+<p>根据DBA要求，自动把整个数据库或其中的关键数据复制到另一个磁盘上。更新时，DBMS保证一致性</p>
+<p>增强了可靠性（故障后可以通过镜像继续服务）、提供一定并行性</p>
+<h2 id="并发控制">并发控制</h2>
+<p>优点：</p>
+<ul>
+<li>提高系统吞吐量，改善系统资源利用率</li>
+<li>减少平均响应时间</li>
+</ul>
+<p>问题：</p>
+<ul>
+<li>丢失修改（T1的提交修改被T2覆盖）</li>
+<li>不可重复读（T1读之后，T2改，T1再读时不一样了）</li>
+<li>读到脏数据（T1写，但T2出错，一并撤销，T1再访问就读到脏数据）</li>
+</ul>
+<p>条件：多个事务同时访问一个数据集合、至少一个事务对数据集合进行了更新</p>
+<h3 id="锁">锁</h3>
+<p>采用的技术：封锁</p>
+<p>锁的类型：</p>
+<ul>
+<li>排他锁（X锁），写时加，其他事务的任何请求都不成功</li>
+<li>共享锁（S锁），读时加，其他事务可读不可写</li>
+</ul>
+<p>相容矩阵</p>
+<p>一级封锁协议：修改数据之前必须加X锁。可防止丢失修改</p>
+<p>二级封锁协议：一级锁协议+读取前必须加S锁。可防止读脏数据</p>
+<p>三级封锁协议：1+读取前必须加S锁，直到事务结束才释放。可防不可重复读</p>
+<h3 id="死锁活锁">死锁活锁</h3>
+<p>预防死锁：</p>
+<ul>
+<li>一次封锁法：每个事务必须一次将所有要使用的数据全部加锁，降低了系统并发度</li>
+<li>顺序封锁：预先规定一个封锁顺序，数据库动态变化很难实现</li>
+</ul>
+<p>死锁检测与恢复：</p>
+<p>检测：超时法、等待图法（节点是事务，a指b代表a等待b，存在回路说明死锁）</p>
+<p>恢复：选一个代价最小的事务，撤销</p>
+<p>事务的调度：串行调度、并行调度。多个事务的并发执行是正确的，当且仅当其结果与按某一次串行的执行顺序结果相同。称调度策略为<strong>可串行化调度</strong>。一个并发调度可串行化才正确</p>
+<h3 id="各种锁">各种锁</h3>
+<p><strong>两段锁协议</strong>：</p>
+<ul>
+<li>在对任何数据进行读写操作之前，事务首先要获得对该数据的封锁。</li>
+<li>在释放一个封锁之后，事务不再获得任何其他封锁</li>
+</ul>
+<p>若所有事务都遵循两段锁协议，则可串行化</p>
+<p>封锁粒度：封锁对象（逻辑单元如元组，物理单元如物理页）的大小。颗粒度小则并发程度高、封锁机构复杂、开销大</p>
+<p>多粒度树：根节点是整个数据库，表示最大的粒度，叶节点表示最小的粒度</p>
+<p><strong>多粒度封锁协议</strong>：多粒度树中的每个结点被独立地加锁，结点中的所有子节点也被加上同样类型的锁</p>
+<p>意向锁：如果对一个结点加意向锁，则说明下层结点正在被加锁；对任一结点加锁时，需要先对上层结点加意向锁</p>
+<p>有意向共享锁IS、意向排他锁IX、意向共享排他锁SIX</p>
+<h2 id="分布式数据库">分布式数据库</h2>
+<p>分布式数据库由分布在计算机网络的不同计算机上的一组数据组成，网络中每个节点具有<strong>场地自治性</strong>（可以执行局部应用，即只对本节点数据进行存取的应用），每个节点也通过网络通讯支持<strong>全局应用</strong></p>
+<p>特点：分布性（独立存储、独立处理）、逻辑整体性</p>
+<p>分布式数据库系统的特点：</p>
+<ul>
+<li>数据独立性</li>
+<li>集中与自治相结合的控制机构</li>
+<li>适当增加数据冗余</li>
+<li>全局的一致性、可串行性、可恢复性</li>
+</ul>
+<p>目标：</p>
+<ul>
+<li>适应部门分布的组织结构、降低费用</li>
+<li>提高系统的可靠性和可用性</li>
+<li>充分利用数据库资源，提高现有集中式数据库的利用率</li>
+<li>逐步扩展处理能力和系统规模</li>
+</ul>
+<p><img src="D:\study\大三上\数据库\assets\image-20241229152239944.png" srcset="/img/loading.gif" lazyload alt="image-20241229152239944" style="zoom:67%;" /></p>
+<h3 id="设计">设计</h3>
+<p>分布透明性包括</p>
+<ul>
+<li>分片透明性。用户只对全局关系进行操作而不必考虑关系的分片</li>
+<li>位置透明性。用户或应用程序不必了解片段的存储位置</li>
+<li>局部数据模型透明性。不必了解局部场地上使用哪种数据模型</li>
+</ul>
+<p>存储方式有</p>
+<ul>
+<li>重复存储。几个节点有完全相同的副本</li>
+<li>分片存储。完全性、不相交性、可重构性
+<ul>
+<li>水平分片。按行分</li>
+<li>垂直分片。按列分</li>
+<li>导出分片。按其他关系的属性条件分片</li>
+<li>混合分片。连续应用几种分片方法</li>
+</ul></li>
+<li>组合存储。重复存储和分片存储相结合</li>
+</ul>
+<p>命名和局部自治性：每个数据项必须有唯一的名字。方法：名字服务器/节点+名字</p>
+<h3 id="管理系统">管理系统</h3>
+<p>D-DBMS的四个组成部分：</p>
+<ul>
+<li>LDBMS，局部场地上的DBMS</li>
+<li>GDBMS，全局数据库管理系统</li>
+<li>全局数据字典，存放全局概念模式、分片模式等定义、映像定义等等</li>
+<li>通信管理</li>
+</ul>
+<p>D-DBMS的分类：</p>
+<p>全局控制集中、全局控制分散、全局控制部分分散</p>
+<p>同构型、异构型（各节点的局部DBMS不同）</p>
+<h3 id="查询处理">查询处理</h3>
+<p>分类有局部查询、远程查询、全局查询。前两个只涉及单点数据</p>
+<p>处理过程：查询变换、数据定位</p>
+<p>集中式数据库：IO+CPU代价 分布式数据库：IO+CPU代价+通信代价</p>
+<p>传送时间T=总传输延迟+总数据量/传输速度</p>
+<p>TODO半连接的传输</p>
+<h3 id="事务处理">事务处理</h3>
+<p>不仅要保证事务在每个节点上的原子性，还要保证全局事务的原子性</p>
+<p>事务管理器：管理在局部节点的事务或全局事务的一部分</p>
+<p>事务协调器：协调该节点发起的事务的执行</p>
+<h2 id="sthelse">sthelse</h2>
+<p>数据模型三要素：数据结构、数据操作、数据完整性约束</p>
+<p>存取控制包括：自主（DAC），强制（MAC）。其机制包括用户权限定义、合法权限检查</p>
+<p>DAC的用户权限的组成要素：数据对象+数据操作</p>
+<p>完整性控制的功能包括：定义、检查、违约响应</p>
+<p>data要用like，比如
+<code>select * from test1 where a like '2025%'</code> ，或者
+<code>select * from test1 where a like '_____01___';</code></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE/" class="category-chain-item">专业课</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>数据库理论笔记</div>
+      <div>https://solor-wind.github.io/2025/01/01/数据库理论笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/01/C%E8%AF%AD%E8%A8%80%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B%E7%AC%94%E8%AE%B0/" title="C语言系统编程笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">C语言系统编程笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E6%9C%80%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" title="最优化笔记">
+                        <span class="hidden-mobile">最优化笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

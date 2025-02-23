@@ -1,0 +1,1498 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/solor-wind.jpg">
+  <link rel="icon" href="/img/solor-wind.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#006cbf">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="《编译原理》理论考试复习资料，包括词法分析、语法分析（LL,LR,SLR）、符号表与运行栈、代码优化等等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理理论笔记">
+<meta property="og:url" content="https://solor-wind.github.io/2025/01/01/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="《编译原理》理论考试复习资料，包括词法分析、语法分析（LL,LR,SLR）、符号表与运行栈、代码优化等等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203203908956.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203204653836.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205111113838.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203221339155.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203223357970.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203223427725.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203223633416.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205104940489.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205105847269.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205112455403.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205114210788.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241205163243207.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241216200736045.png">
+<meta property="article:published_time" content="2024-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T09:14:39.799Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\assets\image-20241203203908956.png">
+  
+  
+  
+  <title>编译原理理论笔记 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E9%AD%88-%E6%B5%B7%E7%81%AF%E8%8A%82.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="编译原理理论笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 00:00" pubdate>
+          2025年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">编译原理理论笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h2 id="概论">概论</h2>
+<p><strong>源程序</strong>：用汇编语言或高级语言编写的程序</p>
+<p><strong>目标程序</strong>：用目标语言所表示的程序</p>
+<p><strong>翻译程序</strong>：将原程序转换为目标程序的程序称为翻译程序</p>
+<p>汇编语言——汇编程序——&gt;机器语言</p>
+<p>高级语言——编译程序——&gt;目标程序</p>
+<p><strong>解释程序</strong>：对源程序进行解释执行的程序</p>
+<p>编译过程的5个基本阶段：词法分析、语法分析、语义分析+生成中间代码、代码优化、生成目标程序</p>
+<ul>
+<li>词法分析：分析和识别单词（关键字、标识符、常数、分界符+运算符）</li>
+<li>语法分析：根据语法规则，识别出各种语法成分，并进行语法正确性检查</li>
+<li>语义分析、生成中间代码：进行语义分析并产生相应的中间代码</li>
+<li>代码优化：得到高质量的目标程序</li>
+<li>生成目标程序：根据机器进行</li>
+</ul>
+<p>编译程序的7个<strong>逻辑部分</strong>：5个基本阶段+符号表管理+出错处理</p>
+<p><strong>遍</strong>（PASS）：对源程序或中间形式从头到尾扫描一次，并做有关的加工处理，生成新的源程序中间形式或目标程序</p>
+<p>前端：与源程序有关的编译部分。词法分析、语法分析、语义分析、中间代码生成</p>
+<p>后端：与目标机有关的部分。代码优化、目标代码生成</p>
+<h2 id="形式语言">形式语言</h2>
+<h3 id="语言">语言</h3>
+<p>字母表（符号集合）、符号（字母表中的元素）、符号串（符号的又穷序列）、空符号串</p>
+<p>符号串的连接：x=XX,y=YY——&gt;xy=XXYY</p>
+<p>符号串集合的乘积（笛卡尔积）：A=s,t；B=u,v——&gt;AB=st,sv,tu,tv</p>
+<p>幂运算、闭包同离散二</p>
+<h3 id="文法">文法</h3>
+<p><strong>文法</strong> <span
+class="math inline">\(G=(V_n,V_t,P,Z)\)</span></p>
+<ul>
+<li><span class="math inline">\(V_n\)</span>：非终结符号集</li>
+<li><span class="math inline">\(V_t\)</span>：终结符号集（<span
+class="math inline">\(V=V_n\cup V_t\)</span>，称文法的字汇表）</li>
+<li><span class="math inline">\(P\)</span>：产生式或规则的集合</li>
+<li><span class="math inline">\(Z\)</span>：开始符号（识别符号）</li>
+<li>规则：<span class="math inline">\((U,x),|U|=1,|x|\ge0\)</span>
+，写作 <span class="math inline">\(U::=x或U\rightarrow x\)</span></li>
+</ul>
+<p>语法规则：<code>&lt;句子&gt;::=&lt;主语&gt;&lt;谓语&gt;</code></p>
+<p>推导：<code>&lt;句子&gt;=&gt;&lt;主语&gt;&lt;谓语&gt;</code></p>
+<ul>
+<li><span
+class="math inline">\(v\overset{+}=&gt;w\)</span>：根据规则推导一步或多步</li>
+<li><span
+class="math inline">\(v\overset{*}=&gt;w\)</span>：根据规则推导0步或多步</li>
+<li><span
+class="math inline">\(vUy=|=&gt;xuy\)</span>：<strong>规范推导</strong>（最右推导）</li>
+</ul>
+<p>规范规约与规范推导互为逆过程</p>
+<p>语言：<span class="math inline">\(L(G[Z])=\{x|x\in
+V_t^*,Z\overset{+}=&gt;x\}\)</span></p>
+<p>语言相同，则两种文法等价</p>
+<ul>
+<li><strong>句型</strong>：<span class="math inline">\(\{x|x\in
+V^*,Z\overset{*}=&gt;x\}\)</span>，即从开始符号随便推</li>
+<li><strong>句子</strong>：<span class="math inline">\(\{x|x\in
+V_t^*,Z\overset{+}=&gt;x\}\)</span>，推到全都是终结符为之</li>
+</ul>
+<p>左递归、右递归</p>
+<p>递归文法：可用有穷条规则定义无穷语言。但左递归文法不能用自顶向下的方法进行语法分析</p>
+<h4 id="句型与短语">句型与短语</h4>
+<p>句型的<strong>短语</strong>：句型w，其中一个成分U一步或多步推导到了u，则u是句型w相对于U的短语</p>
+<p>句型的<strong>简单短语</strong>：1步推导称简单短语</p>
+<p>句型的<strong>句柄</strong>：最左简单短语</p>
+<p>注意：空串既不是终结符也不是非终结符，不是短语，也不在语法树里面</p>
+<h4 id="二义性">二义性</h4>
+<p>规范规约：对句型中最左简单短语进行的规约（相当于从最左边开始规约）</p>
+<p>规范句型：通过规范推导或规范规约得到的句型</p>
+<p>若对于一个文法的某一句型存在两颗不同的语法树，则该文法是<strong>二义性文法</strong>，否则是无二义性文法</p>
+<p>若一个文法的某个句子存在两个不同的规范推导，则是<strong>二义性</strong>的</p>
+<p>若一个文法的某规范句型的句柄不唯一，则二义性</p>
+<p>有害规则：U::=U</p>
+<p>多余规则：始终用不到的规则、退不出任何终结符号串的规则。</p>
+<p>若文法中没有有害规则或多余规则，则称该文法是压缩过的</p>
+<p>文法的其他表示：</p>
+<ul>
+<li>扩充的BNF表示：<code>&lt;,&gt;,::=,|</code> 加上
+<code>&#123;,&#125;,[,],(,)</code></li>
+<li>语法图</li>
+</ul>
+<h4 id="文法分类">文法分类</h4>
+<p><span class="math inline">\(L_3\subset L_2\subset L_1\subset
+L_0\)</span></p>
+<p><strong>0型文法</strong>：<span
+class="math inline">\(P：u::=v\)</span> ，其中 <span
+class="math inline">\(u\in V^+,v\in V^*,V=V_n\cup V_t\)</span></p>
+<p>​ 称为短语结构文法，构成的语言L0可以用图灵机接受</p>
+<p><strong>1型文法</strong>：<span
+class="math inline">\(P：xUy::=xuy\)</span> ，其中 <span
+class="math inline">\(U\in V_n,x、y、u\in V^*\)</span></p>
+<p>​
+称为上下文有关/敏感文法，构成的语言L1可以由一种线性界限自动机接受</p>
+<p><strong>2型文法</strong>：<span
+class="math inline">\(P：U::=u\)</span> ，其中 <span
+class="math inline">\(U\in V_n,u\in V^*\)</span></p>
+<p>​
+称为<strong>上下文无关文法</strong>（与BNF表示等价），构成的语言L2可以由下推自动机接受</p>
+<p><strong>3型文法</strong>：<span
+class="math inline">\(P：U::=t或U::=Wt\)</span>（左线性，W在右边称右线性）
+，其中 <span class="math inline">\(U、W\in V_n,t\in V_t\)</span></p>
+<p>​
+称为<strong>正则文法</strong>，构成的语言L3又称正则语言可以由有穷自动机接受</p>
+<ul>
+<li><p>0型文法可以产生L0、L1、L2、L3，</p></li>
+<li><p>但2型文法只能产生L2、L3不能产生L0、L1</p></li>
+<li><p>3型文法只能产生L3</p></li>
+</ul>
+<blockquote>
+<p>数学上正则文法不允许有空串，但编译允许</p>
+</blockquote>
+<h2 id="词法分析正则dfa">词法分析（正则、DFA）</h2>
+<p>正则文法、左右线性文法、有穷自动机</p>
+<h3 id="正则文法与状态图">正则文法与状态图</h3>
+<p>左线性文法，设开始状态为S，开始符号代表终止状态</p>
+<ul>
+<li>若 <span class="math inline">\(Q::=t,Q\in V_n,t\in V_t\)</span>
+，则画一条S指向Q，标记为t的线</li>
+<li>若 <span class="math inline">\(Q::=Rt,Q、R\in V_n,t\in V_t\)</span>
+，则画一条R指向Q，标记为t的线</li>
+</ul>
+<p>右线性文法则线的方向相反</p>
+<h3 id="正则表达式与dfa">正则表达式与DFA</h3>
+<h4
+id="字母表上的正则表达式与正则集合">字母表上的正则表达式与正则集合：</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><span
+class="math inline">\(\Sigma\)</span> 上的正则表达式</th>
+<th style="text-align: center;">正则集合</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(\varepsilon\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\{\varepsilon\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(\phi\)</span> （空正则表达式集合）</td>
+<td style="text-align: center;"><span
+class="math inline">\(\phi\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">a（ <span
+class="math inline">\(a\in\Sigma\)</span> ）</td>
+<td style="text-align: center;"><span
+class="math inline">\(\{a\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(U|V\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(L(U)\cup
+L(V)\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(U\cdot
+V\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(L(U)\cdot
+L(V)\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(U^*\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(L(U)^*\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>正则表达式相等 <span class="math inline">\(\Leftrightarrow\)</span>
+正则表达式表示的语言相等</p>
+<p>正则表达式的|运算具有交换律、结合律、分配律</p>
+<p>正则表达式与DFA等价：在 <span class="math inline">\(\Sigma\)</span>
+上的一个子集 <span class="math inline">\(V\subseteq\Sigma^*\)</span>
+是正则集合，当且仅当存在一个DFA M，使得 <span
+class="math inline">\(V=L(M)\)</span></p>
+<h4
+id="确定的有穷自动机dfa">确定的有穷自动机（<strong>DFA</strong>）</h4>
+<p><span class="math inline">\(M=(S,\Sigma,\delta,s_0,Z)\)</span>
+，其中</p>
+<ul>
+<li>S——有穷状态集</li>
+<li><span class="math inline">\(\Sigma\)</span> ——输入字母表</li>
+<li><span class="math inline">\(\delta\)</span> ——映射函数，<span
+class="math inline">\(S\times\Sigma\rightarrow S\)</span>
+，根据当前状态S以及输入的字母a（字母表内的字母）转移到下一个状态</li>
+<li><span class="math inline">\(s_0\)</span> ——初始状态</li>
+<li>Z——终止状态集</li>
+</ul>
+<p>NFA：映射函数是多值函数，或输入允许为空。即从同一状态出发，有以同一字符标记的多条边，或者有以ε标记的特殊边的自动机。</p>
+<h4 id="nfa的确定化">NFA的确定化</h4>
+<p>集合I的ε-闭包：设I是一个状态集的子集，则 <span
+class="math inline">\(\varepsilon-closure(I)\)</span>
+包括：I本身的状态、从I中任意状态经过任意条ε弧能够到达的任何状态</p>
+<p><span
+class="math inline">\(I_a\)</span>：设I是一个状态集的子集，<span
+class="math inline">\(I_a=\varepsilon-closure(J)\)</span> ，其中 <span
+class="math inline">\(J=\underset{s\in I}\cup\delta(s,a)\)</span></p>
+<blockquote>
+<p>其实求 <span class="math inline">\(I_a\)</span> 只需三步：</p>
+<ol type="1">
+<li>求出从I中的状态出发，经过ε弧能够到达的状态</li>
+<li>加上I中的状态本身，从这些状态出发，沿着a弧能到达的状态为 <span
+class="math inline">\(I&#39;\)</span></li>
+<li><span class="math inline">\(I&#39;\)</span> 以及走 <span
+class="math inline">\(\varepsilon\)</span> 到的状态集合为 <span
+class="math inline">\(I_a\)</span></li>
+</ol>
+</blockquote>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203203908956.png" srcset="/img/loading.gif" lazyload alt="image-20241203203908956" style="zoom:67%;" /></p>
+<p>确定化NFA：</p>
+<ol type="1">
+<li>将开始状态的ε-闭包作为新的开始状态</li>
+<li>如图填表，新出现的状态填在下一行的最左侧，直到没有新状态为止</li>
+<li>最左侧一列即为新的状态，右侧即为状态转移矩阵</li>
+</ol>
+<h4 id="dfa的最小化">DFA的最小化</h4>
+<p>状态S和T等价的条件是：</p>
+<ul>
+<li>一致性条件：状态S和T必须同时为可接受状态或不可接受状态</li>
+<li>蔓延性条件：对于所有输入符号，状态S和T必须转换到等价的状态里</li>
+</ul>
+<p>“分割法”
+：把一个DFA(不含多余状态)的状态分割成一些不相关的子集，使得任何不同的两个子集状态都是可区别的，而同一个子集中的任何状态都是等价的。</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203204653836.png" srcset="/img/loading.gif" lazyload alt="image-20241203204653836" style="zoom:67%;" /></p>
+<p>TODO:LEX考吗？</p>
+<h3 id="lex">LEX</h3>
+<p>由三部分组成：辅助定义式、识别规则、用户子程序</p>
+<p>辅助定义式：<span class="math inline">\(D_1\rightarrow
+R_1,D_2\rightarrow R_2,……\)</span>
+，即正则表达式的名字-&gt;正则表达式</p>
+<p>识别规则：<span class="math inline">\(P_1\  \{A_1\},...\)</span>
+，Pi是定义在 <span
+class="math inline">\(\Sigma\cup\{D_1,D_2,...\}\)</span>
+上的正则表达式，A1是语句序列，表示识别出词形为Pi的单词后，词法分析器所应作的动作（如返回单词的类别编码和单词值）</p>
+<p>工作原理：扫描每条规则Pi，转化成NFA，然后转化成DFA，最后生成状态转移矩阵与控制执行程序</p>
+<p>二义性问题：</p>
+<ul>
+<li>最长匹配原则：可以识别为P1+P2或单独的P3，则P3优先</li>
+<li>优先匹配原则：可以识别为P1或P2，则排在前面的P1优先（如保留字和标识符）</li>
+</ul>
+<p>工作流程：一直吃字符直到走不动，然后退掉一个，看是否在终态里</p>
+<h2 id="语法分析lllrslr">语法分析（LL,LR,SLR）</h2>
+<p>自顶向下分析：递归子程序法、LL分析法</p>
+<p>自底向上分析：算符优先文法、LR分析法</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205111113838.png" srcset="/img/loading.gif" lazyload alt="image-20241205111113838" style="zoom:67%;" /></p>
+<h3 id="自顶向下">自顶向下</h3>
+<p>问题：左递归、回溯</p>
+<h4 id="处理左递归">处理左递归</h4>
+<p>法一：用扩充的BNF表示来改写文法</p>
+<ul>
+<li>提因子—— <span class="math inline">\(U::=xy|xw|...|xz\)</span>
+可改写为 <span class="math inline">\(U::=x(y|w|...|z)\)</span>
+，注意把ε放在最后</li>
+<li>消左递归—— <span class="math inline">\(U::=x|y|...|z|Uv\)</span>
+可改写为 <span class="math inline">\(U::=(x|y|...|z)\{v\}\)</span></li>
+</ul>
+<p>法二：改成多条文法</p>
+<p><span class="math inline">\(P::=P\alpha|\beta\)</span> 可改写为 <span
+class="math inline">\(P::=\beta P&#39;,P&#39;::=\alpha
+P&#39;|\varepsilon\)</span></p>
+<p>为避免回溯，可以改写文法（反复提取左因子）/超前扫描</p>
+<p>若无左递归、FIRST集两两不相交，则可以构造有效的、不带回溯的自顶向下分析器</p>
+<p>递归下降分析法：编译实验。</p>
+<p>递归子程序法、LL分析法对应的是最左推导</p>
+<h4 id="ll分析法">LL分析法</h4>
+<p>分析表+执行程序（人）+符号栈</p>
+<p>符号栈的四种状态：</p>
+<ul>
+<li>开始状态：#E</li>
+<li>工作状态：#...X</li>
+<li>出错状态</li>
+<li>结束状态：#</li>
+</ul>
+<p>分析表：符号栈栈顶为A、当前输入符号为a时，使用的规则为 <span
+class="math inline">\(M[A,a]=A::=\alpha_i\)</span></p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203221339155.png" srcset="/img/loading.gif" lazyload alt="image-20241203221339155" style="zoom:67%;" /></p>
+<p>分析表的构造：</p>
+<p>FIRST集——<span class="math inline">\(FIRST(\alpha)=\{a|\}\)</span>
+TODO 就是字面意思，A-&gt;a|c则ac</p>
+<p>FOLLOW集——A-&gt;Ba则B的follow有a</p>
+<p><strong>求FIRST</strong>：</p>
+<p><span class="math inline">\(\alpha=X_1X_2...X_n\)</span></p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203223357970.png" srcset="/img/loading.gif" lazyload alt="image-20241203223357970" style="zoom:67%;" /></p>
+<p><strong>求FOLLOW</strong></p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203223427725.png" srcset="/img/loading.gif" lazyload alt="image-20241203223427725" style="zoom:67%;" /></p>
+<p>填分析表</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241203223633416.png" srcset="/img/loading.gif" lazyload alt="image-20241203223633416" style="zoom:67%;" /></p>
+<p><strong>LL(1)文法</strong>：一个文法G，其分析表不含有多重定义入口，则为LL1文法</p>
+<p>另有充要条件：对于G的每个终结符A的任意两条规则 <span
+class="math inline">\(A::=\alpha|\beta\)</span> ，下列条件成立</p>
+<ul>
+<li><p><span class="math inline">\(FIRST(\alpha)\cap
+FIRST(\beta)=\Phi\)</span></p></li>
+<li><p>若 <span
+class="math inline">\(\beta\overset{*}=&gt;\varepsilon\)</span> ，则
+<span class="math inline">\(FIRST(\alpha)\cap
+FOLLOW(A)=\Phi\)</span></p></li>
+</ul>
+<p>若是左递归的或二义性的，则至少有多个多重入口</p>
+<p>步骤、符号栈、读入符号、剩余符号、规则</p>
+<h3 id="自底向上">自底向上</h3>
+<p>一般方法：移进-规约</p>
+<p>将输入符号串移入符号栈，若形成当前句型（栈内符号串+未处理的输入）的句柄，则规约。直到读完所有符号</p>
+<h4 id="算符优先分析">算符优先分析</h4>
+<p>算符文法（OG）：文法中没有形如 <span
+class="math inline">\(U::=...VW...(V,W\in V_n)\)</span> 的规则</p>
+<p>算符优先文法（OPG）：任意两个终结符之间，至多只有优先关系中的一种</p>
+<blockquote>
+<p>优先关系表示为a=b,a&lt;b,a&gt;b中的一种，三种符号中间都要加一个·，但是markdown打不出来，暂时用等号、小于号、大于号代替</p>
+</blockquote>
+<p>算符优先分析方法可以分析二义性文法所产生的语言</p>
+<p>构造优先关系矩阵：</p>
+<p><strong>求“=”</strong>：检查每一条规则，若有 <span
+class="math inline">\(U::=...ab...\)</span> 或 <span
+class="math inline">\(U::=...aVb...\)</span> 则 <span
+class="math inline">\(a=b\)</span></p>
+<p>定义 <span
+class="math inline">\(FIRSTVT(U)=\{b|U\overset{+}\Rightarrow
+b...或U\overset{+}\Rightarrow Vb...,b\in V_t,V\in V_n\}\)</span></p>
+<p>与first集的区别：first集不包括U-&gt;Vb的情况</p>
+<p>求FIRST：</p>
+<ol type="1">
+<li>按定义</li>
+<li><span class="math inline">\(U::=V...\)</span>，则 <span
+class="math inline">\(FIRSTVT(V)\subseteq FIRSTVT(U)\)</span></li>
+</ol>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205104940489.png" srcset="/img/loading.gif" lazyload alt="image-20241205104940489" style="zoom:67%;" /></p>
+<p>定义 <span
+class="math inline">\(LASTVT(U)=\{a|U\overset{+}\Rightarrow
+...a或U\overset{+}\Rightarrow ...aV,a\in V_t,V\in V_n\}\)</span></p>
+<p>与last集的区别：last集是跟在U后面的集合，lastvt是U的末尾集合</p>
+<p>求LAST：类似</p>
+<p><strong>构造优先关系矩阵</strong>：</p>
+<p>对于每条规则 <span
+class="math inline">\(U::=x_1x_2...x_n\)</span></p>
+<ol type="1">
+<li>对终结符填=</li>
+<li>对于xi终结、xi+1非终结：FIRSTVT（xi+1）中的每个b置xi&lt;b</li>
+<li>xi非终结……a&gt;xi+1</li>
+<li>构造E'=#E#，补充#的优先关系</li>
+</ol>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205105847269.png" srcset="/img/loading.gif" lazyload alt="image-20241205105847269" style="zoom:67%;" /></p>
+<p><strong>素短语</strong>：至少包括一个终结符号且除自身外不再包含其他素短语的短语</p>
+<p>最左素短语：算符优先文法中，句型 <span
+class="math inline">\(N_1a_1...N_na_nN_{n+1}\)</span> 的满足 <span
+class="math inline">\(a_{j-1}N_j...N_{i+1}a_{i+1}\)</span> 且 <span
+class="math inline">\(a_{j-1}&lt;a_j=...=a_i&gt;a_{i+1}\)</span>
+的最左子串（中间大，两边小）</p>
+<p>步骤、符号栈、输入串、优先关系、动作</p>
+<h4 id="lr分析">LR分析</h4>
+<p>规范句型：通过规范规约得到的句型</p>
+<p>规范句型的<strong>活前缀</strong>：对于句型 <span
+class="math inline">\(\alpha\beta t\)</span> ，<span
+class="math inline">\(\beta\)</span> 表示句柄，若 <span
+class="math inline">\(\alpha\beta=u_1u_2...u\)</span></p>
+<p>TODO:goto表、action表、SLR分析</p>
+<p>步骤、状态栈、符号（状态栈去掉状态bian'hao）、输入串、动作</p>
+<h2 id="符号表与运行栈">符号表与运行栈</h2>
+<p>符号表：编译过程中，编译程序用来记录源程序中各种名字的特性信息（名字+特性信息）</p>
+<p>内容：名字+特性。其中特性包括</p>
+<ul>
+<li>标识符的种类：一般变量、数组、参数、函数、过程、标号等等</li>
+<li>类型：整数、浮点型、字符型、指针……</li>
+<li>值</li>
+<li>地址</li>
+<li>大小</li>
+</ul>
+<p>组织方式：统一符号表、不同类的不同表、折中（二者组成统一的表，用指针连接）</p>
+<p>另组织方式：无序符号表、有序符号表、散列符号表</p>
+<h3 id="栈式符号表">栈式符号表</h3>
+<p>画的时候从下往上画（下图的翻转），数组要存模板吗？</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205112455403.png" srcset="/img/loading.gif" lazyload alt="image-20241205112455403" style="zoom:67%;" /></p>
+<h3 id="运行栈">运行栈</h3>
+<p>ms-win+VS+X86下，从高地址到低地址分别是全局和静态量表、代码段、运行栈、内存堆</p>
+<p>典型的运行栈包括：函数的返回地址、全局寄存器的保存区、临时变量的保存区、未分配到全局寄存器的局部变量的保存区、其他辅助信息的保存区（如display）</p>
+<p>运行时的存储组织与管理包括：目标程序运行时所需存储空间的组织与管理、源程序中变量存储空间的分配</p>
+<p>静态存储分配：编译阶段由编译程序实现的对存储空间的管理和为源程序中的变量分配存储的方法。要求编译时能确定空间，且运行时不变。</p>
+<p>动态存储分配：运行阶段由目标程序实现对存储空间的组织与管理和……。编译时要生成进行动态分配的目标指令</p>
+<h3 id="活动记录">活动记录</h3>
+<p>display区+参数区+局部数据区</p>
+<ul>
+<li>局部数据区：局部变量（数组还要存模板）</li>
+<li>参数区：（自下而上）ret value、ret addr、prev
+abp、形参，没有的部分可不填</li>
+<li>display区：（自下而上）abp(i)，即自外而内的交叉的各个块</li>
+</ul>
+<h2 id="源程序的中间形式">源程序的中间形式</h2>
+<h3 id="波兰表示">波兰表示</h3>
+<blockquote>
+<p>后缀表达式</p>
+</blockquote>
+<p>算数指令心算</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205114210788.png" srcset="/img/loading.gif" lazyload alt="image-20241205114210788" style="zoom:67%;" /></p>
+<h3 id="抽象机代码p-code">抽象机代码P-code</h3>
+<p>仅能在栈顶进行计算</p>
+<p>d=(a+b)*c：lod a,lod b,add,lod c,mul,sto d</p>
+<h3 id="n元表示">N元表示</h3>
+<p>三元式</p>
+<p>间接三元式：</p>
+<p><img src="D:\study\大三上\编译原理\assets\image-20241205163243207.png" srcset="/img/loading.gif" lazyload alt="image-20241205163243207" style="zoom:67%;" /></p>
+<p>四元式：LLVM IR、MIPS汇编……</p>
+<p>+，A，B，T1</p>
+<h2 id="错误处理">错误处理</h2>
+<p>错误处理能力：</p>
+<ul>
+<li>诊察错误</li>
+<li>报错及时准确</li>
+<li>一次编译找出错误的多少</li>
+<li>错误的改正能力</li>
+<li>遏制重复的错误信息的能力</li>
+</ul>
+<h3 id="错误分类">错误分类</h3>
+<p>编译角度：语法错误、语义错误</p>
+<ul>
+<li>语法错误：源程序在语法上不符合文法</li>
+<li>语义错误：程序不符合语义规则或超越具体计算机系统的限制
+<ul>
+<li>标识符定义相关（未定义、重复定义）</li>
+<li>调用时形参和实参类型不匹配</li>
+<li>运算的操作数类型不一致</li>
+<li>下标变量不能越界</li>
+<li>数据溢出</li>
+<li>符号表、静态存储分配数据区溢出</li>
+<li>动态存储分配数据区溢出</li>
+</ul></li>
+</ul>
+<h3 id="错误的诊察和报告">错误的诊察和报告</h3>
+<p>诊察：</p>
+<ul>
+<li>对一般的语法、语义规则，在语法和语义分析时发现</li>
+<li>下标越界、计算结果溢出、动态存储数据区溢出，在目标程序运行时发现</li>
+</ul>
+<p>错误报告：</p>
+<ol type="1">
+<li>出错位置：源程序中出现错误的位置，可用行号计数器或单词序号计数器实现</li>
+<li>出错性质：可直接显示文字信息或给出错误编码</li>
+<li>报告错误：分析完后报告/边分析边报告</li>
+</ol>
+<h3 id="错误处理-1">错误处理</h3>
+<ol type="1">
+<li>错误改正</li>
+<li>错误局部化处理
+<ul>
+<li>跳过所在语法成分继续向下分析</li>
+</ul></li>
+<li>目标程序运行时，调用写好的异常处理程序，打印错误信息、运行现场，然后停止程序运行</li>
+</ol>
+<h2 id="语法制导翻译">语法制导翻译</h2>
+<p>用于语义分析和中间代码生成</p>
+<h3 id="相关概念">相关概念</h3>
+<p>输入文法：未插入动作符号时的文法。由输入文法可以通过推导产生输入序列</p>
+<p><strong>翻译文法</strong>：插入<strong>动作符号</strong>的文法，可通过推导产生<strong>活动序列</strong>（输入序列、动作序列）</p>
+<p>执行动作序列，则完成翻译任务。输入序列和动作序列组成翻译文法的对偶集</p>
+<p>或：翻译文法是<strong>上下文无关文法</strong>，终结符号集由输入符号和动作符号组成，由翻译文法所产生的终结符号串称为活动序列</p>
+<p>符号串翻译文法：插入文法中的动作符号对应的语义子程序是输出动作符号标记@后的字符串的文法</p>
+<p>语法制导翻译：按翻译文法进行翻译，获得动作序列并执行该序列所规定的动作的过程</p>
+<p>属性翻译文法：翻译文法基础上，终结符、非终结符、动作符号均可带有属性</p>
+<p><span class="math inline">\(\uparrow c\)</span>
+是<strong>综合属性</strong>符号，<span
+class="math inline">\(\uparrow\)</span> 是综合属性标记，<span
+class="math inline">\(c\)</span> 为属性变量或者属性值</p>
+<p>综合属性求值规则：自右向左、自底向上</p>
+<p><span class="math inline">\(\downarrow c\)</span>
+是<strong>继承属性</strong>符号</p>
+<p>继承属性求值规则：自左向右、自顶向下</p>
+<p>L-属性翻译文法（L-AGT）：要求输入文法为LL1文法</p>
+<p><span class="math inline">\(A\rightarrow BC\)</span> 的求值顺序：</p>
+<ol type="1">
+<li>A的继承属性——指定/上面产生式右部符号的继承属性</li>
+<li>B的继承属性——A的继承属性求得</li>
+<li>B的综合属性——下面产生式中左部符号为B的综合属性</li>
+<li>C的继承属性——A的继承属性和B的属性</li>
+<li>C的综合属性——下面产生式中左部符号为C的综合属性</li>
+<li>A的综合属性——A的继承属性或BC的属性计算</li>
+</ol>
+<p>简单赋值形式的L-属性翻译文法（SL-AGT）：</p>
+<ul>
+<li>产生式有部符号的继承属性是常量，等于产生式左边的继承属性或所给符号左边的综合属性</li>
+<li>产生式左部非终结符号的综合属性是常量，等于左部继承属性或者产生式有部的综合属性</li>
+</ul>
+<p>即除了动作符号外，其余符号的属性求值规则其右部是属性或常量</p>
+<p>转化：</p>
+<figure>
+<img src="D:\study\大三上\编译原理\assets\image-20241216200736045.png" srcset="/img/loading.gif" lazyload
+alt="image-20241216200736045" />
+<figcaption aria-hidden="true">image-20241216200736045</figcaption>
+</figure>
+<p>递归下降翻译器</p>
+<p>对每个非终结符号都编写一个翻译子程序，根据该非终结符号具有的属性数目，设置相应的参数。</p>
+<ul>
+<li>产生式左部的同名非终结符使用相同的属性名</li>
+<li>具有相同值得属性取相同的属性名</li>
+</ul>
+<h2 id="代码生成">代码生成</h2>
+<h3 id="寄存器分类">寄存器分类</h3>
+<ul>
+<li>通用寄存器
+<ul>
+<li>保留寄存器</li>
+<li>临时寄存器（生存范围不超过基本块，不跨越函数调用）</li>
+<li>全局寄存器（跨越基本快、跨越函数调用）</li>
+</ul></li>
+<li>专用寄存器</li>
+</ul>
+<p>$gp：全局指针寄存器、$sp：栈指针寄存器、$fp：Frame指针寄存器（活动记录基地址）</p>
+<p>全局/静态量不参与全局寄存器分配，局部变量才参与</p>
+<h3 id="引用计数">引用计数</h3>
+<p>一个局部变量被访问次数越多，获得全局寄存器的机会也较大</p>
+<h3 id="图着色">图着色</h3>
+<p>当两个变量中的一个变量在另一个变量定义（赋值）处是活跃的，它们之间便有一条边连接。所谓变量i在代码n处活跃，是指程序运行时变量i在n处拥有的值，在从n出发的某条路径上会被使用。</p>
+<ol type="1">
+<li>数据流分析得到冲突图</li>
+<li>找到第一个连接边数目小于k（全局寄存器数目）的节点，将它从图G中移走。重复此过程</li>
+<li>找不到小于k的了，就选取适当节点，标记为不分配全局寄存器，移除，然后重复步骤2</li>
+<li>按移除顺序的倒序加入图中，着色</li>
+</ol>
+<h3 id="寄存器池">寄存器池</h3>
+<p>——对临时寄存器的管理</p>
+<ol type="1">
+<li><p>进入基本块时，清空临时寄存器池</p></li>
+<li><p>为当前中间代码生成目标代码时，无论临时变量还是局部变量（亦或全局变量和静态变量），如需使用临时寄存器，都可以向临时寄存器池申请</p></li>
+<li><p>临时寄存器池接到申请后，如寄存器池中有空闲寄存器，则可将该寄存器标识为被该申请变量占用，并返回该空闲寄存器。如寄存器池中没有空闲寄存器，则选取一个在即将生成代码中不会被使用的寄存器写回相应的内存空间，标识该寄存器被新的变量占用，返回该寄存器</p></li>
+<li><p>在基本块结尾，或者函数调用发生前，将寄存器池中所有被占用的临时寄存器写回相应的内存空间，</p></li>
+<li><p>清空临时寄存器池</p></li>
+</ol>
+<h2 id="代码优化">代码优化</h2>
+<h3 id="划分基本块">划分基本块</h3>
+<p>基本块中的代码连续执行，仅能从第一句进入、最后一句离开</p>
+<ol type="1">
+<li>整个序列的第一条语句属于入口语句</li>
+<li>能由跳转语句转移到的第一条语句属于入口语句</li>
+<li>跳转语句之后的语句属于入口语句</li>
+</ol>
+<p><strong>流图</strong>：节点是基本块的有向图。B2可能紧跟B1执行，则从B1到B2有一条有向边。B1为B2的前驱，B2为B1的后继</p>
+<h3 id="消除局部公共子表达式">消除局部公共子表达式</h3>
+<ol type="1">
+<li>建立DAG图，右侧画节点表</li>
+<li>从DGA图导出中间代码</li>
+</ol>
+<h2 id="可能考的大题">可能考的大题</h2>
+<h3 id="正则文法转状态图">正则文法转状态图</h3>
+<p>正则文法要么是左线性，要么是右线性。左线性（非终结符在左边）则逆向推导的方向画箭头</p>
+<h3 id="正则表达式转nfadfa最小化">正则表达式转NFA、DFA、最小化</h3>
+<p>转NFA：记得几个基础的怎么转，可以带epsilon</p>
+<p>转DFA：先确定初始状态的epsilon-集合，作为新的初始状态。之后确定输入a能转移到哪些状态以及他们的epsilon-集合，作为新的状态集合。直到所有输入画完、没有新状态为止</p>
+<p>最小化：</p>
+<ul>
+<li>等价类法：枚举所有两两状态的组合，要求同时处于非终态或终态，而且转移到的状态集合必须等价</li>
+<li>分割法：列表，先划分非终态和终态。遍历每个输入下的每个状态转移，如果前后转移到的状态被划分开，则这两个状态也要被划分</li>
+</ul>
+<h3 id="消除左递归">消除左递归</h3>
+<h3 id="ll分析">LL分析</h3>
+<h4 id="建表">建表</h4>
+<p>求FIRST集和FOLLOW集</p>
+<p>求FIRST（S）：只看左侧有S的规则，将规则右侧的第一个符号（终结符或非终结符的first+。。。）加入FIRST</p>
+<p>求FOLLOW（S）：从开始符号向后求，开始符号有#。只看右侧有S的规则，加终结符或左侧的FOLLOW</p>
+<p>建表：横行为所有终结符和#，竖列为所有非终结符。遍历每条规则a，坐标（a的左侧，a的FIRST集）填a；a能推出空，则（a的左侧，a的FOLLOW集）填a</p>
+<h4 id="分析">分析</h4>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">步骤</th>
+<th style="text-align: center;">符号栈</th>
+<th style="text-align: center;">读入符号</th>
+<th style="text-align: center;">剩余符号串</th>
+<th style="text-align: center;">使用规则</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">#E</td>
+<td style="text-align: center;">i</td>
+<td style="text-align: center;">+i*i#</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">#E'T</td>
+<td style="text-align: center;">i</td>
+<td style="text-align: center;">+i*i#</td>
+<td style="text-align: center;">E::=TE'</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li><p>根据栈顶符号和读入符号查表</p></li>
+<li><p>当符号栈栈顶符号和读入符号相等时，pop，读入下一个（相当于顶掉了）</p></li>
+<li><p>否则查表后将栈顶符号换为规则右部的<strong>倒序</strong></p></li>
+</ol>
+<h4 id="易错点">易错点</h4>
+<ul>
+<li><p>建表时，忘记<strong>#</strong>号</p></li>
+<li><p>分析时，压符号栈要<strong>倒序</strong></p></li>
+<li><p>符号栈最左侧和剩余符号串最右侧都有<strong>#</strong></p></li>
+</ul>
+<h3 id="算符优先分析-1">算符优先分析</h3>
+<h4 id="构造优先关系矩阵">构造优先关系矩阵</h4>
+<p>求FIRSTVT（U）：只看左部有U的规则，b，Vb，V都要加进去。可以用栈的形式找</p>
+<p>LAST同理</p>
+<p>建表：连续终结符xy，x=y；xY，x&lt;FIRST(Y)；Xy，LASTVT(X)&gt;y</p>
+<h4 id="分析-1">分析</h4>
+<p>当栈顶<strong>终结符</strong>的优先级大于栈外终结符的优先级，规约，否则移进</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">步骤</th>
+<th style="text-align: center;">符号栈</th>
+<th style="text-align: center;">输入串</th>
+<th style="text-align: center;">优先关系</th>
+<th style="text-align: center;">动作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">#</td>
+<td style="text-align: center;">i+i*i#</td>
+<td style="text-align: center;">#&lt;i</td>
+<td style="text-align: center;">移进</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">#i</td>
+<td style="text-align: center;">+i*i#</td>
+<td style="text-align: center;">i&gt;+</td>
+<td style="text-align: center;">规约</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h4 id="易错点-1">易错点</h4>
+<ul>
+<li>符号栈最左侧和输入串最右侧都有<strong>#</strong></li>
+<li>比较的是终结符的优先级，不是非终结符</li>
+<li>算符优先的“动作”指的是下一行要干什么，其他的指的是本行要做什么</li>
+<li>规约时要规约最左素短语</li>
+</ul>
+<h3 id="lr分析-1">LR分析</h3>
+<p>构造分析表见CSDN</p>
+<p>ACTION中的r：项目集I有规则A-&gt;a.，则I行FOLLOW(A)的所有列置该规则。但E'-&gt;E对于#置acc</p>
+<p>易错点：</p>
+<ul>
+<li>记得ACTION表有#号</li>
+</ul>
+<h3 id="栈式符号表-1">栈式符号表</h3>
+<p>（从下往上画）</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">标号</th>
+<th style="text-align: center;">名字</th>
+<th style="text-align: center;">种类</th>
+<th style="text-align: center;">类型</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">arr</td>
+<td style="text-align: center;">var</td>
+<td style="text-align: center;">array</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">var</td>
+<td style="text-align: center;">real</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">P</td>
+<td style="text-align: center;">para</td>
+<td style="text-align: center;">int</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">M1</td>
+<td style="text-align: center;">proc</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="运行栈-1">运行栈</h3>
+<p>局部变量</p>
+<p>参数</p>
+<p>prev abp</p>
+<p>ret value</p>
+<p>ret addr</p>
+<p>display（前几层的abp）</p>
+<p>易错点：</p>
+<ul>
+<li>标出当前的abp（指向display最下面）</li>
+<li>prev和其他abp指向对应位置</li>
+<li>数组还有模板</li>
+</ul>
+<h3 id="dag图">DAG图</h3>
+<p>易错点：</p>
+<ul>
+<li>常量也要标号、复用？</li>
+<li>输出变量的时候，尽可能赋值给下文可能要用的变量？</li>
+</ul>
+<h3 id="到达定义分析">到达定义分析</h3>
+<p><span class="math display">\[
+in[B]=\cup_{B的前驱}out[P]\\
+out[B]=gen[B]\cup(in[B]-kill[B])
+\]</span></p>
+<p>易错点：</p>
+<ul>
+<li>注意是针对每一条指令，而非变量</li>
+<li>从上到下，从前到后顺序分析</li>
+</ul>
+<h3 id="活跃变量分析">活跃变量分析</h3>
+<p><span class="math display">\[
+out[B]=\cup_{B的后继基本块P}in[P]\\
+in[B]=use[B]\cup(out[B]-def[B])
+\]</span></p>
+<p>易错点：</p>
+<ul>
+<li>注意针对变量，而非定义点</li>
+<li>从下到上，从后向前逆序分析</li>
+</ul>
+<h3 id="冲突图">冲突图</h3>
+<p>冲突的条件：一个变量在另一个变量定义处是活跃的</p>
+<p>形参之间相互冲突</p>
+<h3 id="定义-使用链">定义-使用链</h3>
+<p>先进行到达分析，得到每个定义点可以到达那些地方，随后按{定义点，使用点，使用点，。。。}的形式为每一个定义点构造链</p>
+<p>若两个链之间有相同的使用点，则合并成一个网</p>
+<p>构建网后，冲突图按网和网之间的冲突（其中一个网所代表的变量在另一个网的定义处是否活跃）来写</p>
+<p>FIRST：只看左侧有S的规则</p>
+<p>LAST：只看右侧有S的规则</p>
+<p>FIRSTVT：只看左侧有S的规则</p>
+<p>LASTVT：只看左侧有S的规则</p>
+<p>LL分析表：遍历每条规则，S和S的FIRST集构成的坐标填规则</p>
+<p>算符优先分析表：遍历规则中的每个aAaA</p>
+<p>LR分析表：呵呵</p>
+<p>LL1、SLR1都是2型文法。算符优先是</p>
+<h1 id="问题">问题：</h1>
+<ol type="1">
+<li>地址计算怎么算？考不考</li>
+<li>运行栈怎么标号？</li>
+<li>正则表达式有空串吗？正则文法有二义性吗？</li>
+<li>运行栈进入C语言的{、pascall的block、procedure的begin
+end要不要新建？</li>
+<li>为当前函数申请活动记录空间的指针是哪一个？</li>
+<li>运行栈要不要记录局部函数？beating返回值是啥？（例题：20-21外国人）参数信息是什么</li>
+<li>DAG图数组/指针怎么处理？左右子树能否交换？</li>
+<li>空串在语法树叶节点中吗？对应短语怎么写？</li>
+<li>冲突图只画跨块活跃、不只看定义点-活跃冲突？</li>
+</ol>
+<p>算符、LL1、SLR1无二义性</p>
+<p>正则有二义性</p>
+<p>属性翻译、算符、LL1、SLR1是2型文法</p>
+<p>声明一般不直接出现在翻译后的语句中</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE/" class="category-chain-item">专业课</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>编译原理理论笔记</div>
+      <div>https://solor-wind.github.io/2025/01/01/编译原理理论笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="编译原理实验设计文档">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">编译原理实验设计文档</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/07/02/OS%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/" title="OS理论笔记">
+                        <span class="hidden-mobile">OS理论笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

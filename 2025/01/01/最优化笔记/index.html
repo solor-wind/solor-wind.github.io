@@ -1,0 +1,1949 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/solor-wind.jpg">
+  <link rel="icon" href="/img/solor-wind.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#006cbf">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最优化方法的课程笔记，包括单纯形方法、运输模型、动态规划、网络优化模型等等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最优化笔记">
+<meta property="og:url" content="https://solor-wind.github.io/2025/01/01/%E6%9C%80%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="最优化方法的课程笔记，包括单纯形方法、运输模型、动态规划、网络优化模型等等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%9C%80%E4%BC%98%E5%8C%96\assets\image-20241219152915139.png">
+<meta property="article:published_time" content="2024-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T09:13:08.443Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E6%9C%80%E4%BC%98%E5%8C%96\assets\image-20241219152915139.png">
+  
+  
+  
+  <title>最优化笔记 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E9%AD%88-%E6%B5%B7%E7%81%AF%E8%8A%82.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="最优化笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 00:00" pubdate>
+          2025年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          11 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">最优化笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+</blockquote>
+<h2 id="基本单纯形方法">基本单纯形方法</h2>
+<p>例题： <span class="math display">\[
+\max\ z=2x_1+3x_2\\
+s.t.\ x_1+2x_2\le8\\
+4x_1\le16\\
+4x_2\le12
+\]</span> 转化为等式约束形式。有大于等于则再加人工变量</p>
+<p><span class="math display">\[
+x_1+2x_2+S_1=8\\
+4x_1+S_2=16\\
+4x_2+S_3=12
+\]</span>
+画出单纯形表，对应列即为约束条件中的系数，解列为等号右边的数字</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">-3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(S_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(S_2\)</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(S_3\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">12</td>
+</tr>
+</tbody>
+</table>
+<p>确定进基变量和离基变量：Z行绝对值最大的负值是进基变量，确定进基变量后解列除以进基变量列，最小非负比的行是离基变量。此处为S3行，x2列</p>
+<p>随后进行高斯-？？运算</p>
+<ol type="1">
+<li>进基变量行（S3）除以（S3，x2）的元素（要写出来Z行和离基变量行、最小非负比）</li>
+<li>其他行减去新的离基变量行*进离基变量列对应的系数</li>
+</ol>
+<p>得到第二个单纯形表</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/4</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(S_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1/2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(S_2\)</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1/4</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p>重复上述步骤，得到第三个表</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1/4</td>
+<td style="text-align: center;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1/2</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(S_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1/4</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p>第四个表</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(S_3\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/2</td>
+<td style="text-align: center;">1/8</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1/4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(S_3\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-2</td>
+<td style="text-align: center;">1/2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1/2</td>
+<td style="text-align: center;">-1/8</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table>
+<p>最后解列为x1=4，x2=2，Z=14</p>
+<p>检验方法：每次确定最小非负比*单位改善率（离基变量系数）=每次改善多少</p>
+<p>评分：等式形式、单纯性表+高斯？？运算、结果</p>
+<h2 id="两阶段单纯形法">两阶段单纯形法</h2>
+<p>例题： <span class="math display">\[
+\min\ z=4x_1+x_2\\
+s.t.\ 3x_1+x_2\le3\\
+4x_1+3x_2\ge6\\
+x_1+2x_2\le4
+\]</span> 转化为等式约束：大于等于号要加R1人工变量，而且前面的x4是负号
+<span class="math display">\[
+3x_1+x_2+x_3=3\\
+4x_1+3x_2-x_4+R_1=6\\
+x_1+2x_2+x_5=4
+\]</span> ### 阶段1：</p>
+<p><span class="math display">\[
+\min\ r=R_1\\
+s.t.\ 3x_1+x_2+x_3=3\\
+4x_1+3x_2-x_4+R_1=6\\
+x_1+2x_2+x_5=4
+\]</span></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(R_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">r</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_3\)</span></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(R_1\)</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table>
+<p>与r=0矛盾，调整r行：将人工变量R1,R2等加到r行上</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(R_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">r</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_3\)</span></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(R_1\)</span></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+</tr>
+</tbody>
+</table>
+<p>由于求r的最小值，因此寻找r行系数为正且绝对值最大的列为进基变量，即x1。最小非负比为x3</p>
+<p>进行高斯-？？运算，列出数据</p>
+<p>新的表如下</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(R_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">r</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5/3</td>
+<td style="text-align: center;">-4/3</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1/3</td>
+<td style="text-align: center;">1/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(R_1\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5/3</td>
+<td style="text-align: center;">-4/3</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5/3</td>
+<td style="text-align: center;">-1/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p>重复上述操作，新表如下（x2、R1）</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(R_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">r</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+<td style="text-align: center;">1/5</td>
+<td style="text-align: center;">-1/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-4/5</td>
+<td style="text-align: center;">-3/5</td>
+<td style="text-align: center;">3/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>无法继续改善，r=0，说明有最优解（正数则无解）</p>
+<h3 id="阶段2">阶段2</h3>
+<p>沿用上一阶段的系数 <span class="math display">\[
+\min\ Z=4x_1+x_2\\
+s.t.\ x_1+0x_2+3/5x_3+1/5x_4+0x_5=3/5\\
+0x_1+x_2-4/5x_3-3/5x_4+0x_5=6/5\\
+0x_1+0x_2+x_3+x_4-x_5=1
+\]</span> 单纯形表：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">-4</td>
+<td style="text-align: center;">-1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+<td style="text-align: center;">1/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-4/5</td>
+<td style="text-align: center;">-3/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>与z=0矛盾，调整z行：z行对应列（如x1）的系数乘以对应行（x1）</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">8/5</td>
+<td style="text-align: center;">1/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">18/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_1\)</span></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+<td style="text-align: center;">1/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3/5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">-4/5</td>
+<td style="text-align: center;">-3/5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">6/5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>进基变量：x3，离基：x1、x5均可，不妨取x1</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">基</th>
+<th style="text-align: center;"><span
+class="math inline">\(x_1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(x_5\)</span></th>
+<th style="text-align: center;">解</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Z</td>
+<td style="text-align: center;">-8/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_3\)</span></td>
+<td style="text-align: center;">5/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span
+class="math inline">\(x_2\)</span></td>
+<td style="text-align: center;">4/3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-1/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span
+class="math inline">\(x_5\)</span></td>
+<td style="text-align: center;">-5/3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2/3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<p>x1=0,x2=2,z=2</p>
+<p>评分点：</p>
+<p>等式约束、表+高斯？？、第一阶段结果（R=0，r=0，几个变量的值）、新的规划函数、</p>
+<h2 id="对偶问题">对偶问题</h2>
+<p>例题： <span class="math display">\[
+\min\ Z=15x_1+12x_2\\
+x_1+2x_2\ge3\\
+2x_1-4x_2\le8\\
+x_1,x_2\ge0
+\]</span> 原始问题的等式约束如下（无需加人工变量） <span
+class="math display">\[
+\min\ Z=15x_1+12x_2+0x_3+0x_4\\
+x_1+2x_2-x_3=3(对应对偶变量y_1)\\
+2x_1-4x_2+x_4=8(对应对偶变量y_2)\\
+x_1,x_2,x_3,x_4=0
+\]</span> 对偶问题 <span class="math display">\[
+\max\ w=3y_1+8y_2\\
+s.t.\ y_1+2y_2\le15\\
+2y_1+4y_2\le12\\
+-y_1+0y_2\le0\\
+0y_1+y_2\le0\\
+y_1,y_2无限制
+\]</span> 评分点：</p>
+<h2 id="运输模型">运输模型</h2>
+<p>例题：</p>
+<p>求初始解、最优解</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">供应/需求</td>
+</tr>
+</tbody>
+</table>
+<figure>
+<img
+src="D:\study\大三上\最优化\assets\78ae97b330f07367c07cebfde1001eb.jpg" srcset="/img/loading.gif" lazyload
+alt="78ae97b330f07367c07cebfde1001eb" />
+<figcaption
+aria-hidden="true">78ae97b330f07367c07cebfde1001eb</figcaption>
+</figure>
+<p>评分点：求初始解</p>
+<h2 id="目标规划">目标规划</h2>
+<h2 id="整数规划">整数规划</h2>
+<h2 id="动态规划">动态规划</h2>
+<blockquote>
+<p>其实就是经典动态规划的倒序</p>
+</blockquote>
+<p>例题（背包问题）：</p>
+<p>货船最多装6吨</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">货物i</th>
+<th style="text-align: center;">wi</th>
+<th style="text-align: center;">ri</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">70</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">40</td>
+</tr>
+</tbody>
+</table>
+<p>阶段3 <span
+class="math inline">\(f_3(x_3)=\max\limits_{m_3=0,1,..,3}\{40m_3\}\)</span></p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">x3</th>
+<th style="text-align: center;">40m3</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">最优解</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">（背包容量）</td>
+<td style="text-align: center;"><span
+class="math inline">\(m_3=0\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_3=1\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_3=2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_3=3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f_3(x_3)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_3^*\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">3</td>
+</tr>
+</tbody>
+</table>
+<p>阶段二 <span
+class="math inline">\(f_2(x_2)=\max\limits_{m_2=0,1,...,6}\{20m_2+f_3(x_2-m_2)\}\)</span></p>
+<table>
+
+<thead>
+<tr class="header">
+<th style="text-align: center;">x2</th>
+<th style="text-align: center;">20m2+f3(x2-m3)</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">最优解</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">（背包容量）</td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=0\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=1\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=3\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=5\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2=6\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f_2(x_2)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_2^*\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0+0=0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0+0=0</td>
+<td style="text-align: center;">20+0=20</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0+40=40</td>
+<td style="text-align: center;">20+0=20</td>
+<td style="text-align: center;">40+0=40</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0,2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0+40=40</td>
+<td style="text-align: center;">20+40=60</td>
+<td style="text-align: center;">40+0=40</td>
+<td style="text-align: center;">60+0=60</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">1,3</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0+80=80</td>
+<td style="text-align: center;">20+40=60</td>
+<td style="text-align: center;">40+40=80</td>
+<td style="text-align: center;">60+0=60</td>
+<td style="text-align: center;">80+0=80</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">0,2,4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0+80=80</td>
+<td style="text-align: center;">20+80=100</td>
+<td style="text-align: center;">40+40=80</td>
+<td style="text-align: center;">60+40=100</td>
+<td style="text-align: center;">80+0=80</td>
+<td style="text-align: center;">100+0=100</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">1,3,5</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0+80=120</td>
+<td style="text-align: center;">20+80=100</td>
+<td style="text-align: center;">40+80=120</td>
+<td style="text-align: center;">60+40=100</td>
+<td style="text-align: center;">80+40=120</td>
+<td style="text-align: center;">100+0=100</td>
+<td style="text-align: center;">120+0=120</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">0,2,4,6</td>
+</tr>
+</tbody>
+</table>
+<p>阶段三 <span
+class="math inline">\(f_1(x_1)=\max\limits_{m_1=0,1}\{70m_1+f_2(x_1-4m_1)\}\)</span></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">x1</th>
+<th style="text-align: center;">70m1+f2(x1-4m1)</th>
+<th style="text-align: center;"></th>
+<th style="text-align: center;">最优解</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">（背包容量）</td>
+<td style="text-align: center;"><span
+class="math inline">\(m_1=0\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_1=1\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(f_1(x_1)\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(m_1^*\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0+0=0</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0+20=20</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0+40=40</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0+60=60</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0+80=80</td>
+<td style="text-align: center;">70+0=0</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0+100=100</td>
+<td style="text-align: center;">70+20=90</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">0+120=120</td>
+<td style="text-align: center;">70+40=110</td>
+<td style="text-align: center;">120</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="网络优化模型">网络优化模型</h2>
+<p>例题：</p>
+<p><img src="D:\study\大三上\最优化\assets\image-20241219152915139.png" srcset="/img/loading.gif" lazyload alt="image-20241219152915139" style="zoom:67%;" /></p>
+<p>表1</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">节点</th>
+<th style="text-align: center;">距离</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">[0,-]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">[100,1]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">[30,1]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;">永久</td>
+</tr>
+</tbody>
+</table>
+<p>表2</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">节点</th>
+<th style="text-align: center;">距离</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">[0,-]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">[100,1]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">[30,1]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">[40,3]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;">永久</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">[90,3]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<p>表3</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">节点</th>
+<th style="text-align: center;">距离</th>
+<th style="text-align: center;">状态</th>
+<th style="text-align: center;"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">[0,-]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">[100,1]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">[30,1]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">[40,3]</td>
+<td style="text-align: center;">永久</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">[85,4]</td>
+<td style="text-align: center;">暂时</td>
+<td style="text-align: center;">永久</td>
+</tr>
+</tbody>
+</table>
+<p>min Z=85</p>
+<p>1-3-4-5</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E6%95%B0%E7%90%86%E5%9F%BA%E7%A1%80/" class="category-chain-item">数理基础</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>最优化笔记</div>
+      <div>https://solor-wind.github.io/2025/01/01/最优化笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/" title="数据库理论笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">数据库理论笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/" title="编译原理实验设计文档">
+                        <span class="hidden-mobile">编译原理实验设计文档</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

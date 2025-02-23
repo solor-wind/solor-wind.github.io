@@ -1,0 +1,837 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/solor-wind.jpg">
+  <link rel="icon" href="/img/solor-wind.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#006cbf">
+  <meta name="author" content="gpf">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="《编译原理》实验部分设计文档，包括从词法分析到代码生成的全部思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编译原理实验设计文档">
+<meta property="og:url" content="https://solor-wind.github.io/2025/01/01/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E5%AE%9E%E9%AA%8C%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="solor-wind&#39;s blog">
+<meta property="og:description" content="《编译原理》实验部分设计文档，包括从词法分析到代码生成的全部思路">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\%E5%AE%9E%E9%AA%8C\assets\image-20241105091931445.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\%E5%AE%9E%E9%AA%8C\assets\image-20241128224826296.png">
+<meta property="og:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\%E5%AE%9E%E9%AA%8C\assets\image-20241128224940507.png">
+<meta property="article:published_time" content="2024-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-02-23T09:17:57.816Z">
+<meta property="article:author" content="gpf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="d:\study\%E5%A4%A7%E4%B8%89%E4%B8%8A\%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86\%E5%AE%9E%E9%AA%8C\assets\image-20241105091931445.png">
+  
+  
+  
+  <title>编译原理实验设计文档 - solor-wind&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"solor-wind.github.io","root":"/","version":"1.9.7","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>solor-wind&#39;s blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/%E9%AD%88-%E6%B5%B7%E7%81%AF%E8%8A%82.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="编译原理实验设计文档"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-01-01 00:00" pubdate>
+          2025年1月1日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">编译原理实验设计文档</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <blockquote>
+<p><span class="math inline">\(\mathcal{Author:gpf}\)</span></p>
+<p>源码见 <a
+target="_blank" rel="noopener" href="https://github.com/solor-wind/BUAA_Compiler">https://github.com/solor-wind/BUAA_Compiler</a></p>
+</blockquote>
+<h2 id="参考编译器介绍">参考编译器介绍</h2>
+<p>参考pl0-compiler编译器</p>
+<p>总体分为getsym，block，interpret三个部分</p>
+<p>getsym负责读取和识别源代码中下一个符号，类似词法分析。通过跳过空白和注释、识别不同类型的符号来更新符号表并返回符号（token）</p>
+<p>block负责处理程序的一个逻辑块，负责解析和生成代码，处理变量声明、语句和表达式等。通过递归调用子函数如statement等函数来递归下降解析源程序，类似于语法分析和语义分析。</p>
+<p>interpret负责解析执行，类似生成目标代码。</p>
+<h2 id="编译器总体设计">编译器总体设计</h2>
+<h2 id="词法分析设计">词法分析设计</h2>
+<p>词法分析主要涉及3个类：<code>Lexer,Token,TkenType</code>
+，其中最后一个是枚举类，对应单词的类别码。</p>
+<p>Token类存储每个token的信息，包括类别码、值（比如变量名、字符串等等）、行数</p>
+<p>Lexer类是进行词法分析的主要部分，使用 <code>PushbackReader</code>
+读入，便于回退。读到字母或下划线、数字、符号、换行符则交由3种不同的方法处理。具体而言，读到字母或下划线则一直读下去直至出现非字母、非数字、非下划线，然后将读到的字符串进行匹配，判断是标识符还是关键字；读到数字则为数字常量；读到符号则分情况处理，比如
+<code>/</code>
+可能是除号，也可能是注释的一部分，需要再读入字符进行判断，如果是除号则进行回退。</p>
+<p>特别的，对于转译字符需要原样输出</p>
+<p>最终，将处理完毕的token存储到链表中，输出。</p>
+<p><strong>编码后的修改</strong>：为了让架构更加美观，将三个类移动至Lexer软件包中。同时，增加了TokenStream类来定位、输出、判断token</p>
+<h2 id="语法分析设计">语法分析设计</h2>
+<p>目前的代码结构如下所示，units中的软件包下面是各个非终结符对应的类。</p>
+<figure>
+<img
+src="C:\Users\gpf\AppData\Roaming\Typora\typora-user-images\image-20240929084737230.png" srcset="/img/loading.gif" lazyload
+alt="image-20240929084737230" />
+<figcaption aria-hidden="true">image-20240929084737230</figcaption>
+</figure>
+<p>存储结构方面，采用树形，将几乎每个非终结符建一个类，存储可能推出的下一个终结符/非终结符。每个类还重写了toString方法，便于最后的输出。</p>
+<p>Parser类负责解析，采用递归下降解析，针对每一条文法几乎都有对应的解析方法。同时改写了部分左递归文法，方便处理。</p>
+<p>错误处理方面，在对应位置判断是否为对应的终结符，如果不是则加入负责存储错误的TreeMap中，最后统一输出。如
+<code>parseAddExp()</code> 会调用 <code>parseMulExp()</code>
+等等，直至解析完成返回最顶层的存储单元</p>
+<p><strong>编码后的修改</strong>：错误处理不能仅仅在对应位置判断，对于一些同样依靠终结符得出解析方向的方法，需要进行修改。如
+<code>UnaryExp → Ident '(' [FuncRParams] ')'</code>
+，之前的写法是看一下有无右括号来判断是否有参数项，但这样无法正确处理错误。最终阅读文法之后得出
+<code>First(FuncRParams)</code> 集合，通过判断相应的终结符来处理。</p>
+<h2 id="错误处理设计">错误处理设计</h2>
+<p>由于词法分析部分只涉及一种错误，只需对 <code>|</code> 和
+<code>&amp;</code> 进行特判处理即可。</p>
+<p>语法分析错误处理方面，在对应位置判断是否为对应的终结符，如果不是则加入负责存储错误的TreeMap中，最后统一输出。如
+<code>parseAddExp()</code> 会调用 <code>parseMulExp()</code>
+等等，直至解析完成返回最顶层的存储单元</p>
+<p>语义分析错误处理，只需查对应的符号表。建立符号表的过程中，可以进行错误处理。如b类错误可以查询当前已经建立好的符号表中有无使用的相同符号名。除此之外，建立符号表的过程还可以添加多余信息方便错误处理，比如在LVal中利用符号表判断标识符是数组还是一般变量、字符类型还是整数类型等等，方便后续函数参数类型匹配。</p>
+<h2 id="代码生成设计">代码生成设计</h2>
+<h3 id="语义分析符号表的建立">语义分析——符号表的建立</h3>
+<p>代码总体架构仍然是递归下降，初始给出符号表根节点，从编译单元根节点开始递归调用checkError方法进行解析，遇到变量/常量声明则建立新的符号并加入当前符号表，遇到Block或者函数声明就建立新的符号表，作为当前符号表的子节点之一。</p>
+<p>新建立GetSymTable作为工具类，SymbolTable作为符号表，以及Symbol作为存储符号的类。具体的ArraySym，VarSym，FuncSym继承自Symbol并有各自的新增属性，如ArraySym需要存储数组长度，FuncSym需要存储参数个数以及参数类型等等。</p>
+<p>建立符号表的过程中，可以进行错误处理。如b类错误可以查询当前已经建立好的符号表中有无使用的相同符号名。除此之外，建立符号表的过程还可以添加多余信息方便错误处理，比如在LVal中利用符号表判断标识符是数组还是一般变量、字符类型还是整数类型等等，方便后续函数参数类型匹配。</p>
+<p>输出方面，从根符号表逐层调用子符号表即可。</p>
+<h3 id="生成llvm-ir">生成LLVM IR</h3>
+<p>总体架构上类似语义分析，逐层调用每层类的genIR方法来获得相应的ir，具体设计如下</p>
+<h4 id="存储结构">存储结构</h4>
+<p>采用LLVM的“万物皆value”思想，主要层次是irModule-Function-BasicBlock-Instruction，具体如下图所示，更详细的继承结构参考<a
+target="_blank" rel="noopener" href="https://llvm.org/doxygen/classllvm_1_1Value.html">LLVM:
+llvm::Value Class Reference</a>和<a
+target="_blank" rel="noopener" href="https://llvm.org/doxygen/classllvm_1_1Type.html">LLVM: llvm::Type
+Class Reference</a></p>
+<p><img src="D:\study\大三上\编译原理\实验\assets\image-20241105091931445.png" srcset="/img/loading.gif" lazyload alt="image-20241105091931445" style="zoom:67%;" /></p>
+<p>其中，value类内容如下，提供了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Value</span> &#123;<br>    <span class="hljs-keyword">private</span> String name;<br>    <span class="hljs-keyword">private</span> Type type;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> &#123;<span class="hljs-comment">/**/&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    <span class="hljs-doctag">@Override</span></span><br><span class="hljs-comment">    public boolean equals(Object o) &#123;/**/</span>&#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span> &#123;<span class="hljs-comment">/**/&#125;</span><br><span class="hljs-comment">&#125;</span><br></code></pre></td></tr></table></figure>
+<h3 id="生成mips">生成MIPS</h3>
+<p>由于有了LLVM的基础，生成MIPS只需如实翻译ir即可。后端相应的存储结构类似于LLVM，大体分为ObjModule,ObjFunction,ObjBlock,ObjInstr四层，而所有操作数都继承自ObjOperand，有标签、立即数、虚拟寄存器和实际寄存器四类。</p>
+<p>翻译过程中，将LLVM
+value替换为相应的后端操作数，并完成指令的替换。如Br指令可根据有无条件分别翻译成bne和j指令。比较复杂的地方在于函数调用，涉及栈帧的涉及，而我的栈帧涉及如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/*</span><br><span class="hljs-comment">当前栈帧sp，函数A调用B</span><br><span class="hljs-comment">调用前：</span><br><span class="hljs-comment">----高地址</span><br><span class="hljs-comment">alloca的变量</span><br><span class="hljs-comment">...</span><br><span class="hljs-comment">ra</span><br><span class="hljs-comment">s0</span><br><span class="hljs-comment">...</span><br><span class="hljs-comment">s7</span><br><span class="hljs-comment">....</span><br><span class="hljs-comment">arg1(sp+4)</span><br><span class="hljs-comment">arg0(sp)</span><br><span class="hljs-comment">----低地址</span><br><span class="hljs-comment">ra为A的ra，arg为传入B的参数</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">通过遍历指令，确定需要alloca的大小、最多预留多少参数空间</span><br><span class="hljs-comment">函数A调用B时，保存ra,s0-s8,传递参数</span><br><span class="hljs-comment">函数B开头通过以上类似过程确定大小+ra+s0-s7申请自己的栈空间，即sp=sp-size</span><br><span class="hljs-comment">随后取出A传递的参数</span><br><span class="hljs-comment">返回时销毁栈帧</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<p>完成了翻译，只剩下为指令中的虚拟寄存器分配实际寄存器的环节。这里采用比较简单的栈式分配，更复杂的图着色在代码优化部分。栈式分配即所有虚拟寄存器都为之分配栈空间，并将数值存到栈上。具体来说，遍历每个函数的每条指令，确定虚拟寄存器对应的栈空间位移，当虚拟寄存器vr0被更新时，用
+<code>sw vr0,offset(sp)</code> 更新栈上存储的数值；当vr0被使用时，用
+<code>lw vr0,offset(sp)</code>
+获取最新的数值。由于每条指令的操作数不超过3，因此用t0,t1,t2三个实际寄存器即可完成所有指令的寄存器替换。</p>
+<h2 id="代码优化设计">代码优化设计</h2>
+<h3 id="前端优化">前端优化</h3>
+<h4 id="mem2reg">Mem2Reg</h4>
+<p>参考资料主要是https://github.com/No-SF-Work/miniSysY-tutorial/blob/master/challenge/mem2reg/help.md</p>
+<p>mem2reg的主要内容是将以alloca、store、load为主要结构的局部变量存储与赋值转换为真正的SSA形式，最终实现去掉大部分的alloca、store、load指令</p>
+<h5 id="步骤一求程序流图">步骤一：求程序流图</h5>
+<p>所谓程序流图（<strong>CFG</strong>），实际上就是求出每个基本块的前驱与后继，即基本块basicBlock可能来自于哪些基本块，又可能跳转到哪些基本块</p>
+<p>由于LLVM的语法约束，每个基本块有且仅有一条终结语句（br或ret，其他指令暂未用到），并且放置在最后，因此只需遍历每个基本块的最后一条指令即可构建出CFG</p>
+<p>存储结构如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java">HashMap&lt;BasicBlock, HashSet&lt;BasicBlock&gt;&gt; prevs = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>HashMap&lt;BasicBlock, HashSet&lt;BasicBlock&gt;&gt; nexts = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>HashSet&lt;Pair&lt;BasicBlock, BasicBlock&gt;&gt; edges = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+<p>在此阶段，可以简单合并一下基本块，并删除基本块。若A仅有一个后继B且B仅有一个前驱A，则AB可合并。求出CFG后，从起始节点进行DFS，没有遍历到的基本块即访问不到，可以删除</p>
+<h5 id="步骤二求支配树和支配边界">步骤二：求支配树和支配边界</h5>
+<p>支配涉及到多个概念，参考教程中的解释即可，下面给出大致定义</p>
+<ul>
+<li><p>支配：若CFG中从起始基本块到基本块B的每条路径都经过了A，则称基本块A支配B</p></li>
+<li><p>严格支配：A支配B，且A不是B</p></li>
+<li><p>直接支配：A严格支配B，并且不存在使得A严格支配C和C严格支配B同时成立。感性理解就是A是支配B的所有基本块中离B最近的哪一个。需要注意，每个基本块的直接支配者有且仅有一个</p></li>
+<li><p>支配树：由上可知，基本块之间的直接支配关系可以构成一棵树</p></li>
+<li><p>支配边界DF：<span
+class="math inline">\(DF(n)=\{x|n支配x的前驱结点，但n不严格支配x\}\)</span></p></li>
+</ul>
+<p>存储结构如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java">HashMap&lt;BasicBlock, HashSet&lt;BasicBlock&gt;&gt; doms = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//A被哪些块支配</span><br>HashMap&lt;BasicBlock, BasicBlock&gt; idoms = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//直接支配者(A被B支配)</span><br>HashMap&lt;BasicBlock, HashSet&lt;BasicBlock&gt;&gt; domTree = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//支配树，A直接支配哪些块</span><br>HashMap&lt;BasicBlock, HashSet&lt;BasicBlock&gt;&gt; DF = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//支配边界</span><br></code></pre></td></tr></table></figure>
+<p>首先计算支配，计院教程中的计算方式貌似有误，无法处理循环的情况。由于测试点不大，可以采用最简单的做法：针对每个基本块A，标记A为被删除的块，然后从起始结点开始根据CFG图进行DFS，没有被遍历到的基本块则是被A支配的基本块。求出支配后，严格支配也被求出</p>
+<p>接着计算直接支配。遍历每个基本块A的支配节点B（B支配A），如果B1严格支配B2则更新B2为A的直接支配者，依次更新。</p>
+<p>其次计算支配边界</p>
+<p>伪代码以及对应的真实代码如下：</p>
+<p><img src="D:\study\大三上\编译原理\实验\assets\image-20241128224826296.png" srcset="/img/loading.gif" lazyload alt="image-20241128224826296" style="zoom: 67%;" /></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">for</span> (Pair&lt;BasicBlock, BasicBlock&gt; pair : cfg.edges) &#123;<br>    <span class="hljs-type">BasicBlock</span> <span class="hljs-variable">a</span> <span class="hljs-operator">=</span> pair.getFirst();<br>    <span class="hljs-type">BasicBlock</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> pair.getSecond();<br>    <span class="hljs-type">BasicBlock</span> <span class="hljs-variable">x</span> <span class="hljs-operator">=</span> a;<br>    <span class="hljs-keyword">while</span> (!doms.get(b).contains(x) || x.equals(b)) &#123;<br>        DF.get(x).add(b);<br>        x = idoms.get(x);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="步骤三在支配边界插入phi">步骤三：在支配边界插入phi</h5>
+<p>这一步骤没啥好说的，直接看代码即可</p>
+<p><img src="D:\study\大三上\编译原理\实验\assets\image-20241128224940507.png" srcset="/img/loading.gif" lazyload alt="image-20241128224940507" style="zoom:67%;" /></p>
+<p>插入空的phi语句后，DFS遍历支配树，对于每个基本块，遍历每一条指令，记录每个alloca的局部变量的最新的load的值和store的值，并在CFG的后继中插入phi指令的赋值部分</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">rename</span><span class="hljs-params">(BasicBlock block)</span> &#123;<br>        ArrayList&lt;Instruction&gt; newInstrs = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;();<br>        <span class="hljs-keyword">for</span> (Instruction instr : block.getInstructions()) &#123;<br>            replaceValue(instr);<br>            <span class="hljs-keyword">if</span> (instr <span class="hljs-keyword">instanceof</span> AllocaInstr alloca) &#123;<br>                <span class="hljs-keyword">if</span> (defs.containsKey(alloca.getVar())) &#123;<br>                    localValMap.put(alloca.getVar(), <span class="hljs-keyword">new</span> <span class="hljs-title class_">Literal</span>(<span class="hljs-number">0</span>, ((PointerType) alloca.getVar().getType()).getBaseType()));<br>                    <span class="hljs-comment">//局部变量未定义就使用，文法没说，但默认为0</span><br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instr <span class="hljs-keyword">instanceof</span> StoreInstr store) &#123;<br>                <span class="hljs-keyword">if</span> (defs.containsKey(store.getAddr())) &#123;<br>                    localValMap.put(store.getAddr(), store.getValue());<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instr <span class="hljs-keyword">instanceof</span> LoadInstr load) &#123;<br>                <span class="hljs-keyword">if</span> (defs.containsKey(load.getAddr())) &#123;<br>                    loadValMap.put(load.getRes(), localValMap.get(load.getAddr()));<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instr <span class="hljs-keyword">instanceof</span> PhiInstr phi) &#123;<br>                localValMap.put(phiValMap.get(phi.getRes()), phi.getRes());<span class="hljs-comment">//更新局部变量对应的值</span><br>            &#125;<br>            newInstrs.add(instr);<br>        &#125;<br>        block.setInstructions(newInstrs);<br>        <span class="hljs-keyword">for</span> (BasicBlock nextBlock : cfg.nexts.get(block)) &#123;<br>            <span class="hljs-keyword">for</span> (Instruction instr : nextBlock.getInstructions()) &#123;<br>                <span class="hljs-keyword">if</span> (instr <span class="hljs-keyword">instanceof</span> PhiInstr phi) &#123;<br>                    <span class="hljs-keyword">if</span> (localValMap.containsKey(phiValMap.get(phi.getRes()))) &#123;<br>                        phi.addValLabel(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Pair</span>&lt;&gt;(localValMap.get(phiValMap.get(phi.getRes())), block));<br>                    &#125;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">for</span> (BasicBlock domBlock : domTree.domTree.get(block)) &#123;<br>            HashMap&lt;Value, Value&gt; tmpMap = (HashMap&lt;Value, Value&gt;) localValMap.clone();<br>            rename(domBlock);<span class="hljs-comment">//前序遍历支配树，每个子节点使用相同的当前父节点的stackMap（子节点1更新时不能影响子节点2）</span><br>            localValMap = tmpMap;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<h4 id="dce">DCE</h4>
+<p>DCE即删除死代码，做法就是先求出有用的部分，剩下的都删掉</p>
+<p>具体而言，遍历每个变量，得到def-use关系，即每个变量在哪里定义，用到了哪些变量。</p>
+<p>初始先设置一些有用变量如返回值、跳转的cond、函数调用的参数等等，将他们加入usedValues集合，同时将他们用到的变量也加入这个集合，再递归查找用到的变量直至集合不再变化。没有产生在usedValues里定义过的变量的指令就可以删掉了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java">HashMap&lt;Value, Pair&lt;BasicBlock, Integer&gt;&gt; defMap;<span class="hljs-comment">//每个变量的定义点</span><br>HashSet&lt;Value&gt; usedValues;<br></code></pre></td></tr></table></figure>
+<p>DCE和mem2reg都会暴露出新的优化机会，可以再通过CFG合并、删除多余基本块</p>
+<h3 id="后端优化">后端优化</h3>
+<h4 id="removephi">RemovePhi</h4>
+<p>mem2reg后，留下了许多Phi指令来自不同基本块的数据流为变量赋值，但phi无法直接翻译，因此必须消除phi指令，消除的方式就是用并行赋值指令PC（一堆move的集合）。对于A到B的一条CFG边，如果A有多个后继，就不能直接在A后面添加PC，需要新建一个基本块，在其中添加PC指令，同时修改相应的前驱、后继、跳转指令、CFG图</p>
+<h4 id="图着色">图着色</h4>
+<p>最重要的后端优化，目的是合理的分配寄存器。</p>
+<p>首先求出每个指令的use、def集合，根据指令的use、def求出基本块的use、def集合。use即一个变量还未被定义过就被使用，def即一个变量还未被使用过就被定义。use和def交集应为空。</p>
+<p>求出use、def集合后，进行活跃变量分析。首先进行基本块的活跃变量分析，之后将每个基本块的out加入到基本块最后一个指令的out集合中，进行指令的活跃变量分析。活跃变量的in、out按如下公式求出
+<span class="math display">\[
+out[m]=\cup_{s\in succ[m]}in[s]\\
+in[m]=use[m]\cup(out[m]-def[m])\\
+\]</span>
+随后构建冲突图，位于同一条指令出口变量或寄存器以及定义的变量或寄存器相互冲突，根据这个冲突的定义即可完成冲突图的构建，具体存储结构如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> HashMap&lt;ObjReg, HashSet&lt;ObjReg&gt;&gt; conflictMap = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//寄存器A与哪些寄存器冲突</span><br><span class="hljs-keyword">private</span> Stack&lt;ObjReg&gt; stack = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Stack</span>&lt;&gt;();<span class="hljs-comment">//分配颜色的顺序</span><br><span class="hljs-keyword">private</span> HashMap&lt;ObjReg, Integer&gt; spilled = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<span class="hljs-comment">//溢出的变量对应的栈空间</span><br></code></pre></td></tr></table></figure>
+<p>随后，循环进行简化和溢出，直至冲突图没有虚拟寄存器节点为止。简化，将冲突数小于等于实际寄存器个数的寄存器删除并存到栈上，随后进行溢出，将一个冲突数大于实际寄存器个数的寄存器删除并存到栈上，此时冲突图可能可以重新简化，因此循环。</p>
+<p>之后，就根据栈的顺序逐步弹出虚拟寄存器，并加入冲突图中，查看是否有实际寄存器能够分配给它并使它不与当前的冲突图中的寄存器冲突。如果有，则分配相应的寄存器。否则，将其作为溢出的变量，分配栈空间。</p>
+<p>最后，将虚拟寄存器替换为对应的实际寄存器，并针对剩余的虚拟寄存器进行栈式分配。</p>
+<h4 id="鸡肋优化">鸡肋优化</h4>
+<blockquote>
+<p>食之无用，弃之可惜</p>
+</blockquote>
+<p>常数优化如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">a+<span class="hljs-number">0</span>=a;<br>a-<span class="hljs-number">0</span>=a;<br>a*<span class="hljs-number">1</span>=a;	a*-<span class="hljs-number">1</span>=a;	a*<span class="hljs-number">0</span>=<span class="hljs-number">0</span>;<br>a*<span class="hljs-number">4</span>=a&lt;&lt;<span class="hljs-number">2</span>;<br>a/<span class="hljs-number">1</span>=a;	a/-<span class="hljs-number">1</span>=-a;<br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%93%E4%B8%9A%E8%AF%BE/" class="category-chain-item">专业课</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>编译原理实验设计文档</div>
+      <div>https://solor-wind.github.io/2025/01/01/编译原理实验设计文档/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>gpf</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年1月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E6%9C%80%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0/" title="最优化笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">最优化笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/01/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/" title="编译原理理论笔记">
+                        <span class="hidden-mobile">编译原理理论笔记</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
